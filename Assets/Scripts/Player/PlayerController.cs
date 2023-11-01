@@ -10,42 +10,54 @@ namespace unixel
         private CapsuleCollider2D col;
 
         [Header("MOVEMENT")]
-        private Vector2 moveDirection;
-        public float maxSpeed;
-        public float acceleration;
-        public float groundDeceleration;
-        public float airDeceleration;
-        public float maxFallSpeed;
-        public float fallAcceleration;
-        public float groundingForce;
+        [SerializeField] private float maxSpeed;
+        [SerializeField] private float acceleration;
+        [SerializeField] private float groundDeceleration;
+        [SerializeField] private float airDeceleration;
+        [SerializeField] private float maxFallSpeed;
+        [SerializeField] private float fallAcceleration;
+        [SerializeField] private float groundingForce;
+
+        //---------------------------------------------------------------------
 
         [Header("GROUND & COLLISION CHECKS")]
         public LayerMask groundLayerMask;
-        public float grounderDistance;
-        public float JumpEndEarlyGravityModifier;
-        private bool _cachedQueryStartInColliders;
+        [SerializeField] private float grounderDistance;
+        [SerializeField] private float JumpEndEarlyGravityModifier;
+        [SerializeField] private bool _cachedQueryStartInColliders;
+
+        //---------------------------------------------------------------------
 
         [Header("JUMPING")]
-        public float jumpPower;
+        [SerializeField] private float jumpPower;
+        [SerializeField] private float jumpBuffer;
+        [SerializeField] private float coyoteTime;
+        private bool bufferedJumpUsable;
+        private bool coyoteUsable;
         private bool jumpToConsume;
         private float timeJumpWasPressed;
-        private bool bufferedJumpUsable;
-        public float jumpBuffer;
         private bool endedJumpEarly;
-        private bool coyoteUsable;
-        public float coyoteTime;
+
+        //---------------------------------------------------------------------
 
         [Header("GLIDING")]
-        public float maxGlideSpeed;
-        public float glideAcceleration;
-        public float glideFallSpeed;
-        public float glideFallAcceleration;
-        public float glideGravityResistance;
+        [SerializeField] private float maxGlideSpeed;
+        [SerializeField] private float glideAcceleration;
+        [SerializeField] private float glideFallSpeed;
+        [SerializeField] private float glideFallAcceleration;
+        [SerializeField] private float glideGravityResistance;
+
+        //---------------------------------------------------------------------
+
+        [Header("PIDGEYPOOP")]
+        [SerializeField] private float amountOfPoop;
+        public Transform poopDropPos;
+        public GameObject poopPrefab;
+        
 
         private Vector2 frameVelocity;
         private FrameInput frameInput;
         public bool isFacingRight = true;
-
         private float time;
 
         //Interface
@@ -53,7 +65,6 @@ namespace unixel
         public event Action<bool, float> GroundedChanged;
         public event Action Jumped;
 
-        // Start is called before the first frame update
         void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -61,26 +72,26 @@ namespace unixel
 
             _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
         }
-
-        // Update is called once per frame
         void Update()
         {
             time += Time.deltaTime;
             GatherInput();
-            //if (frameInput.isGliding)
-            //{
-            //    print("in gliding state");
-            //}
+
+
+            if (frameInput.Move.x > 0 && !isFacingRight)
+                FlipSprite();
+
+
+            if (frameInput.Move.x < 0 && isFacingRight)
+                FlipSprite();
         }
-
-
         private void GatherInput()
         {
             frameInput = new FrameInput
             {
                 JumpDown = Input.GetButtonDown("Jump"),
                 JumpHeld = Input.GetButton("Jump"),
-                isGliding = Input.GetKey(KeyCode.LeftShift),
+                isGliding = Input.GetButton("Jump") && rb.velocity.y <= 0 && !grounded, //currently in air and is falling to ground
                 Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
             };
 
@@ -90,7 +101,10 @@ namespace unixel
                 timeJumpWasPressed = time;
             }
 
-            FlipSprite();
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                PidgeyPoop();
+            }
         }
 
         private void FixedUpdate()
@@ -99,10 +113,18 @@ namespace unixel
             HandleJump();
             HandleDirection();
             HandleGravity();
-
             ApplyMovement();
         }
 
+        private void PidgeyPoop()
+        {
+            print("function called");
+
+            GameObject poop = Instantiate(poopPrefab, poopDropPos.position, Quaternion.identity);
+            //poop.GetComponent<Rigidbody2D>().velocity = -transform.up * poopDropSpeed;
+            
+        }
+        #region Horizontal Movement
         private void HandleDirection()
         {
             if (frameInput.isGliding)
@@ -144,7 +166,7 @@ namespace unixel
             
         }
         private void ApplyMovement() => rb.velocity = frameVelocity;
-
+        #endregion
 
         #region Collisions
 
@@ -183,20 +205,21 @@ namespace unixel
 
         }
         #endregion
+
         #region Jumping
 
         [SerializeField] private bool HasBufferedJump => bufferedJumpUsable && time < timeJumpWasPressed + jumpBuffer; //buffering jump before performing next jump
-        [SerializeField] private bool CanUseCoyote => coyoteUsable && !grounded && time < frameLeftGrounded + coyoteTime; 
+        [SerializeField] private bool CanUseCoyote => coyoteUsable && !grounded && time < frameLeftGrounded + coyoteTime;
 
         private void HandleJump() //Jumping conditions 
         {
-            if (!endedJumpEarly && !grounded && !frameInput.JumpHeld && rb.velocity.y > 0) 
+            if (!endedJumpEarly && !grounded && !frameInput.JumpHeld && rb.velocity.y > 0)
                 endedJumpEarly = true;
 
-            if (!jumpToConsume && !HasBufferedJump) 
+            if (!jumpToConsume && !HasBufferedJump)
                 return;
 
-            if (!frameInput.isGliding && jumpToConsume && grounded || CanUseCoyote) 
+            if (!frameInput.isGliding && jumpToConsume && grounded || CanUseCoyote)
                 ExecuteJump();
 
             jumpToConsume = false;
@@ -215,16 +238,14 @@ namespace unixel
         #endregion
         private void FlipSprite()
         {
-            if (isFacingRight && moveDirection.x < 0f || !isFacingRight && moveDirection.x > 0f)
-            {
-                isFacingRight = !isFacingRight;
-                Vector3 localScale = transform.localScale;
-                localScale.x *= -1f;
-                transform.localScale = localScale;
-            }
+            Vector3 currentScale = gameObject.transform.localScale;
+            currentScale.x *= -1;
+            gameObject.transform.localScale = currentScale;
+            isFacingRight = !isFacingRight;
         }
 
     }
+
     public struct FrameInput
     {
         public bool JumpDown;
