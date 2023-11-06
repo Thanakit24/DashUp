@@ -7,7 +7,9 @@ public class Enemy : MonoBehaviour
    
     [Header("Stats")]
     [SerializeField] private float health;
+    [SerializeField] private float currentSpeed;
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float chaseSpeed;
 
     //-------------------------------------------------------;
 
@@ -32,14 +34,16 @@ public class Enemy : MonoBehaviour
     [SerializeField] private bool isFacingRight;
     [SerializeField] Transform wallCheckPos;
     [SerializeField] float wallCheckDistance;
-
     [SerializeField] private float fovAngle = 90f; // Adjust this angle to change the FOV
     [SerializeField] private float fovDetectDistance = 5f; // Adjust this distance to change the FOV range
 
+
+    [SerializeField] private bool isChasing = false;
     void Start()
     {
         currentTarget = player.transform;
         isFacingRight = true;
+        currentSpeed = moveSpeed;
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -48,10 +52,16 @@ public class Enemy : MonoBehaviour
     {
         CheckForPlayerInFOV();
             
-        if (canPatrol)
+        if (canPatrol && !isChasing)
         {
             Patrol();
         }
+        else if (isChasing)
+        {
+            currentTarget = player;
+            print("chase after player");
+        }
+
 
         if (currentTarget.transform.position.x < transform.position.x && isFacingRight)
         {
@@ -74,7 +84,7 @@ public class Enemy : MonoBehaviour
         if (canPatrol && !waitAtPoint)
         {
             Vector3 direction = (currentTarget.position - transform.position).normalized;
-            Vector2 moveVelocity = direction * moveSpeed;
+            Vector2 moveVelocity = direction * currentSpeed;
             //rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
             rb.velocity = new Vector2(moveVelocity.x, rb.velocity.y); //wtf is this
         }
@@ -115,6 +125,7 @@ public class Enemy : MonoBehaviour
         bool foundWall = false;
         float castDistance = wallCheckDistance;
         //define cast distance for left and rightt
+        
         if (!isFacingRight)
         {
             castDistance = -wallCheckDistance;
@@ -154,15 +165,26 @@ public class Enemy : MonoBehaviour
                 // Check if there is an obstacle between the enemy and player
                 RaycastHit2D obstacleHit = Physics2D.Raycast(transform.position, directionToPlayer, hit.distance, LayerMask.GetMask("Ground"));
 
-                if (obstacleHit.collider == null)
+                if (obstacleHit.collider == null)  //it will only stop chasing the player if it sees a wall and the player at the same time, this logic is wrong -> BUG
                 {
                     Debug.Log("Player Detected!");
+                    isChasing = true;
+                    currentSpeed = chaseSpeed;
                     // Take appropriate action (e.g., chase the player)
                 }
                 else
                 {
-                    Debug.Log("Wall Detected");
+                    Debug.Log("Not Chasing");
+                    isChasing = false;
+                    currentSpeed = moveSpeed;
+                    //Debug.Log("Wall Detected");
+                    //NOTE: Need to set this logic outside of if laser hit player check
                 }
+            }
+            else
+            {
+                isChasing = false;
+                currentSpeed = moveSpeed;
             }
         }
     }

@@ -29,6 +29,8 @@ namespace unixel
         //---------------------------------------------------------------------
 
         [Header("JUMPING")]
+        [SerializeField] private int amountOfJumps;
+        [SerializeField] private int maxAmountOfJumps;
         [SerializeField] private float jumpPower;
         [SerializeField] private float jumpBuffer;
         [SerializeField] private float coyoteTime;
@@ -72,6 +74,11 @@ namespace unixel
 
             _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
         }
+
+        void Start()
+        {
+            amountOfJumps = maxAmountOfJumps;
+        }
         void Update()
         {
             time += Time.deltaTime;
@@ -89,9 +96,10 @@ namespace unixel
         {
             frameInput = new FrameInput
             {
-                JumpDown = Input.GetButtonDown("Jump"),
+                JumpDown = Input.GetButtonDown("Jump") && amountOfJumps > 0,
                 JumpHeld = Input.GetButton("Jump"),
-                isGliding = Input.GetButton("Jump") && rb.velocity.y <= 0 && !grounded, //currently in air and is falling to ground
+                isGliding = Input.GetKey(KeyCode.W) && rb.velocity.y <= 0 && !grounded 
+                && time > frameLeftGrounded + coyoteTime && time > timeJumpWasPressed + jumpBuffer,  //currently in air and is falling to ground
                 Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
             };
 
@@ -191,6 +199,7 @@ namespace unixel
                 coyoteUsable = true;
                 bufferedJumpUsable = true;
                 endedJumpEarly = false;
+                amountOfJumps = maxAmountOfJumps;
                 GroundedChanged?.Invoke(true, Mathf.Abs(frameVelocity.y)); //idk wtf this is
             }
             // Left the Ground
@@ -219,7 +228,9 @@ namespace unixel
             if (!jumpToConsume && !HasBufferedJump)
                 return;
 
-            if (!frameInput.isGliding && jumpToConsume && grounded || CanUseCoyote)
+            //if (!grounded && amountOfJumps > 0)
+
+            if (jumpToConsume && amountOfJumps > 0 || CanUseCoyote)
                 ExecuteJump();
 
             jumpToConsume = false;
@@ -227,10 +238,12 @@ namespace unixel
 
         private void ExecuteJump() //Where jump happens
         {
+            amountOfJumps--;
             endedJumpEarly = false;
             timeJumpWasPressed = 0;
             bufferedJumpUsable = false;
             coyoteUsable = false;
+            frameInput.isGliding = false;
             frameVelocity.y = jumpPower;
             Jumped?.Invoke();
         }
