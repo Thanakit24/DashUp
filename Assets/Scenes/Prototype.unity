@@ -2052,7 +2052,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &35086717
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2292,7 +2292,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 6.09375
+  orthographic size: 9.875
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3097,7 +3097,11 @@ MonoBehaviour:
   wallCheckPos: {fileID: 1945476562}
   wallCheckDistance: 0.2
   fovAngle: 45
-  fovDetectDistance: 6
+  fovDetectDistance: 5
+  rememberPlayer: 0
+  rememberTime: 2
+  rememberMaxTime: 2
+  pinPointDistance: 1
   isChasing: 0
 --- !u!50 &1691599991
 Rigidbody2D:

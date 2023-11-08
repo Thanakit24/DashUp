@@ -36,11 +36,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] float wallCheckDistance;
     [SerializeField] private float fovAngle = 90f; // Adjust this angle to change the FOV
     [SerializeField] private float fovDetectDistance = 5f; // Adjust this distance to change the FOV range
-
-
+    [SerializeField] private bool rememberPlayer;
+    [SerializeField] private float rememberTime;
+    [SerializeField] private float rememberMaxTime;
+    [SerializeField] private float pinPointDistance;
     [SerializeField] private bool isChasing = false;
     void Start()
     {
+        rememberTime = rememberMaxTime;
         currentTarget = player.transform;
         isFacingRight = true;
         currentSpeed = moveSpeed;
@@ -59,9 +62,15 @@ public class Enemy : MonoBehaviour
         else if (isChasing)
         {
             currentTarget = player;
+            currentSpeed = chaseSpeed;
             print("chase after player");
         }
 
+        if (rememberPlayer)                                                                    
+        {
+            print("remember player");
+            ContinueChase();
+        }
 
         if (currentTarget.transform.position.x < transform.position.x && isFacingRight)
         {
@@ -74,9 +83,6 @@ public class Enemy : MonoBehaviour
             if (!waitAtPoint|| !canPatrol)
                 Flip();
         }
-        //Write different function for patrol point logic *Done
-        //Write raycast detection behavior with displaying cone effect *Done
-        //Write what happens when player is detected *
     }
 
     private void FixedUpdate()
@@ -91,12 +97,13 @@ public class Enemy : MonoBehaviour
 
         if (isHittingWall())
         {
-            print("Hit Wall");
+            //print("Hit Wall");
         }
     }
 
     private void Patrol()
     {
+        currentSpeed = moveSpeed;
         currentTarget = patrolPoints[patrolIndex];
         if (patrolPoints.Length < 2)
         {
@@ -151,41 +158,86 @@ public class Enemy : MonoBehaviour
         return foundWall;
     }
 
-    void CheckForPlayerInFOV()
+    //void CheckForPlayerInFOV()
+    //{
+    //    Vector3 directionToPlayer = PlayerDirection();
+    //    float angleToPlayer = Vector3.Angle(transform.right, directionToPlayer);
+
+    //    if (angleToPlayer < fovAngle * 0.5f)
+    //    {
+    //        RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, fovDetectDistance, LayerMask.GetMask("Player"));
+
+    //        if (hit.collider != null)
+    //        {
+    //            // Check if there is an obstacle between the enemy and player
+    //            RaycastHit2D obstacleHit = Physics2D.Raycast(transform.position, directionToPlayer, hit.distance, LayerMask.GetMask("Ground"));
+
+    //            if (obstacleHit.collider != null)  //it will only stop chasing the player if it sees a wall and the player at the same time, this logic is wrong -> BUG
+    //            {
+    //                return;
+    //                //do nothing if there is wall
+    //            }
+
+    //            else
+    //            {
+    //                //if there is nno wall, chase player
+    //                Debug.Log("Player Detected!");
+    //                isChasing = true;
+    //                currentSpeed = chaseSpeed;
+    //                // Take appropriate action (e.g., chase the player)
+    //            }
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("No Player Detected");
+    //            return;
+    //        }
+    //    }
+    //}
+    void CheckForPlayerInFOV() //Still a lot of bugss
     {
         Vector3 directionToPlayer = PlayerDirection();
         float angleToPlayer = Vector3.Angle(transform.right, directionToPlayer);
 
-        if (angleToPlayer < fovAngle * 0.5f)
+        if (angleToPlayer < fovAngle && Vector3.Distance(transform.position, player.transform.position) <= fovDetectDistance) //*0.5f
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, fovDetectDistance, LayerMask.GetMask("Player"));
+            RaycastHit2D playerHit = Physics2D.Raycast(transform.position, directionToPlayer, fovDetectDistance, LayerMask.GetMask("Player"));
+            RaycastHit2D obstacleHit = Physics2D.Raycast(transform.position, directionToPlayer, playerHit.distance, LayerMask.GetMask("Ground"));
 
-            if (hit.collider != null)
+            if (obstacleHit.collider != null)
             {
-                // Check if there is an obstacle between the enemy and player
-                RaycastHit2D obstacleHit = Physics2D.Raycast(transform.position, directionToPlayer, hit.distance, LayerMask.GetMask("Ground"));
+                if (isChasing)
+                {
+                    rememberPlayer = true;
+                }
+                return;
+            }
 
-                if (obstacleHit.collider == null)  //it will only stop chasing the player if it sees a wall and the player at the same time, this logic is wrong -> BUG
-                {
-                    Debug.Log("Player Detected!");
-                    isChasing = true;
-                    currentSpeed = chaseSpeed;
-                    // Take appropriate action (e.g., chase the player)
-                }
-                else
-                {
-                    Debug.Log("Not Chasing");
-                    isChasing = false;
-                    currentSpeed = moveSpeed;
-                    //Debug.Log("Wall Detected");
-                    //NOTE: Need to set this logic outside of if laser hit player check
-                }
+            if (playerHit.collider != null && Vector3.Distance(transform.position, player.transform.position) <= pinPointDistance)
+            {
+                isChasing = true;
             }
             else
             {
-                isChasing = false;
-                currentSpeed = moveSpeed;
+                Debug.Log("Lost sight of player");
+                rememberPlayer = true; 
             }
+        
+        }
+    }
+
+    void ContinueChase()
+    {
+        //isChasing = true;
+        rememberTime -= Time.deltaTime;
+
+        if (rememberTime <= 0)
+        {
+            isChasing = false;
+            currentSpeed = moveSpeed;
+            rememberPlayer = false;
+            rememberTime = rememberMaxTime;
+            print("forget player position");
         }
     }
 
