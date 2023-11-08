@@ -253,28 +253,28 @@ public class Enemy : MonoBehaviour
     }
 
     #region Gizmos
-    void OnDrawGizmos()
-    {
-        DrawFOVGizmos();
-    }
+    //void OnDrawGizmos()
+    //{
+    //    DrawFOVGizmos();
+    //}
 
-    void DrawFOVGizmos()
-    {
-        float halfFOV = fovAngle * 0.5f;
-        float coneLength = Mathf.Tan(Mathf.Deg2Rad * halfFOV) * fovDetectDistance;
+    //void DrawFOVGizmos()
+    //{
+    //    float halfFOV = fovAngle * 0.5f;
+    //    float coneLength = Mathf.Tan(Mathf.Deg2Rad * halfFOV) * fovDetectDistance;
 
-        Gizmos.color = Color.red;
+    //    Gizmos.color = Color.red;
 
-        Vector3 coneStart = transform.position;
-        Vector3 coneEnd = transform.position + (Quaternion.Euler(0, 0, halfFOV) * transform.right * fovDetectDistance);
-        Gizmos.DrawLine(coneStart, coneEnd);
+    //    Vector3 coneStart = transform.position;
+    //    Vector3 coneEnd = transform.position + (Quaternion.Euler(0, 0, halfFOV) * transform.right * fovDetectDistance);
+    //    Gizmos.DrawLine(coneStart, coneEnd);
 
-        coneEnd = transform.position + (Quaternion.Euler(0, 0, -halfFOV) * transform.right * fovDetectDistance);
-        Gizmos.DrawLine(coneStart, coneEnd);
+    //    coneEnd = transform.position + (Quaternion.Euler(0, 0, -halfFOV) * transform.right * fovDetectDistance);
+    //    Gizmos.DrawLine(coneStart, coneEnd);
 
-        Gizmos.DrawLine(coneStart, coneStart + transform.right * coneLength);
-        Gizmos.DrawLine(coneStart, coneStart - transform.right * coneLength);
-    }
+    //    Gizmos.DrawLine(coneStart, coneStart + transform.right * coneLength);
+    //    Gizmos.DrawLine(coneStart, coneStart - transform.right * coneLength);
+    //}
 
     //private void OnDrawGizmos()
     //{
