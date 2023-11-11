@@ -121,7 +121,7 @@ public class EnemyTry : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                Debug.Log(collision.gameObject.name);
+                //Debug.Log(collision.gameObject.name);
 
                 Vector3 rayDirection = collision.gameObject.transform.position - transform.position;
                 Debug.DrawRay(castPos.position, rayDirection, Color.blue, 1f); // Draw the ray for debugging
@@ -130,7 +130,7 @@ public class EnemyTry : MonoBehaviour
 
                 if (hit.collider == null)
                 {
-                    print(hit.collider);
+                    //print(hit.collider);
                     isChasing = true;
                     UpdatePath(player.transform);
                     currentSpeed = chaseSpeed;
@@ -138,7 +138,7 @@ public class EnemyTry : MonoBehaviour
                 }
                 else
                 {
-                    print(hit.collider);
+                    //print(hit.collider);
                     //Debug.Log("Wall in the way, not chasing.");
                 }
             }
