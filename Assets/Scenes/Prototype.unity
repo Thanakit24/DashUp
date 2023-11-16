@@ -2261,7 +2261,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 2.25
+  orthographic size: 5.96875
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3465,7 +3465,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2108330453}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 987ac57bd821f3d43b7cf086a2fea95a, type: 2}
   m_CullingMode: 0

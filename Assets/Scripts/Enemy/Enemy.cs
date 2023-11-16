@@ -222,7 +222,6 @@ public class Enemy : MonoBehaviour
                 Debug.Log("Lost sight of player");
                 rememberPlayer = true; 
             }
-        
         }
     }
 

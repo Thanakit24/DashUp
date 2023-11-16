@@ -60,6 +60,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
     public bool isFacingRight = true;
     private float time;
 
+    private Animator anim;
+
     //Interface
     public Vector2 FrameInput => frameInput.Move;
     public event Action<bool, float> GroundedChanged;
@@ -67,6 +69,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     void Awake()
     {
+        anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CapsuleCollider2D>();
 
@@ -82,6 +85,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         time += Time.deltaTime;
         GatherInput();
 
+       
 
         if (frameInput.Move.x > 0 && !isFacingRight)
             FlipSprite();
@@ -119,6 +123,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
         HandleDirection();
         HandleGravity();
         ApplyMovement();
+        anim.SetFloat("xVelocity", Mathf.Abs(frameInput.Move.x));
+        anim.SetFloat("yVelocity", rb.velocity.y);
     }
 
     private void PidgeyPoop()
@@ -198,6 +204,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
             endedJumpEarly = false;
             amountOfJumps = maxAmountOfJumps;
             GroundedChanged?.Invoke(true, Mathf.Abs(frameVelocity.y)); //idk wtf this is
+            anim.SetBool("isJumping", false);
         }
         // Left the Ground
         else if (grounded && !groundHit)
@@ -205,6 +212,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
             grounded = false;
             frameLeftGrounded = time;
             GroundedChanged?.Invoke(false, 0);
+            anim.SetBool("isJumping", true);
         }
 
         Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
@@ -252,6 +260,11 @@ public class PlayerController : MonoBehaviour, IPlayerController
         currentScale.x *= -1;
         gameObject.transform.localScale = currentScale;
         isFacingRight = !isFacingRight;
+    }
+
+    private void AnimationsHandler()
+    {
+
     }
 
     public void Dead()
