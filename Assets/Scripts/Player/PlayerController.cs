@@ -123,8 +123,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         HandleDirection();
         HandleGravity();
         ApplyMovement();
-        anim.SetFloat("xVelocity", Mathf.Abs(frameInput.Move.x));
-        anim.SetFloat("yVelocity", rb.velocity.y);
+        AnimationsHandler();
     }
 
     private void PidgeyPoop()
@@ -264,7 +263,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private void AnimationsHandler()
     {
-
+        anim.SetFloat("xVelocity", Mathf.Abs(frameInput.Move.x));
+        anim.SetFloat("yVelocity", rb.velocity.y);
     }
 
     public void Dead()

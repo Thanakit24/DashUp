@@ -2261,7 +2261,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 5.96875
+  orthographic size: 1.71875
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3452,31 +3452,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2108330453 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8550018600844301407, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
-  m_PrefabInstance: {fileID: 8550018602280158602}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &2108330456
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2108330453}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 987ac57bd821f3d43b7cf086a2fea95a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &8550018602280158602
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3484,42 +3459,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1530820388561008184, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8550018600844301404, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.018
-      objectReference: {fileID: 0}
-    - target: {fileID: 8550018600844301404, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.196
-      objectReference: {fileID: 0}
-    - target: {fileID: 8550018600844301405, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 1806277559, guid: d6305de12a419b3489237d7ddc780b8c, type: 3}
-    - target: {fileID: 8550018600844301405, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8550018600877124274, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
-      propertyPath: m_Size.x
-      value: 0.47301102
-      objectReference: {fileID: 0}
-    - target: {fileID: 8550018600877124274, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
-      propertyPath: m_Size.y
-      value: 0.7014241
-      objectReference: {fileID: 0}
-    - target: {fileID: 8550018600877124274, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.014343739
-      objectReference: {fileID: 0}
-    - target: {fileID: 8550018600877124274, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.16048455
-      objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124285, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: m_RootOrder
       value: 4

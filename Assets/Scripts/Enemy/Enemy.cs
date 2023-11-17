@@ -34,43 +34,44 @@ public class Enemy : MonoBehaviour
     [SerializeField] private bool isFacingRight;
     [SerializeField] Transform wallCheckPos;
     [SerializeField] float wallCheckDistance;
-    [SerializeField] private float fovAngle = 90f; // Adjust this angle to change the FOV
-    [SerializeField] private float fovDetectDistance = 5f; // Adjust this distance to change the FOV range
-    [SerializeField] private bool rememberPlayer;
-    [SerializeField] private float rememberTime;
-    [SerializeField] private float rememberMaxTime;
-    [SerializeField] private float pinPointDistance;
+
+    [Header("Detect & Chasing")]
+    [SerializeField] private Transform castPos;
+    [SerializeField] private float castDistance;
+    [SerializeField] private LayerMask wallLayer;
+    [SerializeField] private bool canDetect;
+    [SerializeField] private float detectRadius;    
     [SerializeField] private bool isChasing = false;
+    [SerializeField] private BoxCollider2D detectCol;
+   
     void Start()
     {
-        rememberTime = rememberMaxTime;
         currentTarget = player.transform;
         isFacingRight = true;
         currentSpeed = moveSpeed;
+        detectCol = GetComponentInChildren<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckForPlayerInFOV();
-            
+        canDetect = Vector3.Distance(transform.position, player.position) <= detectRadius;
+        
+        if (!canDetect)
+        {
+            isChasing = false;
+        }
+
         if (canPatrol && !isChasing)
         {
             Patrol();
         }
-        else if (isChasing)
-        {
-            currentTarget = player;
-            currentSpeed = chaseSpeed;
-            print("chase after player");
-        }
+        //else if (isChasing)
+        //{
+        //    ChaseBehavior();
+        //}
 
-        if (rememberPlayer)                                                                    
-        {
-            print("remember player");
-            ContinueChase();
-        }
 
         if (currentTarget.transform.position.x < transform.position.x && isFacingRight)
         {
@@ -92,19 +93,105 @@ public class Enemy : MonoBehaviour
             Vector3 direction = (currentTarget.position - transform.position).normalized;
             Vector2 moveVelocity = direction * currentSpeed;
             //rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
-            rb.velocity = new Vector2(moveVelocity.x, rb.velocity.y); //wtf is this
+            rb.velocity = new Vector2(moveVelocity.x, rb.velocity.y); 
         }
 
-        if (isHittingWall())
+        //if (isHittingWall())
+        //{
+        //    //print("Hit Wall");
+        //}
+    }
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Player"))
+    //    {
+    //        //shoot a raycast here to check for walls later if true then return immediately
+    //        //RaycastHit2D colliderHit = Physics2D.Raycast(transform.position, collision.gameObject.transform.position, 1000f, LayerMask.GetMask("Wall");
+    //        isChasing = true;
+    //        UpdatePath(player.transform);
+    //        currentSpeed = chaseSpeed;
+    //        //print("Chasing Player");
+    //        //
+    //    }
+    //}
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         {
-            //print("Hit Wall");
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                //Debug.Log(collision.gameObject.name);
+
+                Vector3 rayDirection = collision.gameObject.transform.position - transform.position;
+                Debug.DrawRay(castPos.position, rayDirection, Color.blue, 1f); // Draw the ray for debugging
+               
+                RaycastHit2D hit = Physics2D.Raycast(castPos.position, rayDirection, castDistance, wallLayer);
+
+                if (hit.collider == null)
+                {
+                    //print(hit.collider);
+                    isChasing = true;
+                    UpdatePath(player.transform);
+                    currentSpeed = chaseSpeed;
+                   // Debug.Log("Chasing Player");
+                }
+                else
+                {
+                    //print(hit.collider);
+                    //Debug.Log("Wall in the way, not chasing.");
+                }
+            }
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && !canDetect)
+        {
+            {
+                isChasing = false;
+                currentSpeed = moveSpeed;
+                print("Lost Player");
+            }
+        } 
+    }
+
+
+    // use box collider for detection instead 
+    // if player is outside of box detection and range randius, then forget the player. 
+
+    //RaycastHit2D playerHit = Physics2D.Raycast(castPos.position, transform.right, visionDistance, LayerMask.GetMask("Player"));
+    //RaycastHit2D obstacleHit = Physics2D.Raycast(castPos.position, transform.right, visionDistance, LayerMask.GetMask("Ground"));
+
+    //if (playerHit.collider != null)
+    //{
+    //    print(playerHit.collider);
+    //    if (obstacleHit.collider != null)
+    //        return;
+    //    else
+    //    {
+    //        isChasing = true;
+    //        UpdatePath(player.transform);
+    //        currentSpeed = chaseSpeed;
+    //    }
+    //}
+
+
+
+    private void UpdatePath(Transform targetLocation)
+    {
+        currentTarget = targetLocation;
+        print(targetLocation);
+        
     }
 
     private void Patrol()
     {
         currentSpeed = moveSpeed;
-        currentTarget = patrolPoints[patrolIndex];
+        UpdatePath(patrolPoints[patrolIndex]);
+        //currentTarget = patrolPoints[patrolIndex];
+
         if (patrolPoints.Length < 2)
         {
             Debug.LogWarning("Insufficient patrol points. Need at least 2.");
@@ -126,6 +213,8 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         waitAtPoint = false;
     }
+
+ 
 
     bool isHittingWall()
     {
@@ -157,93 +246,7 @@ public class Enemy : MonoBehaviour
 
         return foundWall;
     }
-
-    //void CheckForPlayerInFOV()
-    //{
-    //    Vector3 directionToPlayer = PlayerDirection();
-    //    float angleToPlayer = Vector3.Angle(transform.right, directionToPlayer);
-
-    //    if (angleToPlayer < fovAngle * 0.5f)
-    //    {
-    //        RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, fovDetectDistance, LayerMask.GetMask("Player"));
-
-    //        if (hit.collider != null)
-    //        {
-    //            // Check if there is an obstacle between the enemy and player
-    //            RaycastHit2D obstacleHit = Physics2D.Raycast(transform.position, directionToPlayer, hit.distance, LayerMask.GetMask("Ground"));
-
-    //            if (obstacleHit.collider != null)  //it will only stop chasing the player if it sees a wall and the player at the same time, this logic is wrong -> BUG
-    //            {
-    //                return;
-    //                //do nothing if there is wall
-    //            }
-
-    //            else
-    //            {
-    //                //if there is nno wall, chase player
-    //                Debug.Log("Player Detected!");
-    //                isChasing = true;
-    //                currentSpeed = chaseSpeed;
-    //                // Take appropriate action (e.g., chase the player)
-    //            }
-    //        }
-    //        else
-    //        {
-    //            Debug.Log("No Player Detected");
-    //            return;
-    //        }
-    //    }
-    //}
-    void CheckForPlayerInFOV() //Still a lot of bugss
-    {
-        Vector3 directionToPlayer = PlayerDirection();
-        float angleToPlayer = Vector3.Angle(transform.right, directionToPlayer);
-
-        if (angleToPlayer < fovAngle && Vector3.Distance(transform.position, player.transform.position) <= fovDetectDistance) //*0.5f
-        {
-            RaycastHit2D playerHit = Physics2D.Raycast(transform.position, directionToPlayer, fovDetectDistance, LayerMask.GetMask("Player"));
-            RaycastHit2D obstacleHit = Physics2D.Raycast(transform.position, directionToPlayer, playerHit.distance, LayerMask.GetMask("Ground"));
-
-            if (obstacleHit.collider != null)
-            {
-                if (isChasing)
-                {
-                    rememberPlayer = true;
-                }
-                return;
-            }
-
-            if (playerHit.collider != null && Vector3.Distance(transform.position, player.transform.position) <= pinPointDistance)
-            {
-                isChasing = true;
-            }
-            else
-            {
-                Debug.Log("Lost sight of player");
-                rememberPlayer = true; 
-            }
-        }
-    }
-
-    void ContinueChase()
-    {
-        //isChasing = true;
-        rememberTime -= Time.deltaTime;
-
-        if (rememberTime <= 0)
-        {
-            isChasing = false;
-            currentSpeed = moveSpeed;
-            rememberPlayer = false;
-            rememberTime = rememberMaxTime;
-            print("forget player position");
-        }
-    }
-
-    Vector3 PlayerDirection()
-    {
-        return (player.position - transform.position).normalized;
-    }
+ 
 
     void Flip()
     {
@@ -251,34 +254,32 @@ public class Enemy : MonoBehaviour
         transform.Rotate(0f, 180f, 0f);
     }
 
-    #region Gizmos
-    //void OnDrawGizmos()
-    //{
-    //    DrawFOVGizmos();
-    //}
+    private void OnDrawGizmos()
+    {
+        // Draw the chase radius
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectRadius);
 
-    //void DrawFOVGizmos()
-    //{
-    //    float halfFOV = fovAngle * 0.5f;
-    //    float coneLength = Mathf.Tan(Mathf.Deg2Rad * halfFOV) * fovDetectDistance;
+        //// Draw the playerHit and obstacleHit raycasts
+        //RaycastHit2D playerHit = Physics2D.Raycast(transform.position, transform.right, visionDistance, LayerMask.GetMask("Player"));
+        //RaycastHit2D obstacleHit = Physics2D.Raycast(transform.position, transform.right, visionDistance, LayerMask.GetMask("Ground"));
 
-    //    Gizmos.color = Color.red;
+        //// Draw playerHit ray
+        ////Gizmos.color = Color.green;
+        ////if (playerHit.collider != null)
+        ////{
+        ////    Gizmos.DrawLine(castPos.position, playerHit.point);
+        ////    //Gizmos.DrawWireSphere(playerHit.point, 0.1f);
+        ////}
 
-    //    Vector3 coneStart = transform.position;
-    //    Vector3 coneEnd = transform.position + (Quaternion.Euler(0, 0, halfFOV) * transform.right * fovDetectDistance);
-    //    Gizmos.DrawLine(coneStart, coneEnd);
+        ////// Draw obstacleHit ray
+        ////Gizmos.color = Color.blue;
+        ////if (obstacleHit.collider != null)
+        ////{
+        ////    Gizmos.DrawLine(castPos.position, obstacleHit.point);
+        ////    //Gizmos.DrawWireSphere(obstacleHit.point, 0.1f);
+        ////}
+    }
 
-    //    coneEnd = transform.position + (Quaternion.Euler(0, 0, -halfFOV) * transform.right * fovDetectDistance);
-    //    Gizmos.DrawLine(coneStart, coneEnd);
 
-    //    Gizmos.DrawLine(coneStart, coneStart + transform.right * coneLength);
-    //    Gizmos.DrawLine(coneStart, coneStart - transform.right * coneLength);
-    //}
-
-    //private void OnDrawGizmos()
-    //{
-    //    //KongrooUtils.DrawGizmoCircle(transform.position, chaseRadius, Color.yellow);
-    //    //KongrooUtils.DrawGizmoCircle(transform.position, attackRange, Color.red);
-    //}
-    #endregion
 }
