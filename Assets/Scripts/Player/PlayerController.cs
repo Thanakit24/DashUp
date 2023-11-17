@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Cinemachine; 
 
 public class PlayerController : MonoBehaviour, IPlayerController
 {
@@ -54,6 +55,12 @@ public class PlayerController : MonoBehaviour, IPlayerController
     public Transform poopDropPos;
     public GameObject poopPrefab;
 
+    //---------------------------------------------------------------------
+
+    [Header("Camera")]
+    [SerializeField] private CinemachineVirtualCamera cinemcam;
+    [SerializeField] private float right_xScreen;
+    [SerializeField] private float left_xScreen;
 
     private Vector2 frameVelocity;
     private FrameInput frameInput;
@@ -88,11 +95,22 @@ public class PlayerController : MonoBehaviour, IPlayerController
        
 
         if (frameInput.Move.x > 0 && !isFacingRight)
+        {
             FlipSprite();
-
+            //CinemachineFramingTransposer transposer = cinemcam.AddCinemachineComponent<CinemachineFramingTransposer>();
+            //Mathf.Lerp(transposer.m_ScreenX, right_xScreen, 2f);
+            //transposer.m_ScreenX = right_xScreen;
+            // L approach .__.
+        }
+            
 
         if (frameInput.Move.x < 0 && isFacingRight)
+        {
             FlipSprite();
+            //CinemachineFramingTransposer transposer = cinemcam.AddCinemachineComponent<CinemachineFramingTransposer>();
+            //Mathf.Lerp(transposer.m_ScreenX, left_xScreen, 2f);
+        }
+           
     }
     private void GatherInput()
     {

@@ -158,31 +158,10 @@ public class Enemy : MonoBehaviour
     }
 
 
-    // use box collider for detection instead 
-    // if player is outside of box detection and range randius, then forget the player. 
-
-    //RaycastHit2D playerHit = Physics2D.Raycast(castPos.position, transform.right, visionDistance, LayerMask.GetMask("Player"));
-    //RaycastHit2D obstacleHit = Physics2D.Raycast(castPos.position, transform.right, visionDistance, LayerMask.GetMask("Ground"));
-
-    //if (playerHit.collider != null)
-    //{
-    //    print(playerHit.collider);
-    //    if (obstacleHit.collider != null)
-    //        return;
-    //    else
-    //    {
-    //        isChasing = true;
-    //        UpdatePath(player.transform);
-    //        currentSpeed = chaseSpeed;
-    //    }
-    //}
-
-
-
     private void UpdatePath(Transform targetLocation)
     {
         currentTarget = targetLocation;
-        print(targetLocation);
+        //print(targetLocation);
         
     }
 
@@ -260,25 +239,6 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectRadius);
 
-        //// Draw the playerHit and obstacleHit raycasts
-        //RaycastHit2D playerHit = Physics2D.Raycast(transform.position, transform.right, visionDistance, LayerMask.GetMask("Player"));
-        //RaycastHit2D obstacleHit = Physics2D.Raycast(transform.position, transform.right, visionDistance, LayerMask.GetMask("Ground"));
-
-        //// Draw playerHit ray
-        ////Gizmos.color = Color.green;
-        ////if (playerHit.collider != null)
-        ////{
-        ////    Gizmos.DrawLine(castPos.position, playerHit.point);
-        ////    //Gizmos.DrawWireSphere(playerHit.point, 0.1f);
-        ////}
-
-        ////// Draw obstacleHit ray
-        ////Gizmos.color = Color.blue;
-        ////if (obstacleHit.collider != null)
-        ////{
-        ////    Gizmos.DrawLine(castPos.position, obstacleHit.point);
-        ////    //Gizmos.DrawWireSphere(obstacleHit.point, 0.1f);
-        ////}
     }
 
 
