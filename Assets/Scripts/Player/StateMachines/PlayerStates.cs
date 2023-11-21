@@ -44,14 +44,12 @@ public class GroundMoveState : PlayerStates
             _pc.frameVelocity.x = Mathf.MoveTowards(_pc.frameVelocity.x, _pc.frameInput.Move.x * _pc.maxSpeed, _pc.acceleration * Time.fixedDeltaTime);
         }
 
-        if (_pc.grounded && _pc.frameVelocity.y <= 0f)
-            _pc.frameVelocity.y = _pc.groundingForce;
+        //if (_pc.grounded && _pc.frameVelocity.y <= 0f)
+        //    _pc.frameVelocity.y = _pc.groundingForce;
 
         _pc.anim.SetFloat("xVelocity", Mathf.Abs(_pc.frameInput.Move.x));
-        ApplyMovement();
+        
     }
-
-    private void ApplyMovement() => _pc.rb.velocity = _pc.frameVelocity;
 }
 
 public class JumpState : AirborneMoveState
@@ -69,7 +67,7 @@ public class JumpState : AirborneMoveState
         _pc.endedJumpEarly = false;
         _pc.timeJumpWasPressed = 0;
         _pc.bufferedJumpUsable = false;
-        _pc.coyoteUsable = false;
+        //_pc.coyoteUsable = false;
         _pc.frameInput.isGliding = false;
         _pc.frameVelocity.y = _pc.jumpPower;
         _pc.jumpToConsume = false;
@@ -91,23 +89,41 @@ public class AirborneMoveState : PlayerStates
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
-        _pc.frameVelocity.x = Mathf.MoveTowards(_pc.frameVelocity.x, _pc.frameInput.Move.x * _pc.maxSpeed, _pc.acceleration * Time.fixedDeltaTime);
+        //HorizontalDir
+        if (_pc.frameInput.isGliding)
+        {
+            _pc.ChangeState(new GlideState(_pc));
+        }
+        else if (_pc.frameInput.Move.x == 0)
+        {
+            _pc.frameVelocity.x = Mathf.MoveTowards(_pc.frameVelocity.x, 0, _pc.airDeceleration * Time.fixedDeltaTime);
+        }
+        else
+        {
+            _pc.frameVelocity.x = Mathf.MoveTowards(_pc.frameVelocity.x, _pc.frameInput.Move.x * _pc.maxSpeed, _pc.acceleration * Time.fixedDeltaTime);
+        }
 
 
         ////Gravity ----------------------------------
-        //if (_pc.frameInput.isGliding)
-        //    _pc.ChangeState(new GlideState(_pc));
-        //else
-
-        var inAirGravity = _pc.fallAcceleration;
-        if (_pc.endedJumpEarly && _pc.frameVelocity.y > 0) inAirGravity *= _pc.JumpEndEarlyGravityModifier;
-        _pc.frameVelocity.y = Mathf.MoveTowards(_pc.frameVelocity.y, -_pc.maxFallSpeed, inAirGravity * Time.fixedDeltaTime);
-
-        ApplyMovement();
+        if (_pc.grounded && _pc.frameVelocity.y <= 0f)
+        {
+            _pc.frameVelocity.y = _pc.groundingForce;
+        }
+        else if (_pc.frameInput.isGliding)
+        {
+            _pc.ChangeState(new GlideState(_pc));
+        }
+        else
+        {
+            var inAirGravity = _pc.fallAcceleration;
+            if (_pc.endedJumpEarly && _pc.frameVelocity.y > 0) inAirGravity *= _pc.JumpEndEarlyGravityModifier;
+            _pc.frameVelocity.y = Mathf.MoveTowards(_pc.frameVelocity.y, -_pc.maxFallSpeed, inAirGravity * Time.fixedDeltaTime);
+        }
+   
         _pc.anim.SetFloat("yVelocity", _pc.rb.velocity.y);
     }
 
-    private void ApplyMovement() => _pc.rb.velocity = _pc.frameVelocity;
+    //private void ApplyMovement() => _pc.rb.velocity = _pc.frameVelocity;
 }
 
 
@@ -126,13 +142,14 @@ public class GlideState : AirborneMoveState
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
+        //_pc.frameVelocity.x = Mathf.MoveTowards(_pc.frameVelocity.x, _pc.frameInput.Move.x * _pc.maxGlideSpeed, _pc.glideAcceleration * Time.fixedDeltaTime);
         _pc.frameVelocity.x = Mathf.MoveTowards(_pc.frameVelocity.x, _pc.frameInput.Move.x * _pc.maxGlideSpeed, _pc.glideAcceleration * Time.fixedDeltaTime);
         _pc.frameVelocity.y /= _pc.glideGravityResistance;
         _pc.frameVelocity.y = Mathf.MoveTowards(_pc.frameVelocity.y, -_pc.glideFallSpeed, _pc.glideFallAcceleration * Time.fixedDeltaTime);
 
-        ApplyMovement();
+        //ApplyMovement();
     }
 
-    private void ApplyMovement() => _pc.rb.velocity = _pc.frameVelocity;
+    //private void ApplyMovement() => _pc.rb.velocity = _pc.frameVelocity;
 }
 

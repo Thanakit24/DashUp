@@ -32,9 +32,9 @@ public class PlayerController : StateMachine, IPlayerController
     public float jumpPower;
     [SerializeField] private int maxAmountOfJumps;
     [SerializeField] private float jumpBuffer;
-    [SerializeField] private float coyoteTime;
+    //[SerializeField] private float coyoteTime;
     [HideInInspector] public bool bufferedJumpUsable;
-    [HideInInspector] public bool coyoteUsable;
+    //[HideInInspector] public bool coyoteUsable;
     [HideInInspector] public bool jumpToConsume;
     [HideInInspector] public float timeJumpWasPressed;
     public bool endedJumpEarly;
@@ -108,8 +108,7 @@ public class PlayerController : StateMachine, IPlayerController
         {
             JumpDown = Input.GetButtonDown("Jump") && amountOfJumps > 0,
             JumpHeld = Input.GetButton("Jump"),
-            isGliding = Input.GetKey(KeyCode.W) && !grounded && rb.velocity.y <= 0f 
-            && time > frameLeftGrounded + coyoteTime && time > timeJumpWasPressed + jumpBuffer,  //currently in air and is falling to ground
+            isGliding = Input.GetKey(KeyCode.W) && !grounded && rb.velocity.y <= 0f && time > timeJumpWasPressed + jumpBuffer,
             Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
         };
 
@@ -137,13 +136,12 @@ public class PlayerController : StateMachine, IPlayerController
         HandleJump();
         //HandleDirection();
         //HandleGravity();
-        //ApplyMovement();
+        ApplyMovement();
         //AnimationsHandler();
     }
 
     private void PidgeyPoop()
     {
-        print("function called"); //refine later
 
         GameObject poop = Instantiate(poopPrefab, poopDropPos.position, Quaternion.identity);
     }
@@ -188,7 +186,7 @@ public class PlayerController : StateMachine, IPlayerController
     //    }
 
     //}
-    //private void ApplyMovement() => rb.velocity = frameVelocity;
+    private void ApplyMovement() => rb.velocity = frameVelocity;
     #endregion //Moved to PlayerStates 
 
     #region Collisions
@@ -211,7 +209,7 @@ public class PlayerController : StateMachine, IPlayerController
         if (!grounded && groundHit)
         {
             grounded = true;
-            coyoteUsable = true;
+            //coyoteUsable = true;
             bufferedJumpUsable = true;
             endedJumpEarly = false;
             amountOfJumps = maxAmountOfJumps;
@@ -235,7 +233,7 @@ public class PlayerController : StateMachine, IPlayerController
     #region Jumping
 
     [HideInInspector] public bool HasBufferedJump => bufferedJumpUsable && time < timeJumpWasPressed + jumpBuffer; //buffering jump before performing next jump
-    [HideInInspector] public bool CanUseCoyote => coyoteUsable && !grounded && time < frameLeftGrounded + coyoteTime;
+    //[HideInInspector] public bool CanUseCoyote => coyoteUsable && !grounded && time < frameLeftGrounded + coyoteTime;
 
     private void HandleJump() //Jumping conditions 
     {
