@@ -47,7 +47,7 @@ public class GroundMoveState : PlayerStates
         if (_pc.grounded && _pc.frameVelocity.y <= 0f)
             _pc.frameVelocity.y = _pc.groundingForce;
 
-
+        _pc.anim.SetFloat("xVelocity", Mathf.Abs(_pc.frameInput.Move.x));
         ApplyMovement();
     }
 
@@ -105,9 +105,8 @@ public class AirborneMoveState : PlayerStates
             if (_pc.endedJumpEarly && _pc.frameVelocity.y > 0) inAirGravity *= _pc.JumpEndEarlyGravityModifier;
             _pc.frameVelocity.y = Mathf.MoveTowards(_pc.frameVelocity.y, -_pc.maxFallSpeed, inAirGravity * Time.fixedDeltaTime);
         }
-
-
         ApplyMovement();
+        _pc.anim.SetFloat("yVelocity", _pc.rb.velocity.y);
     }
 
     private void ApplyMovement() => _pc.rb.velocity = _pc.frameVelocity;

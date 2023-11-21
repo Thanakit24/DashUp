@@ -62,7 +62,7 @@ public class PlayerController : StateMachine, IPlayerController
     public bool isFacingRight = true;
     private float time;
 
-    private Animator anim;
+    [HideInInspector] public Animator anim;
 
     //Interface
     public Vector2 FrameInput => frameInput.Move;
@@ -115,7 +115,7 @@ public class PlayerController : StateMachine, IPlayerController
         {
             JumpDown = Input.GetButtonDown("Jump") && amountOfJumps > 0,
             JumpHeld = Input.GetButton("Jump"),
-            isGliding = Input.GetKey(KeyCode.W) && currentState is AirborneMoveState
+            isGliding = Input.GetKey(KeyCode.W) && currentState is AirborneMoveState && rb.velocity.y <= 0
             && time > frameLeftGrounded + coyoteTime && time > timeJumpWasPressed + jumpBuffer,  //currently in air and is falling to ground
             Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
         };
