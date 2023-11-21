@@ -32,9 +32,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
     [SerializeField] private int maxAmountOfJumps;
     [SerializeField] private float jumpPower;
     [SerializeField] private float jumpBuffer;
-    [SerializeField] private float coyoteTime;
+    //[SerializeField] private float coyoteTime;
     private bool bufferedJumpUsable;
-    private bool coyoteUsable;
+    //private bool coyoteUsable;
     private bool jumpToConsume;
     private float timeJumpWasPressed;
     private bool endedJumpEarly;
@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
             JumpDown = Input.GetButtonDown("Jump") && amountOfJumps > 0,
             JumpHeld = Input.GetButton("Jump"),
             isGliding = Input.GetKey(KeyCode.W) && rb.velocity.y <= 0f && !grounded
-            && time > frameLeftGrounded + coyoteTime && time > timeJumpWasPressed + jumpBuffer,  //currently in air and is falling to ground
+            && time > timeJumpWasPressed + jumpBuffer,  //currently in air and is falling to ground
             Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
         };
 
@@ -216,7 +216,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         if (!grounded && groundHit)
         {
             grounded = true;
-            coyoteUsable = true;
+            //coyoteUsable = true;
             bufferedJumpUsable = true;
             endedJumpEarly = false;
             amountOfJumps = maxAmountOfJumps;
@@ -240,7 +240,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     #region Jumping
 
     [SerializeField] private bool HasBufferedJump => bufferedJumpUsable && time < timeJumpWasPressed + jumpBuffer; //buffering jump before performing next jump
-    [SerializeField] private bool CanUseCoyote => coyoteUsable && !grounded && time < frameLeftGrounded + coyoteTime;
+    //[SerializeField] private bool CanUseCoyote => coyoteUsable && !grounded && time < frameLeftGrounded + coyoteTime;
 
     private void HandleJump() //Jumping conditions 
     {
@@ -252,7 +252,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
         //if (!grounded && amountOfJumps > 0)
 
-        if (jumpToConsume && amountOfJumps > 0 || CanUseCoyote)
+        if (jumpToConsume && amountOfJumps > 0 ) //CanUseCoyote was here
             ExecuteJump();
 
         jumpToConsume = false;
@@ -264,7 +264,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         endedJumpEarly = false;
         timeJumpWasPressed = 0;
         bufferedJumpUsable = false;
-        coyoteUsable = false;
+        //coyoteUsable = false;
         frameInput.isGliding = false;
         frameVelocity.y = jumpPower;
         Jumped?.Invoke();
