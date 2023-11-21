@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         {
             JumpDown = Input.GetButtonDown("Jump") && amountOfJumps > 0,
             JumpHeld = Input.GetButton("Jump"),
-            isGliding = Input.GetKey(KeyCode.W) && rb.velocity.y <= 0 && !grounded
+            isGliding = Input.GetKey(KeyCode.W) && rb.velocity.y <= 0f && !grounded
             && time > frameLeftGrounded + coyoteTime && time > timeJumpWasPressed + jumpBuffer,  //currently in air and is falling to ground
             Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
         };
@@ -289,7 +289,6 @@ public class PlayerController : MonoBehaviour, IPlayerController
     {
         print("kill player");
     }
-
 }
 public struct FrameInput
 {
