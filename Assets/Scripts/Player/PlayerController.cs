@@ -95,13 +95,6 @@ public class PlayerController : StateMachine, IPlayerController
         time += Time.deltaTime;
         GatherInput();
 
-        if (frameInput.JumpDown && amountOfJumps > 0) //For Handling Jump conditions and changing States
-        {
-            jumpToConsume = true;
-            timeJumpWasPressed = time;
-            ChangeState(new JumpState(this));
-        }
-
         if (frameInput.Move.x > 0 && !isFacingRight)
             FlipSprite();
       
@@ -115,10 +108,22 @@ public class PlayerController : StateMachine, IPlayerController
         {
             JumpDown = Input.GetButtonDown("Jump") && amountOfJumps > 0,
             JumpHeld = Input.GetButton("Jump"),
-            isGliding = Input.GetKey(KeyCode.W) && currentState is AirborneMoveState && rb.velocity.y <= 0
+            isGliding = Input.GetKey(KeyCode.W) && !grounded && rb.velocity.y <= 0f 
             && time > frameLeftGrounded + coyoteTime && time > timeJumpWasPressed + jumpBuffer,  //currently in air and is falling to ground
             Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
         };
+
+        if (frameInput.JumpDown) //For Handling Jump conditions and changing States
+        {
+            jumpToConsume = true;
+            timeJumpWasPressed = time;
+            //ChangeState(new JumpState(this));
+        }
+
+        if (frameInput.isGliding && currentState is not JumpState)
+        {
+            ChangeState(new GlideState(this));
+        }
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -132,8 +137,8 @@ public class PlayerController : StateMachine, IPlayerController
         HandleJump();
         //HandleDirection();
         //HandleGravity();
-       // ApplyMovement();
-        AnimationsHandler();
+        //ApplyMovement();
+        //AnimationsHandler();
     }
 
     private void PidgeyPoop()
@@ -240,12 +245,11 @@ public class PlayerController : StateMachine, IPlayerController
         if (!jumpToConsume && !HasBufferedJump)
             return;
 
-        
-        if (jumpToConsume && amountOfJumps > 0 || CanUseCoyote)
-            amountOfJumps--; //placed this here because in JumpState it was decrementing more than once
+        if (jumpToConsume && amountOfJumps > 0)
+        {
             ChangeState(new JumpState(this));
+        }
 
-        jumpToConsume = false;
     }
 
     //private void ExecuteJump() //Where jump happens //Moved to player States
@@ -269,11 +273,11 @@ public class PlayerController : StateMachine, IPlayerController
         isFacingRight = !isFacingRight;
     }
 
-    private void AnimationsHandler()
-    {
-        anim.SetFloat("xVelocity", Mathf.Abs(frameInput.Move.x));
-        anim.SetFloat("yVelocity", rb.velocity.y);
-    }
+    //private void AnimationsHandler()
+    //{
+    //    anim.SetFloat("xVelocity", Mathf.Abs(frameInput.Move.x));
+    //    anim.SetFloat("yVelocity", rb.velocity.y);
+    //}
 
     public void Dead()
     {
