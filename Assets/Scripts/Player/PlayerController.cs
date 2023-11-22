@@ -91,7 +91,7 @@ public class PlayerController : StateMachine, IPlayerController
     protected override void Update()
     {
         base.Update();
-        print(currentState);
+        //print(currentState);
         time += Time.deltaTime;
         GatherInput();
 

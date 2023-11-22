@@ -195,7 +195,7 @@ public class Enemy : MonoBehaviour
 
  
 
-    bool isHittingWall()
+    bool IsHittingWall()
     {
         bool foundWall = false;
         float castDistance = wallCheckDistance;
