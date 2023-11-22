@@ -52,7 +52,6 @@ public class GroundMoveState : PlayerStates
         
     }
 }
-
 public class JumpState : AirborneMoveState
 {
     public JumpState(PlayerController pc) : base(pc)
@@ -60,7 +59,7 @@ public class JumpState : AirborneMoveState
 
     public override void OnEnter()
     {
-        //gets stuck in jump state for the second jump
+        //gets stuck in jump state for the second jump, setting duration fixes this
         Debug.Log("Called JumpState");
         base.OnEnter();
         _pc.bufferedState = new AirborneMoveState(_pc);
@@ -71,9 +70,9 @@ public class JumpState : AirborneMoveState
         _pc.frameInput.isGliding = false;
         _pc.frameVelocity.y = _pc.jumpPower;
         _pc.jumpToConsume = false;
-        //_pc.ChangeState(new AirborneMoveState(_pc));
     }
 }
+
 public class AirborneMoveState : PlayerStates
 {
     public AirborneMoveState(PlayerController pc) : base(pc) { }
@@ -89,7 +88,6 @@ public class AirborneMoveState : PlayerStates
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
-        //_pc.anim.SetFloat("yVelocity", _pc.rb.velocity.y);
         HandleAirDirection();
         HandleGravity();
         _pc.anim.SetFloat("yVelocity", _pc.rb.velocity.y);
@@ -144,11 +142,8 @@ public class GlideState : AirborneMoveState
     {
         base.OnFixedUpdate();
         _pc.frameVelocity.x = Mathf.MoveTowards(_pc.frameVelocity.x, _pc.frameInput.Move.x * _pc.maxGlideSpeed, _pc.glideAcceleration * Time.fixedDeltaTime);
-        //Debug.Log(_pc.frameVelocity.x);
-        //Debug.Log((_pc.frameInput.Move.x * _pc.maxGlideSpeed, _pc.glideAcceleration * Time.fixedDeltaTime));
         _pc.frameVelocity.y /= _pc.glideGravityResistance;
         _pc.frameVelocity.y = Mathf.MoveTowards(_pc.frameVelocity.y, -_pc.glideFallSpeed, _pc.glideFallAcceleration * Time.fixedDeltaTime);
     }
-
 }
 

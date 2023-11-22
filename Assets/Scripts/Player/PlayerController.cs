@@ -145,7 +145,7 @@ public class PlayerController : StateMachine, IPlayerController
 
         GameObject poop = Instantiate(poopPrefab, poopDropPos.position, Quaternion.identity);
     }
-    #region Horizontal Movement
+    #region Horizontal Movement (Moved To Player States)
     //private void HandleDirection()
     //{
     //    if (frameInput.isGliding)
@@ -194,7 +194,7 @@ public class PlayerController : StateMachine, IPlayerController
     private float frameLeftGrounded = float.MinValue;
     public bool grounded;
 
-    private void CheckCollisions() //confusing on the GroundChanged?
+    private void CheckCollisions() 
     {
         Physics2D.queriesStartInColliders = false;
 
@@ -230,7 +230,7 @@ public class PlayerController : StateMachine, IPlayerController
     }
     #endregion
 
-    #region Jumping
+    #region Jumping (ExecuteJump Moved to PlayerStates)
 
     [HideInInspector] public bool HasBufferedJump => bufferedJumpUsable && time < timeJumpWasPressed + jumpBuffer; //buffering jump before performing next jump
     //[HideInInspector] public bool CanUseCoyote => coyoteUsable && !grounded && time < frameLeftGrounded + coyoteTime;
@@ -270,12 +270,6 @@ public class PlayerController : StateMachine, IPlayerController
         gameObject.transform.localScale = currentScale;
         isFacingRight = !isFacingRight;
     }
-
-    //private void AnimationsHandler()
-    //{
-    //    anim.SetFloat("xVelocity", Mathf.Abs(frameInput.Move.x));
-    //    anim.SetFloat("yVelocity", rb.velocity.y);
-    //}
 
     public void Dead()
     {
