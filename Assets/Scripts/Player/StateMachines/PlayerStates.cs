@@ -130,11 +130,16 @@ public class GlideState : AirborneMoveState
 {
     public GlideState(PlayerController pc) : base(pc) { }
 
+    public override void OnEnter()
+    {
+        base.OnEnter();
+    }
     public override void OnUpdate()
     {
         base.OnUpdate();
         if (!_pc.frameInput.isGliding)
         {
+            //_pc.rb.gravityScale = 1;
             _pc.ChangeState(new AirborneMoveState(_pc));
         }
     }

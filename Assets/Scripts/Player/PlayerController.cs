@@ -32,13 +32,11 @@ public class PlayerController : StateMachine, IPlayerController
     public int amountOfJumps;
     public int maxAmountOfJumps;
     [SerializeField] private float jumpBuffer;
-    //[SerializeField] private float coyoteTime;
     [HideInInspector] public bool bufferedJumpUsable;
-    //[HideInInspector] public bool coyoteUsable;
     [HideInInspector] public bool jumpToConsume;
     [HideInInspector] public float timeJumpWasPressed;
-    public bool endedJumpEarly;
-
+    [HideInInspector] public bool endedJumpEarly;
+    
     //---------------------------------------------------------------------
 
     [Header("GLIDING")]
@@ -63,7 +61,6 @@ public class PlayerController : StateMachine, IPlayerController
     private float time;
 
     [HideInInspector] public Animator anim;
-
     //Interface
     public Vector2 FrameInput => frameInput.Move;
     public event Action<bool, float> GroundedChanged;
@@ -108,7 +105,8 @@ public class PlayerController : StateMachine, IPlayerController
         {
             JumpDown = Input.GetButtonDown("Jump") && amountOfJumps > 0,
             JumpHeld = Input.GetButton("Jump"),
-            isGliding = Input.GetKey(KeyCode.W) && !grounded && rb.velocity.y <= 0f && time > timeJumpWasPressed + jumpBuffer,
+            isGliding = Input.GetKey(KeyCode.W) && !frameInput.isFlying && !grounded && rb.velocity.y <= 0f && time > timeJumpWasPressed + jumpBuffer,
+            isFlying = Input.GetKey(KeyCode.W),
             Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
         };
 
@@ -121,6 +119,7 @@ public class PlayerController : StateMachine, IPlayerController
 
         if (frameInput.isGliding && currentState is not JumpState)
         {
+            rb.gravityScale = 0;
             ChangeState(new GlideState(this));
         }
 
@@ -282,6 +281,7 @@ public struct FrameInput
     public bool JumpDown;
     public bool JumpHeld;
     public bool isGliding;
+    public bool isFlying;
     public bool isPoop;
     public Vector2 Move;
 }

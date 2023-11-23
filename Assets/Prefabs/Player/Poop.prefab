@@ -147,9 +147,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e55fbcf7e9f10a49ace3d09632d3703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poopSpeed: 6
+  velocity: {x: 0, y: 0}
+  dropSpeed: 12
+  dropAcceleration: 30
   poopDamage: 0
-  lifeTime: 10
+  lifeTime: 5
 --- !u!1 &2296188348397041469
 GameObject:
   m_ObjectHideFlags: 0
