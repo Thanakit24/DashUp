@@ -60,7 +60,7 @@ public class JumpState : AirborneMoveState
     public override void OnEnter()
     {
         //gets stuck in jump state for the second jump, setting duration fixes this
-        Debug.Log("Called JumpState");
+        //Debug.Log("Called JumpState");
         base.OnEnter();
         _pc.bufferedState = new AirborneMoveState(_pc);
         _pc.amountOfJumps--;

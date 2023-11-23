@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    [SerializeField] private Transform currentTarget;
-
     [Header("Location Points")]
-    [SerializeField] private float moveSpeed;
     public bool canMove = false;
+    [SerializeField] private float moveSpeed;
     public Transform[] pathPoints;
     private int pathIndex = 1;
     [SerializeField] private float nextWaypointDistance = 2f;
     [SerializeField] private bool waitAtPoint = false;
     [SerializeField] private float waitTime;
- 
+
     void Update()
     {
         if (canMove)
@@ -22,26 +20,23 @@ public class MovingPlatform : MonoBehaviour
             MoveToPoint();
         }
     }
-
     private void FixedUpdate()
     {
         if (canMove && !waitAtPoint)
         {
             //Move the platform
-            transform.position = Vector2.MoveTowards(transform.position, currentTarget.transform.position, Time.deltaTime * moveSpeed);
+            transform.position = Vector2.MoveTowards(transform.position, pathPoints[pathIndex].transform.position, Time.deltaTime * moveSpeed);
         }
     }
     private void MoveToPoint()
     {
-        UpdatePath(pathPoints[pathIndex]);
-
         if (pathPoints.Length < 2)
         {
             Debug.LogWarning("Insufficient patrol points. Need at least 2.");
             return;
         }
 
-        if (Vector3.Distance(transform.position, pathPoints[pathIndex].position) < nextWaypointDistance)
+        if (Vector2.Distance(transform.position, pathPoints[pathIndex].position) < nextWaypointDistance)
         {
             waitAtPoint = true;
             pathIndex++;
@@ -49,29 +44,21 @@ public class MovingPlatform : MonoBehaviour
             StartCoroutine(WaitAtPoint(waitTime));
         }
     }
-
-    private void UpdatePath(Transform targetLocation)
-    {
-        currentTarget = targetLocation;
-        //print(targetLocation);
-    }
-
     IEnumerator WaitAtPoint(float waitTime)
     {
-        //rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(waitTime);
         waitAtPoint = false;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            print("player landed on moving platform");
             collision.transform.SetParent(transform);
         }
     }
-
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {

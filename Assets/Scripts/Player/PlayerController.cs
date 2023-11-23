@@ -28,9 +28,9 @@ public class PlayerController : StateMachine, IPlayerController
     //---------------------------------------------------------------------
 
     [Header("JUMPING")]
-    public int amountOfJumps;
     public float jumpPower;
-    [SerializeField] private int maxAmountOfJumps;
+    public int amountOfJumps;
+    public int maxAmountOfJumps;
     [SerializeField] private float jumpBuffer;
     //[SerializeField] private float coyoteTime;
     [HideInInspector] public bool bufferedJumpUsable;
