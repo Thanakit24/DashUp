@@ -70,7 +70,8 @@ public class PlayerController : StateMachine, IPlayerController
     //---------------------------------------------------------------------
 
     [Header("PIDGEYPOOP")]
-    [SerializeField] private float amountOfPoop;
+    public int amountOfPoop;
+    public float poopPower;
     public Transform poopDropPos;
     public GameObject poopPrefab;
 
@@ -133,9 +134,9 @@ public class PlayerController : StateMachine, IPlayerController
         {
             JumpDown = (Input.GetButtonDown("Jump") || Input.GetKey(KeyCode.C)) && amountOfJumps > 0,
             JumpHeld = (Input.GetButton("Jump") || Input.GetKey(KeyCode.C)),
-            isGliding = (Input.GetButton("Jump") || Input.GetKey(KeyCode.W)) && !grounded && rb.velocity.y <= 0f && currentEnergy > 0,
-            isFlying = Input.GetKey(KeyCode.LeftShift) && currentEnergy > 0,
-            isPoop = Input.GetKeyDown(KeyCode.Return),
+            isGliding = (Input.GetButton("Jump") || Input.GetKey(KeyCode.W)) && !grounded && rb.velocity.y <= -0f && currentEnergy > 0 && !frameInput.isPoop,
+            isFlying = Input.GetKey(KeyCode.LeftShift) && currentEnergy > 0 && !frameInput.isPoop,
+            isPoop = Input.GetKeyDown(KeyCode.J) && amountOfPoop > 0,
             Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
         };
 
@@ -145,14 +146,20 @@ public class PlayerController : StateMachine, IPlayerController
             timeJumpWasPressed = time;
         }
 
-        if (frameInput.isFlying || (frameInput.isGliding && currentState is not JumpState))
-        {
-            ChangeState(new FlightState(this));
-        }
+        //if (frameInput.isFlying || (frameInput.isGliding && currentState is not JumpState))
+        //{
+        //    ChangeState(new FlightState(this));
+        //}
 
         if (frameInput.isPoop)
         {
-            PidgeyPoop();
+            //PidgeyPoop();
+            ChangeState(new PoopState(this));
+            GameObject poop = Instantiate(poopPrefab, poopDropPos.position, Quaternion.identity);
+        }
+        else if (frameInput.isFlying || (frameInput.isGliding && currentState is not JumpState))
+        {
+            ChangeState(new FlightState(this));
         }
     }
     protected override void FixedUpdate()
@@ -166,11 +173,7 @@ public class PlayerController : StateMachine, IPlayerController
         //AnimationsHandler();
     }
 
-    private void PidgeyPoop()
-    {
-
-        GameObject poop = Instantiate(poopPrefab, poopDropPos.position, Quaternion.identity);
-    }
+ 
     #region Horizontal Movement (Moved To Player States)
     //private void HandleDirection()
     //{
@@ -270,7 +273,7 @@ public class PlayerController : StateMachine, IPlayerController
         if (!jumpToConsume && !HasBufferedJump)
             return;
 
-        if (grounded && amountOfJumps > 0 || CanUseCoyote)
+        if ( amountOfJumps > 0 || CanUseCoyote)
         {
             ChangeState(new JumpState(this));
         }

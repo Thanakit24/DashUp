@@ -74,6 +74,26 @@ public class JumpState : AirborneMoveState
     }
 }
 
+public class PoopState : AirborneMoveState  //use jump to launch the poop instead but set conditions of when a poop can be performed. 
+{
+    public PoopState(PlayerController pc) : base(pc)
+    {
+        duration = 0.1f;
+    }
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
+        _pc.bufferedState = new AirborneMoveState(_pc);
+        _pc.amountOfPoop--;
+        //_pc.frameVelocity.y = 0f;
+        _pc.frameVelocity.y = _pc.poopPower; 
+       
+    }
+}
+
+
+
 public class AirborneMoveState : PlayerStates
 {
     public AirborneMoveState(PlayerController pc) : base(pc) { }
@@ -148,8 +168,12 @@ public class FlightState : AirborneMoveState
     {
         base.OnFixedUpdate();
 
-        Debug.Log(_pc.currentEnergy);
+        //Debug.Log(_pc.currentEnergy);
+        if (_pc.currentState is PoopState)
+            return;
+
         _pc.currentEnergy -= _pc.depleteEnergy * Time.deltaTime;
+        
         if (_pc.frameInput.isFlying)
         {
             _pc.frameInput.isGliding = false;
