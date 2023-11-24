@@ -176,8 +176,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.014343739, y: -0.16048455}
-  m_Size: {x: 0.47301102, y: 0.7014241}
+  m_Offset: {x: 0.012214661, y: -0.16899574}
+  m_Size: {x: 0.5028, y: 0.6673795}
   m_Direction: 0
 --- !u!61 &1530820388561008184
 BoxCollider2D:
@@ -192,7 +192,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.013828963, y: -0.1422084}
+  m_Offset: {x: 0.013828963, y: -0.10843788}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -203,7 +203,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.4715677, y: 0.61719024}
+  m_Size: {x: 0.4715677, y: 0.54964924}
   m_EdgeRadius: 0
 --- !u!114 &8550018600877124287
 MonoBehaviour:
@@ -236,17 +236,27 @@ MonoBehaviour:
   _cachedQueryStartInColliders: 0
   jumpPower: 13.2
   amountOfJumps: 0
-  maxAmountOfJumps: 2
-  jumpBuffer: 0.3
+  maxAmountOfJumps: 1
+  jumpBuffer: 0.2
   bufferedJumpUsable: 0
   jumpToConsume: 0
   timeJumpWasPressed: 0
   endedJumpEarly: 0
+  coyoteTime: 0.08
+  coyoteUsable: 0
+  currentEnergy: 25
+  depleteEnergy: 10
+  maxEnergy: 25
   maxGlideSpeed: 6.5
   glideAcceleration: 60
   glideFallSpeed: 40
   glideFallAcceleration: 90
   glideGravityResistance: 2.5
+  maxFlySpeed: 5.5
+  flyAcceleration: 32
+  flyUpwardSpeed: 210
+  flyUpwardAcceleration: 40
+  airDownwardForce: 15
   amountOfPoop: 0
   poopDropPos: {fileID: 8550018601427400666}
   poopPrefab: {fileID: 2296188348177056547, guid: 1e30cf7386820c043b20bce2dd5199bd, type: 3}

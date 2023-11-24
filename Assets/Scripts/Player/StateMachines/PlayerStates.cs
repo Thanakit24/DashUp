@@ -49,7 +49,7 @@ public class GroundMoveState : PlayerStates
             _pc.frameVelocity.y = _pc.groundingForce;
 
         _pc.anim.SetFloat("xVelocity", Mathf.Abs(_pc.frameInput.Move.x));
-        
+
     }
 }
 public class JumpState : AirborneMoveState
@@ -67,9 +67,10 @@ public class JumpState : AirborneMoveState
         _pc.endedJumpEarly = false;
         _pc.timeJumpWasPressed = 0;
         _pc.bufferedJumpUsable = false;
+        _pc.coyoteUsable = false;
         _pc.frameInput.isGliding = false;
         _pc.frameVelocity.y = _pc.jumpPower;
-        _pc.jumpToConsume = false;
+
     }
 }
 
@@ -96,7 +97,7 @@ public class AirborneMoveState : PlayerStates
     private void HandleAirDirection()
     {
         //HorizontalDirection in Air -------------------
-        if (_pc.currentState is GlideState)
+        if (_pc.currentState is FlightState)
         {
             return;
         }
@@ -114,7 +115,7 @@ public class AirborneMoveState : PlayerStates
     private void HandleGravity()
     {
         ////Gravity ----------------------------------
-        if (_pc.currentState is GlideState)
+        if (_pc.currentState is FlightState)
         {
             return;
         }
@@ -126,9 +127,9 @@ public class AirborneMoveState : PlayerStates
         }
     }
 }
-public class GlideState : AirborneMoveState
+public class FlightState : AirborneMoveState
 {
-    public GlideState(PlayerController pc) : base(pc) { }
+    public FlightState(PlayerController pc) : base(pc) { }
 
     public override void OnEnter()
     {
@@ -146,9 +147,25 @@ public class GlideState : AirborneMoveState
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
-        _pc.frameVelocity.x = Mathf.MoveTowards(_pc.frameVelocity.x, _pc.frameInput.Move.x * _pc.maxGlideSpeed, _pc.glideAcceleration * Time.fixedDeltaTime);
-        _pc.frameVelocity.y /= _pc.glideGravityResistance;
-        _pc.frameVelocity.y = Mathf.MoveTowards(_pc.frameVelocity.y, -_pc.glideFallSpeed, _pc.glideFallAcceleration * Time.fixedDeltaTime);
+
+        Debug.Log(_pc.currentEnergy);
+        _pc.currentEnergy -= _pc.depleteEnergy * Time.deltaTime;
+        if (_pc.frameInput.isFlying)
+        {
+            _pc.frameInput.isGliding = false;
+            _pc.rb.velocity = Vector2.zero;
+            _pc.frameVelocity.x = Mathf.MoveTowards(_pc.frameVelocity.x, _pc.frameInput.Move.x * _pc.maxFlySpeed, _pc.flyAcceleration * Time.fixedDeltaTime);
+            _pc.frameVelocity.y /= _pc.airDownwardForce;
+            _pc.frameVelocity.y = Mathf.MoveTowards(_pc.frameVelocity.y, _pc.flyUpwardSpeed, _pc.flyUpwardSpeed * Time.fixedDeltaTime);
+        }
+        else if (_pc.frameInput.isGliding)
+        {
+            _pc.frameInput.isFlying = false;
+            _pc.frameVelocity.x = Mathf.MoveTowards(_pc.frameVelocity.x, _pc.frameInput.Move.x * _pc.maxGlideSpeed, _pc.glideAcceleration * Time.fixedDeltaTime);
+            _pc.frameVelocity.y /= _pc.glideGravityResistance;
+            _pc.frameVelocity.y = Mathf.MoveTowards(_pc.frameVelocity.y, -_pc.glideFallSpeed, _pc.glideFallAcceleration * Time.fixedDeltaTime);
+        }
     }
 }
+
 
