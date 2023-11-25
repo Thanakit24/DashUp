@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerStates : BaseState
@@ -63,36 +61,26 @@ public class JumpState : AirborneMoveState
         //Debug.Log("Called JumpState");
         base.OnEnter();
         _pc.bufferedState = new AirborneMoveState(_pc);
-        _pc.amountOfJumps--;
+        //_pc.amountOfJumps--;
         _pc.endedJumpEarly = false;
         _pc.timeJumpWasPressed = 0;
         _pc.bufferedJumpUsable = false;
         _pc.coyoteUsable = false;
         _pc.frameInput.isGliding = false;
-        _pc.frameVelocity.y = _pc.jumpPower;
 
+        if (_pc.amountOfPoop > 0)
+        {
+            _pc.amountOfPoop--;
+            _pc.frameVelocity.y = _pc.poopPower;
+            GameObject poop = GameObject.Instantiate(_pc.poopPrefab, _pc.poopDropPos.position, Quaternion.identity);
+        }
+        else
+        {
+            _pc.amountOfJumps--;
+            _pc.frameVelocity.y = _pc.jumpPower;
+        }
     }
 }
-
-public class PoopState : AirborneMoveState  //use jump to launch the poop instead but set conditions of when a poop can be performed. 
-{
-    public PoopState(PlayerController pc) : base(pc)
-    {
-        duration = 0.1f;
-    }
-
-    public override void OnEnter()
-    {
-        base.OnEnter();
-        _pc.bufferedState = new AirborneMoveState(_pc);
-        _pc.amountOfPoop--;
-        //_pc.frameVelocity.y = 0f;
-        _pc.frameVelocity.y = _pc.poopPower; 
-       
-    }
-}
-
-
 
 public class AirborneMoveState : PlayerStates
 {
@@ -169,7 +157,7 @@ public class FlightState : AirborneMoveState
         base.OnFixedUpdate();
 
         //Debug.Log(_pc.currentEnergy);
-        if (_pc.currentState is PoopState)
+        if (_pc.currentState is JumpState)
             return;
 
         _pc.currentEnergy -= _pc.depleteEnergy * Time.deltaTime;

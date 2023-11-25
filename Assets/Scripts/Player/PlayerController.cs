@@ -20,14 +20,6 @@ public class PlayerController : StateMachine, IPlayerController
 
     //---------------------------------------------------------------------
 
-    [Header("GROUND & COLLISION CHECKS")]
-    public LayerMask groundLayerMask;
-    [SerializeField] private float grounderDistance;
-    public float JumpEndEarlyGravityModifier;
-    [SerializeField] private bool _cachedQueryStartInColliders;
-
-    //---------------------------------------------------------------------
-
     [Header("JUMPING")]
     public float jumpPower;
     public int amountOfJumps;
@@ -60,6 +52,22 @@ public class PlayerController : StateMachine, IPlayerController
 
     //---------------------------------------------------------------------
 
+    [Header("PIDGEYPOOP")]
+    public int amountOfPoop;
+    public float poopPower;
+    public Transform poopDropPos;
+    public GameObject poopPrefab;
+
+    //---------------------------------------------------------------------
+
+    [Header("GROUND & COLLISION CHECKS")]
+    public LayerMask groundLayerMask;
+    [SerializeField] private float grounderDistance;
+    public float JumpEndEarlyGravityModifier;
+    [SerializeField] private bool _cachedQueryStartInColliders;
+
+    //---------------------------------------------------------------------
+
     [Header("ENERGY BAR")]
     public Transform barDisplay;
     public Slider energyBar;
@@ -69,26 +77,17 @@ public class PlayerController : StateMachine, IPlayerController
 
     //---------------------------------------------------------------------
 
-    [Header("PIDGEYPOOP")]
-    public int amountOfPoop;
-    public float poopPower;
-    public Transform poopDropPos;
-    public GameObject poopPrefab;
-
-    //---------------------------------------------------------------------
-
     [HideInInspector] public Vector2 frameVelocity;
     [HideInInspector] public FrameInput frameInput;
     public bool isFacingRight = true;
     private float time;
-
-    [HideInInspector] public Animator anim;
 
     //Interface
     public Vector2 FrameInput => frameInput.Move;
     public event Action<bool, float> GroundedChanged;
     public event Action Jumped;
 
+    [HideInInspector] public Animator anim;
     public override BaseState DefaultState()
     {
         return new GroundMoveState(this);
@@ -114,6 +113,7 @@ public class PlayerController : StateMachine, IPlayerController
     {
         base.Update();
         //print(currentState);
+        //print(time);
         energyBar.gameObject.transform.position = barDisplay.position;
         energyBar.value = currentEnergy;
         
@@ -132,11 +132,11 @@ public class PlayerController : StateMachine, IPlayerController
     {
         frameInput = new FrameInput
         {
-            JumpDown = (Input.GetButtonDown("Jump") || Input.GetKey(KeyCode.C)) && amountOfJumps > 0,
-            JumpHeld = (Input.GetButton("Jump") || Input.GetKey(KeyCode.C)),
-            isGliding = (Input.GetButton("Jump") || Input.GetKey(KeyCode.W)) && !grounded && rb.velocity.y <= -0f && currentEnergy > 0 && !frameInput.isPoop,
-            isFlying = Input.GetKey(KeyCode.LeftShift) && currentEnergy > 0 && !frameInput.isPoop,
-            isPoop = Input.GetKeyDown(KeyCode.J) && amountOfPoop > 0,
+            JumpDown = Input.GetButtonDown("Jump") || Input.GetKey(KeyCode.C) && amountOfJumps > 0,
+            JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.C),
+            isGliding = (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.S)) && !grounded && rb.velocity.y <= 0f && currentEnergy > 0, 
+            isFlying = Input.GetKey(KeyCode.W) && currentEnergy > 0,
+            //&& !frameInput.JumpDown && !frameInput.JumpHeld, //do double tap on W and hold to fly
             Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
         };
 
@@ -146,18 +146,8 @@ public class PlayerController : StateMachine, IPlayerController
             timeJumpWasPressed = time;
         }
 
-        //if (frameInput.isFlying || (frameInput.isGliding && currentState is not JumpState))
-        //{
-        //    ChangeState(new FlightState(this));
-        //}
-
-        if (frameInput.isPoop)
-        {
-            //PidgeyPoop();
-            ChangeState(new PoopState(this));
-            GameObject poop = Instantiate(poopPrefab, poopDropPos.position, Quaternion.identity);
-        }
-        else if (frameInput.isFlying || (frameInput.isGliding && currentState is not JumpState))
+       
+        if (currentState is not JumpState && (frameInput.isFlying || frameInput.isGliding))
         {
             ChangeState(new FlightState(this));
         }
@@ -173,7 +163,6 @@ public class PlayerController : StateMachine, IPlayerController
         //AnimationsHandler();
     }
 
- 
     #region Horizontal Movement (Moved To Player States)
     //private void HandleDirection()
     //{
@@ -273,7 +262,7 @@ public class PlayerController : StateMachine, IPlayerController
         if (!jumpToConsume && !HasBufferedJump)
             return;
 
-        if ( amountOfJumps > 0 || CanUseCoyote)
+        if (amountOfJumps > 0 || amountOfPoop > 0 || CanUseCoyote)
         {
             ChangeState(new JumpState(this));
         }
@@ -338,4 +327,43 @@ public interface IPlayerController
 //else if (coyoteUsedThisFrame)
 //{
 //    coyoteUsedThisFrame = false;
+//}
+
+//void ReadDoubleTapInput()
+//{
+//    switch (inputState)
+//    {
+//        case InputState.off:
+//            if (Input.GetKeyDown(KeyCode.W))
+//            {
+//                inputState = InputState.reading;
+//                inputTime = Time.time;
+//            }
+//            break;
+//        case InputState.reading:
+//            if (Input.GetKeyDown(KeyCode.W) && Time.time - inputTime < doubleTapThreshold)
+//            {
+//                // purely for input reading for the duration of threshold
+//                inputState = InputState.held;
+//                doubleTapped = true;
+//                print("Double Tap");
+//            }
+//            if (Time.time - inputTime >= doubleTapThreshold)
+//            {
+//                inputState = Input.GetKey(KeyCode.W) ? InputState.held : InputState.off;
+//            }
+//            break;
+//        case InputState.held:
+//            if (!Input.GetKey(KeyCode.W))
+//            {
+//                inputState = InputState.off;
+//                doubleTapped = false;
+//                // if doubletapped true, fly
+//                // if false, glide
+//            }
+
+//            //hold W to glide 
+//            //tap W and hold W, fly
+//            break;
+//    }
 //}
