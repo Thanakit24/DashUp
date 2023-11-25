@@ -86,6 +86,11 @@ public class AirborneMoveState : PlayerStates
 {
     public AirborneMoveState(PlayerController pc) : base(pc) { }
 
+    public override void OnEnter()
+    {
+        base.OnEnter();
+        _pc.anim.SetBool("isFly", false);
+    }
     public override void OnUpdate()
     {
         base.OnUpdate();
@@ -165,6 +170,7 @@ public class FlightState : AirborneMoveState
         if (_pc.frameInput.isFlying)
         {
             _pc.frameInput.isGliding = false;
+            _pc.anim.SetBool("isFly", true); 
             _pc.rb.velocity = Vector2.zero;
             _pc.frameVelocity.x = Mathf.MoveTowards(_pc.frameVelocity.x, _pc.frameInput.Move.x * _pc.maxFlySpeed, _pc.flyAcceleration * Time.fixedDeltaTime);
             _pc.frameVelocity.y /= _pc.airDownwardForce;
