@@ -9,10 +9,12 @@ public class PoopBehavior : MonoBehaviour
     [SerializeField] private float dropAcceleration;
     [SerializeField] private float poopDamage;
     [SerializeField] private float lifeTime;
+    [SerializeField] private Animator anim;
     private Rigidbody2D rb;
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     private void Start()
@@ -33,7 +35,14 @@ public class PoopBehavior : MonoBehaviour
         {
             print("destroy poop");
             //display explosive, on impact particles
-            Destroy(gameObject);
+            anim.SetTrigger("PoopExplode");
+            ///DestroyPoop();
+           
         }
+    }
+
+    public void DestroyPoop() //called by animation event
+    {
+        Destroy(gameObject);
     }
 }

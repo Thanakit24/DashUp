@@ -586,6 +586,18 @@ PrefabInstance:
       propertyPath: energyBar
       value: 
       objectReference: {fileID: 4889708597913526708}
+    - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
+      propertyPath: poopPower
+      value: 15.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
+      propertyPath: maxFlySpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
+      propertyPath: amountOfPoop
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
 --- !u!4 &4889708598770074673 stripped
