@@ -26,7 +26,7 @@ public class PlayerController : StateMachine, IPlayerController
     public int maxAmountOfJumps;
     [SerializeField] private float jumpBuffer;
     [HideInInspector] public bool bufferedJumpUsable;
-    [HideInInspector] public bool jumpToConsume;
+    [HideInInspector] public bool jumpToConsume = false;
     [HideInInspector] public float timeJumpWasPressed;
     [HideInInspector] public bool endedJumpEarly;
     public float coyoteTime;
@@ -76,18 +76,29 @@ public class PlayerController : StateMachine, IPlayerController
     public float maxEnergy;
 
     //---------------------------------------------------------------------
+    //Animation Keys 
+    [HideInInspector] public Animator anim;
+    public static readonly int AnimSpeedParameter = Animator.StringToHash("animSpeed");
+    public static readonly int IdleKey = Animator.StringToHash("Idle");
+    public static readonly int MoveKey = Animator.StringToHash("Move");
+    public static readonly int JumpKey = Animator.StringToHash("Jump");
+    public static readonly int FallKey = Animator.StringToHash("Fall");
+    public static readonly int GlideKey = Animator.StringToHash("Glide");
+    public static readonly int FlyKey = Animator.StringToHash("Fly");
+
+    //--------------------------------------------------------------------
 
     [HideInInspector] public Vector2 frameVelocity;
     [HideInInspector] public FrameInput frameInput;
     public bool isFacingRight = true;
     private float time;
 
+    //--------------------------------------------------------------------
     //Interface
     public Vector2 FrameInput => frameInput.Move;
     public event Action<bool, float> GroundedChanged;
     public event Action Jumped;
 
-    [HideInInspector] public Animator anim;
     public override BaseState DefaultState()
     {
         return new GroundMoveState(this);
@@ -99,11 +110,13 @@ public class PlayerController : StateMachine, IPlayerController
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CapsuleCollider2D>();
         _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
+       
     }
 
     protected override void Start()
     {
         base.Start();
+        rb.velocity = Vector2.zero;
         amountOfJumps = maxAmountOfJumps;
         currentEnergy = maxEnergy;
         energyBar.value = maxEnergy;
@@ -113,20 +126,19 @@ public class PlayerController : StateMachine, IPlayerController
     {
         base.Update();
         //print(currentState);
-        //print(time);
         energyBar.gameObject.transform.position = barDisplay.position;
         energyBar.value = currentEnergy;
-        
+
         time += Time.deltaTime;
 
         GatherInput();
 
         if (frameInput.Move.x > 0 && !isFacingRight)
             FlipSprite();
-      
+
         if (frameInput.Move.x < 0 && isFacingRight)
             FlipSprite();
-           
+
     }
     private void GatherInput()
     {
@@ -134,23 +146,30 @@ public class PlayerController : StateMachine, IPlayerController
         {
             JumpDown = Input.GetButtonDown("Jump") || Input.GetKey(KeyCode.C) && amountOfJumps > 0,
             JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.C),
-            isGliding = (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.S)) && !grounded && rb.velocity.y <= 0f && currentEnergy > 0, 
+            isGliding = (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.S)) && !grounded && rb.velocity.y <= 0f && currentEnergy > 0,
             isFlying = Input.GetKey(KeyCode.W) && currentEnergy > 0,
-            //&& !frameInput.JumpDown && !frameInput.JumpHeld, //do double tap on W and hold to fly
             Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
         };
 
-        if (frameInput.JumpDown) //For Handling Jump conditions and changing States
-        {
+        if (frameInput.JumpDown) //For Handling Jump conditions
+        {   
             jumpToConsume = true;
             timeJumpWasPressed = time;
         }
 
-       
-        if (currentState is not JumpState && (frameInput.isFlying || frameInput.isGliding))
+        if (currentState is not JumpState)  //JumpState is set in HandleJump method
         {
-            ChangeState(new FlightState(this));
+            if (frameInput.isFlying && currentState is not GlideState)
+            {
+                ChangeState(new FlyState(this));
+            }
+
+            else if (frameInput.isGliding && currentState is not FlyState)
+            {
+                ChangeState(new GlideState(this));
+            }
         }
+
     }
     protected override void FixedUpdate()
     {
@@ -212,7 +231,7 @@ public class PlayerController : StateMachine, IPlayerController
     private float frameLeftGrounded = float.MinValue;
     public bool grounded;
 
-    private void CheckCollisions() 
+    private void CheckCollisions()
     {
         Physics2D.queriesStartInColliders = false;
 
@@ -233,7 +252,7 @@ public class PlayerController : StateMachine, IPlayerController
             amountOfJumps = maxAmountOfJumps;
             currentEnergy = maxEnergy;
             GroundedChanged?.Invoke(true, Mathf.Abs(frameVelocity.y)); //idk wtf this is
-            anim.SetBool("isJumping", false);
+            //anim.SetBool("isJumping", false);
         }
         // Left the Ground
         else if (grounded && !groundHit)
@@ -241,7 +260,7 @@ public class PlayerController : StateMachine, IPlayerController
             grounded = false;
             frameLeftGrounded = time;
             GroundedChanged?.Invoke(false, 0);
-            anim.SetBool("isJumping", true);
+            //anim.SetBool("isJumping", true);
         }
 
         Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
@@ -262,7 +281,7 @@ public class PlayerController : StateMachine, IPlayerController
         if (!jumpToConsume && !HasBufferedJump)
             return;
 
-        if (amountOfJumps > 0 || amountOfPoop > 0 || CanUseCoyote)
+        if (jumpToConsume && coyoteUsable && (amountOfJumps > 0 || amountOfPoop > 0))  //This gets called even if jumpToConsume is false
         {
             ChangeState(new JumpState(this));
         }
@@ -271,17 +290,7 @@ public class PlayerController : StateMachine, IPlayerController
 
     }
 
-    //private void ExecuteJump() //Where jump happens //Moved to player States
-    //{
-    //    amountOfJumps--;
-    //    endedJumpEarly = false;
-    //    timeJumpWasPressed = 0;
-    //    bufferedJumpUsable = false;
-    //    coyoteUsable = false;
-    //    frameInput.isGliding = false;
-    //    frameVelocity.y = jumpPower;
-    //    Jumped?.Invoke();
-    //}
+    
 
     #endregion 
     private void FlipSprite()
@@ -315,6 +324,11 @@ public interface IPlayerController
     public event Action Jumped;
     public Vector2 FrameInput { get; }
 }
+
+
+
+//split animations using anim keys, 
+
 
 //DebugCode for Coyotetime, finding a good balance between when the player can perform a jump from coyote and when the player can glide when not on ground =
 //if (currentState is JumpState && time < frameLeftGrounded + coyoteTime)
@@ -366,4 +380,17 @@ public interface IPlayerController
 //            //tap W and hold W, fly
 //            break;
 //    }
+//}
+
+
+//private void ExecuteJump() //Where jump happens //Moved to player States
+//{
+//    amountOfJumps--;
+//    endedJumpEarly = false;
+//    timeJumpWasPressed = 0;
+//    bufferedJumpUsable = false;
+//    coyoteUsable = false;
+//    frameInput.isGliding = false;
+//    frameVelocity.y = jumpPower;
+//    Jumped?.Invoke();
 //}
