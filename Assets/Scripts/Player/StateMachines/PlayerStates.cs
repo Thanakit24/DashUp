@@ -55,7 +55,7 @@ public class JumpState : AirborneMoveState
 {
     public JumpState(PlayerController pc) : base(pc)
 
-    { duration = 0.1f; }
+    { duration = 0.3f; }
 
     public override void OnEnter()
     {
@@ -63,7 +63,6 @@ public class JumpState : AirborneMoveState
         //Debug.Log("Called JumpState");
         base.OnEnter();
         _pc.bufferedState = new AirborneMoveState(_pc);
-        //_pc.amountOfJumps--;
         _pc.endedJumpEarly = false;
         _pc.timeJumpWasPressed = 0;
         _pc.bufferedJumpUsable = false;
@@ -133,12 +132,10 @@ public class AirborneMoveState : PlayerStates
         else if (_pc.frameInput.Move.x == 0)
         {
             _pc.frameVelocity.x = Mathf.MoveTowards(_pc.frameVelocity.x, 0, _pc.airDeceleration * Time.fixedDeltaTime);
-            //pc.anim.Play(PlayerController.FallKey);
         }
         else
         {
             _pc.frameVelocity.x = Mathf.MoveTowards(_pc.frameVelocity.x, _pc.frameInput.Move.x * _pc.maxSpeed, _pc.acceleration * Time.fixedDeltaTime);
-            //c.anim.Play(PlayerController.FallKey);
         }
 
     }
@@ -183,7 +180,7 @@ public class GlideState : AirborneMoveState
         base.OnFixedUpdate();
         if (_pc.currentState is JumpState)
             return;
-       
+
         _pc.currentEnergy -= _pc.depleteEnergy * Time.deltaTime;
         _pc.frameInput.isFlying = false;
         _pc.frameVelocity.x = Mathf.MoveTowards(_pc.frameVelocity.x, _pc.frameInput.Move.x * _pc.maxGlideSpeed, _pc.glideAcceleration * Time.fixedDeltaTime);
@@ -202,6 +199,7 @@ public class FlyState : AirborneMoveState
         base.OnEnter();
         //set anim glide to play here
         _pc.anim.Play(PlayerController.FlyKey);
+     
     }
     public override void OnUpdate()
     {

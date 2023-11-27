@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EndLevel : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class EndLevel : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             GameManager.instance.CompleteLevel();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 }

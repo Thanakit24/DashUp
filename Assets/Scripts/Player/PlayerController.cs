@@ -49,6 +49,8 @@ public class PlayerController : StateMachine, IPlayerController
     public float flyUpwardSpeed;
     public float flyUpwardAcceleration;
     public float airDownwardForce;
+    public bool firstLaunch = false;
+    public float launchDecrement;
 
     //---------------------------------------------------------------------
 
@@ -110,7 +112,7 @@ public class PlayerController : StateMachine, IPlayerController
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CapsuleCollider2D>();
         _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
-       
+
     }
 
     protected override void Start()
@@ -132,6 +134,15 @@ public class PlayerController : StateMachine, IPlayerController
         time += Time.deltaTime;
 
         GatherInput();
+        if (frameInput.isLaunch && !firstLaunch)
+        {
+            firstLaunch = true;
+            if (firstLaunch)
+            {
+                currentEnergy -= launchDecrement;
+                firstLaunch = false;
+            }
+        }
 
         if (frameInput.Move.x > 0 && !isFacingRight)
             FlipSprite();
@@ -148,11 +159,12 @@ public class PlayerController : StateMachine, IPlayerController
             JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.C),
             isGliding = (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.S)) && !grounded && rb.velocity.y <= 0f && currentEnergy > 0,
             isFlying = Input.GetKey(KeyCode.W) && currentEnergy > 0,
+            isLaunch = Input.GetKeyDown(KeyCode.W),
             Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
         };
 
         if (frameInput.JumpDown) //For Handling Jump conditions
-        {   
+        {
             jumpToConsume = true;
             timeJumpWasPressed = time;
         }
@@ -243,7 +255,7 @@ public class PlayerController : StateMachine, IPlayerController
         if (ceilingHit) frameVelocity.y = Mathf.Min(0, frameVelocity.y);
 
         // Landed on the Ground
-        if (!grounded && groundHit)
+        if (!grounded && groundHit) //added is flying, when the player collides with the ground while flying, it resets the energy bar to full
         {
             grounded = true;
             coyoteUsable = true;
@@ -281,7 +293,7 @@ public class PlayerController : StateMachine, IPlayerController
         if (!jumpToConsume && !HasBufferedJump)
             return;
 
-        if (jumpToConsume && coyoteUsable && (amountOfJumps > 0 || amountOfPoop > 0))  //This gets called even if jumpToConsume is false
+        if (jumpToConsume && (amountOfJumps > 0 || amountOfPoop > 0))  //This gets called even if jumpToConsume is false
         {
             ChangeState(new JumpState(this));
         }
@@ -289,9 +301,6 @@ public class PlayerController : StateMachine, IPlayerController
         jumpToConsume = false;
 
     }
-
-    
-
     #endregion 
     private void FlipSprite()
     {
@@ -313,6 +322,7 @@ public struct FrameInput
     public bool JumpHeld;
     public bool isGliding;
     public bool isFlying;
+    public bool isLaunch;
     public bool isPoop;
     public Vector2 Move;
 }
