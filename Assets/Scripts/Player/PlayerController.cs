@@ -50,7 +50,8 @@ public class PlayerController : StateMachine, IPlayerController
     public float flyUpwardAcceleration;
     public float airDownwardForce;
     public bool firstLaunch = false;
-    public float launchDecrement;
+    public float launchDeplete; 
+    public float launchPower = 15f;
 
     //---------------------------------------------------------------------
 
@@ -134,12 +135,14 @@ public class PlayerController : StateMachine, IPlayerController
         time += Time.deltaTime;
 
         GatherInput();
-        if (frameInput.isLaunch && !firstLaunch)
+        if (frameInput.isLaunch && !firstLaunch) //launching player with small upwards velocity, this also prevents spamming "fly input" to gain speed and minimize energy consumption
         {
             firstLaunch = true;
+           
             if (firstLaunch)
             {
-                currentEnergy -= launchDecrement;
+                currentEnergy -= launchDeplete;
+                frameVelocity.y = launchPower;
                 firstLaunch = false;
             }
         }
@@ -248,14 +251,16 @@ public class PlayerController : StateMachine, IPlayerController
         Physics2D.queriesStartInColliders = false;
 
         // Ground and Ceiling
-        bool groundHit = Physics2D.CapsuleCast(col.bounds.center, col.size, col.direction, 0, Vector2.down, grounderDistance, groundLayerMask);
+        bool groundHit = Physics2D.CapsuleCast(col.bounds.center, col.size, col.direction, 0, Vector2.down, grounderDistance, groundLayerMask) && currentState is not FlyState;
+        //added is not flying check because when the player collides with the ground while flying, it resets the energy bar to full 
         bool ceilingHit = Physics2D.CapsuleCast(col.bounds.center, col.size, col.direction, 0, Vector2.up, grounderDistance, ~playerLayer);
 
         // Hit a Ceiling
         if (ceilingHit) frameVelocity.y = Mathf.Min(0, frameVelocity.y);
 
         // Landed on the Ground
-        if (!grounded && groundHit) //added is flying, when the player collides with the ground while flying, it resets the energy bar to full
+
+        if (!grounded && groundHit) /// adding the check here lead to animation bugs when flying
         {
             grounded = true;
             coyoteUsable = true;
@@ -263,8 +268,8 @@ public class PlayerController : StateMachine, IPlayerController
             endedJumpEarly = false;
             amountOfJumps = maxAmountOfJumps;
             currentEnergy = maxEnergy;
-            GroundedChanged?.Invoke(true, Mathf.Abs(frameVelocity.y)); //idk wtf this is
-            //anim.SetBool("isJumping", false);
+            GroundedChanged?.Invoke(true, Mathf.Abs(frameVelocity.y)); 
+            
         }
         // Left the Ground
         else if (grounded && !groundHit)
@@ -272,7 +277,6 @@ public class PlayerController : StateMachine, IPlayerController
             grounded = false;
             frameLeftGrounded = time;
             GroundedChanged?.Invoke(false, 0);
-            //anim.SetBool("isJumping", true);
         }
 
         Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;

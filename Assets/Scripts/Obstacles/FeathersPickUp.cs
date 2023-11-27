@@ -5,7 +5,7 @@ using UnityEngine;
 public class FeathersPickUp : MonoBehaviour
 {
     [SerializeField] 
-    private int featherToIncrease;
+    private int poopToIncrease;
     [SerializeField] private bool isGoldFeather;
     // Start is called before the first frame update
     void Start()
@@ -32,9 +32,9 @@ public class FeathersPickUp : MonoBehaviour
             }
             else
             {
-                player.maxAmountOfJumps += featherToIncrease;
+                print("picked up bread");
+                player.amountOfPoop += poopToIncrease;
             }
-
             //play some effects or particles and sounds
             Destroy(gameObject);
         }

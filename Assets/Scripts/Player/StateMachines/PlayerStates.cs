@@ -41,7 +41,6 @@ public class GroundMoveState : PlayerStates
         }
         else
         {
-
             _pc.frameVelocity.x = Mathf.MoveTowards(_pc.frameVelocity.x, _pc.frameInput.Move.x * _pc.maxSpeed, _pc.acceleration * Time.fixedDeltaTime);
             _pc.anim.Play(PlayerController.MoveKey);
         }
