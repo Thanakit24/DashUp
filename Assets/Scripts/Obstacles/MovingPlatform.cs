@@ -13,6 +13,10 @@ public class MovingPlatform : MonoBehaviour
     [SerializeField] private bool waitAtPoint = false;
     [SerializeField] private float waitTime;
 
+    private void Start()
+    {
+        transform.position = pathPoints[pathIndex].transform.position;
+    }
     void Update()
     {
         if (canMove)
@@ -54,7 +58,7 @@ public class MovingPlatform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            print("player landed on moving platform");
+            //print("player landed on moving platform");
             collision.transform.SetParent(transform);
         }
     }
