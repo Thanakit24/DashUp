@@ -10,7 +10,6 @@ public class WindTurbine : MonoBehaviour
     void Start()
     {
         boxCol = GetComponent<BoxCollider2D>();
- 
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -36,6 +35,4 @@ public class WindTurbine : MonoBehaviour
             
         }
     }
-
-    // Update is called once per frame
 }

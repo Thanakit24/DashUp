@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class FeathersPickUp : MonoBehaviour
 {
-    [SerializeField] 
-    private int poopToIncrease;
+    [SerializeField]
+    //public bool isActive = true;
+    public float restoreTime;
+    public int poopToIncrease;
     [SerializeField] private bool isGoldFeather;
     // Start is called before the first frame update
     void Start()
@@ -19,6 +21,19 @@ public class FeathersPickUp : MonoBehaviour
         
     }
 
+    //IEnumerator UntilRestore(float restoreTime)
+    //{
+    //    yield return new WaitForSeconds(restoreTime);
+    //    print("platform restore");
+    //    if (!isActive)
+    //    {
+    //        isActive = true;
+    //    }
+    //    //set back the sprite to its original sprite
+        
+        
+    //}
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -30,13 +45,17 @@ public class FeathersPickUp : MonoBehaviour
             {
                 player.amountOfJumps = player.maxAmountOfJumps;
             }
+
             else
             {
                 print("picked up bread");
                 player.amountOfPoop += poopToIncrease;
             }
             //play some effects or particles and sounds
-            Destroy(gameObject);
+            //isActive = false;
+            //StartCoroutine(UntilRestore(restoreTime));
+            //change sprite to restoring/transparent sprite;
+            Destroy(gameObject); //deactive this instead
         }
     }
 }

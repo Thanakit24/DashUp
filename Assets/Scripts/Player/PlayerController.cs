@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerController : StateMachine, IPlayerController
 {
     public LayerMask playerLayer;
-    public Rigidbody2D rb;
+    [HideInInspector] public Rigidbody2D rb;
     private CapsuleCollider2D col;
 
     [Header("MOVEMENT")]
@@ -51,7 +51,7 @@ public class PlayerController : StateMachine, IPlayerController
     public float airDownwardForce;
     public bool firstLaunch = false;
     public float launchDeplete; 
-    public float launchPower = 15f;
+    //public float launchPower = 15f;
 
     //---------------------------------------------------------------------
 
@@ -142,7 +142,7 @@ public class PlayerController : StateMachine, IPlayerController
             if (firstLaunch)
             {
                 currentEnergy -= launchDeplete;
-                frameVelocity.y = launchPower;
+                //frameVelocity.y = launchPower;
                 firstLaunch = false;
             }
         }
@@ -251,7 +251,7 @@ public class PlayerController : StateMachine, IPlayerController
         Physics2D.queriesStartInColliders = false;
 
         // Ground and Ceiling
-        bool groundHit = Physics2D.CapsuleCast(col.bounds.center, col.size, col.direction, 0, Vector2.down, grounderDistance, groundLayerMask) && currentState is not FlyState;
+        bool groundHit = Physics2D.CapsuleCast(col.bounds.center, col.size, col.direction, 0, Vector2.down, grounderDistance, groundLayerMask) && (currentState is not FlyState || currentState is not GlideState);
         //added is not flying check because when the player collides with the ground while flying, it resets the energy bar to full 
         bool ceilingHit = Physics2D.CapsuleCast(col.bounds.center, col.size, col.direction, 0, Vector2.up, grounderDistance, ~playerLayer);
 

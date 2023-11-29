@@ -96,12 +96,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e55fbcf7e9f10a49ace3d09632d3703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: {x: 0, y: 0}
   dropSpeed: 14
   dropAcceleration: 35
   poopDamage: 0
   lifeTime: 5
-  anim: {fileID: 0}
+  destroyObjectTime: 0.15
+  explosionRadius: 0.8
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!212 &3742618311763619679
 SpriteRenderer:
   m_ObjectHideFlags: 0

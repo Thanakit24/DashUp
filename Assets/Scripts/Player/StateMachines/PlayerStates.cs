@@ -72,8 +72,11 @@ public class JumpState : AirborneMoveState
         if (_pc.amountOfPoop > 0)
         {
             _pc.amountOfPoop--;
+            _pc.amountOfJumps--;
             _pc.frameVelocity.y = _pc.poopPower;
+            //Debug.Log("dash up");
             GameObject poop = GameObject.Instantiate(_pc.poopPrefab, _pc.poopDropPos.position, Quaternion.identity);
+           
         }
         else
         {
