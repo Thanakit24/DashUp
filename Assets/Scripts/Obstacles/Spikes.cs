@@ -17,8 +17,8 @@ public class Spikes : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            print("player touched, call dead");
             collision.gameObject.GetComponent<PlayerController>().Dead();
-
         }
 
     }

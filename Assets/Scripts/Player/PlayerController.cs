@@ -31,7 +31,8 @@ public class PlayerController : StateMachine, IPlayerController
     [HideInInspector] public bool endedJumpEarly;
     public float coyoteTime;
     public bool coyoteUsable;
-   
+    public bool blackJump;
+
 
     //---------------------------------------------------------------------
 
@@ -51,7 +52,7 @@ public class PlayerController : StateMachine, IPlayerController
     public float flyUpwardAcceleration;
     public float airDownwardForce;
     public bool firstLaunch = false;
-    public float launchDeplete; 
+    public float launchDeplete;
     //public float launchPower = 15f;
 
     //---------------------------------------------------------------------
@@ -138,10 +139,15 @@ public class PlayerController : StateMachine, IPlayerController
 
         GatherInput();
 
+        //if (amountOfPoop > 0)
+        //    blackJump = true;
+        //else
+        //    blackJump = false;
+
         if (frameInput.isLaunch && !firstLaunch) //launching player with small upwards velocity, this also prevents spamming "fly input" to gain speed and minimize energy consumption
         {
             firstLaunch = true;
-           
+
             if (firstLaunch)
             {
                 currentEnergy -= launchDeplete;
@@ -150,7 +156,7 @@ public class PlayerController : StateMachine, IPlayerController
             }
         }
 
-        
+
         if (frameInput.Move.x > 0 && !isFacingRight)
             FlipSprite();
 
@@ -193,9 +199,9 @@ public class PlayerController : StateMachine, IPlayerController
     protected override void FixedUpdate()
     {
         HandleJump();
-        CheckCollisions(); 
+        CheckCollisions();
         base.FixedUpdate(); // player states relies on the first two functions, handle jump and check collision
-        
+
         //HandleDirection();
         //HandleGravity();
         ApplyMovement();
@@ -273,8 +279,8 @@ public class PlayerController : StateMachine, IPlayerController
             endedJumpEarly = false;
             amountOfJumps = maxAmountOfJumps;
             currentEnergy = maxEnergy;
-            GroundedChanged?.Invoke(true, Mathf.Abs(frameVelocity.y)); 
-            
+            GroundedChanged?.Invoke(true, Mathf.Abs(frameVelocity.y));
+
         }
         // Left the Ground
         else if (grounded && !groundHit)
@@ -302,7 +308,7 @@ public class PlayerController : StateMachine, IPlayerController
         if (!jumpToConsume && !HasBufferedJump)
             return;
 
-        if (jumpToConsume && (amountOfJumps > 0 || amountOfPoop > 0))  
+        if (jumpToConsume && (amountOfJumps > 0 || amountOfPoop > 0))
         {
             ChangeState(new JumpState(this));
         }
@@ -317,6 +323,21 @@ public class PlayerController : StateMachine, IPlayerController
         currentScale.x *= -1;
         gameObject.transform.localScale = currentScale;
         isFacingRight = !isFacingRight;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Breakable") && currentState is JumpState && blackJump)
+        {
+            print("called");
+            collision.collider.enabled = false;
+            Destroy(collision.gameObject);
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+
     }
 
     public void Dead()

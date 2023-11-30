@@ -29,10 +29,10 @@ public class StateMachine : MonoBehaviour
     {
         currentState.OnFixedUpdate();
     }
-    protected virtual void OnCollisionEnter2D(Collision2D collision)
-    {
-        currentState.OnCollisionEnter2D(collision);
-    }
+    //protected virtual void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    currentState.OnCollisionEnter2D(collision);
+    //}
     //protected virtual void OnTriggerEnter2D(Collider2D collision)
     //{
     //    currentState.OnTriggerEnter2D(collision);

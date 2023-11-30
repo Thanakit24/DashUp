@@ -45,9 +45,9 @@ public class BaseState
     public virtual void OnExit()
     {
     }
-    public virtual void OnCollisionEnter2D(Collision2D collision)
-    {
-    }
+    //public virtual void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //}
     //public virtual void OnTriggerEnter2D(Collider2D collision)
     //{
     //}

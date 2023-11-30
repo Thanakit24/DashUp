@@ -70,14 +70,13 @@ public class JumpState : AirborneMoveState
         _pc.frameInput.isGliding = false;
         _pc.frameInput.isFlying = false;
         
-
         if (_pc.amountOfPoop > 0)
         {
             _pc.amountOfPoop--;
             _pc.amountOfJumps--;
             _pc.frameVelocity.y = _pc.poopPower;
             _pc.anim.Play(PlayerController.BlackJumpkey);
-            Debug.Log(_pc.anim);
+            _pc.blackJump = true;
             GameObject poop = GameObject.Instantiate(_pc.poopPrefab, _pc.poopDropPos.position, Quaternion.identity);
 
         }
@@ -89,7 +88,6 @@ public class JumpState : AirborneMoveState
         }
     }
 }
-
 public class AirborneMoveState : PlayerStates
 {
     public AirborneMoveState(PlayerController pc) : base(pc) { }
@@ -97,6 +95,10 @@ public class AirborneMoveState : PlayerStates
     public override void OnEnter()
     {
         base.OnEnter();
+        if (_pc.blackJump)
+        {
+            _pc.blackJump = false;
+        }
     }
     public override void OnUpdate()
     {
@@ -188,8 +190,6 @@ public class GlideState : AirborneMoveState
         _pc.frameVelocity.y = Mathf.MoveTowards(_pc.frameVelocity.y, -_pc.glideFallSpeed, _pc.glideFallAcceleration * Time.fixedDeltaTime);
     }
 }
-
-
 public class FlyState : AirborneMoveState
 {
     public FlyState(PlayerController pc) : base(pc) { }

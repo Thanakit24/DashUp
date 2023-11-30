@@ -104,7 +104,7 @@ MonoBehaviour:
   explosionRadius: 0.8
   groundMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 520
 --- !u!212 &3742618311763619679
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -229,8 +229,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
+      key0: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
+      key1: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
