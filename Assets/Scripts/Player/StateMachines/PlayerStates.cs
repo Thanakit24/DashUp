@@ -23,16 +23,17 @@ public class GroundMoveState : PlayerStates
     public override void OnUpdate()
     {
         base.OnUpdate();
-        if (!_pc.grounded)
-        {
-            _pc.ChangeState(new AirborneMoveState(_pc));
-        }
+        
     }
 
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
-
+        if (!_pc.grounded && _pc.currentState is not JumpState)
+        {
+            _pc.ChangeState(new AirborneMoveState(_pc));
+            return;
+        }
         //HorizontalDirection on Ground
         if (_pc.frameInput.Move.x == 0)
         {
@@ -68,20 +69,23 @@ public class JumpState : AirborneMoveState
         _pc.coyoteUsable = false;
         _pc.frameInput.isGliding = false;
         _pc.frameInput.isFlying = false;
+        
 
         if (_pc.amountOfPoop > 0)
         {
             _pc.amountOfPoop--;
             _pc.amountOfJumps--;
             _pc.frameVelocity.y = _pc.poopPower;
-            //Debug.Log("dash up");
+            _pc.anim.Play(PlayerController.BlackJumpkey);
+            Debug.Log(_pc.anim);
             GameObject poop = GameObject.Instantiate(_pc.poopPrefab, _pc.poopDropPos.position, Quaternion.identity);
-           
+
         }
         else
         {
             _pc.amountOfJumps--;
             _pc.frameVelocity.y = _pc.jumpPower;
+            _pc.anim.Play(PlayerController.JumpKey);
         }
     }
 }
@@ -93,24 +97,14 @@ public class AirborneMoveState : PlayerStates
     public override void OnEnter()
     {
         base.OnEnter();
-        if (!(_pc.currentState is GlideState || _pc.currentState is FlyState))
-            return;
     }
     public override void OnUpdate()
     {
         base.OnUpdate();
-        if (_pc.grounded)
-        {
-            _pc.ChangeState(new GroundMoveState(_pc));
-        }
-
         if (!(_pc.currentState is GlideState || _pc.currentState is FlyState))
         {
-            if (_pc.rb.velocity.y >= 0.1f)
-            {
-                _pc.anim.Play(PlayerController.JumpKey);
-            }
-            else
+            if (_pc.rb.velocity.y <= 0.01f )
+                
             {
                 _pc.anim.Play(PlayerController.FallKey);
             }
@@ -122,6 +116,10 @@ public class AirborneMoveState : PlayerStates
         base.OnFixedUpdate();
         HandleAirDirection();
         HandleGravity();
+        if (_pc.grounded)
+        {
+            _pc.ChangeState(new GroundMoveState(_pc));
+        }
     }
 
     private void HandleAirDirection()

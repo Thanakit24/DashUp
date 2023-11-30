@@ -131,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f3d5e9d2b005e8b4b805694822fabaf3
-      internalID: 1728521493
+      spriteID: 8d6f11b63bcbcbe48b35292f605f30a0
+      internalID: 972750605
       vertices: []
       indices: 
       edges: []
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9ef578e0f846f954a98c753999ee701b
-      internalID: 1756529265
+      spriteID: 65b4e550650f7e64abed86bda66591ea
+      internalID: 1442856384
       vertices: []
       indices: 
       edges: []
@@ -169,8 +169,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Pigeon_IDLE-Sheet_1: 1756529265
-      Pigeon_IDLE-Sheet_0: 1728521493
+      Pigeon_IDLE-Sheet_1: 1442856384
+      Pigeon_IDLE-Sheet_0: 972750605
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

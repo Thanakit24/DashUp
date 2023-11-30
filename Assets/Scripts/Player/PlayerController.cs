@@ -31,6 +31,7 @@ public class PlayerController : StateMachine, IPlayerController
     [HideInInspector] public bool endedJumpEarly;
     public float coyoteTime;
     public bool coyoteUsable;
+   
 
     //---------------------------------------------------------------------
 
@@ -85,6 +86,7 @@ public class PlayerController : StateMachine, IPlayerController
     public static readonly int IdleKey = Animator.StringToHash("Idle");
     public static readonly int MoveKey = Animator.StringToHash("Move");
     public static readonly int JumpKey = Animator.StringToHash("Jump");
+    public static readonly int BlackJumpkey = Animator.StringToHash("BlackJump");
     public static readonly int FallKey = Animator.StringToHash("Fall");
     public static readonly int GlideKey = Animator.StringToHash("Glide");
     public static readonly int FlyKey = Animator.StringToHash("Fly");
@@ -135,6 +137,7 @@ public class PlayerController : StateMachine, IPlayerController
         time += Time.deltaTime;
 
         GatherInput();
+
         if (frameInput.isLaunch && !firstLaunch) //launching player with small upwards velocity, this also prevents spamming "fly input" to gain speed and minimize energy consumption
         {
             firstLaunch = true;
@@ -147,6 +150,7 @@ public class PlayerController : StateMachine, IPlayerController
             }
         }
 
+        
         if (frameInput.Move.x > 0 && !isFacingRight)
             FlipSprite();
 
@@ -188,9 +192,10 @@ public class PlayerController : StateMachine, IPlayerController
     }
     protected override void FixedUpdate()
     {
-        base.FixedUpdate();
-        CheckCollisions();
         HandleJump();
+        CheckCollisions(); 
+        base.FixedUpdate(); // player states relies on the first two functions, handle jump and check collision
+        
         //HandleDirection();
         //HandleGravity();
         ApplyMovement();
@@ -297,7 +302,7 @@ public class PlayerController : StateMachine, IPlayerController
         if (!jumpToConsume && !HasBufferedJump)
             return;
 
-        if (jumpToConsume && (amountOfJumps > 0 || amountOfPoop > 0))  //This gets called even if jumpToConsume is false
+        if (jumpToConsume && (amountOfJumps > 0 || amountOfPoop > 0))  
         {
             ChangeState(new JumpState(this));
         }

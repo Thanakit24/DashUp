@@ -534,17 +534,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4889708599287385493}
     m_Modifications:
+    - target: {fileID: 8550018600844301405, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 972750605, guid: 6440cbb2e16063845ba33056af4eb49c, type: 3}
     - target: {fileID: 8550018600877124285, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124285, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.46
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124285, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.19
+      value: 2.65
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124285, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -703,7 +707,7 @@ TrailRenderer:
   m_Time: 0.3
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.18
+    widthMultiplier: 0.3
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -730,8 +734,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}
+      key0: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+      key1: {r: 0.19215687, g: 0.19215687, b: 0.19215687, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}

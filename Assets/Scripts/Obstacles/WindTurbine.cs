@@ -16,7 +16,7 @@ public class WindTurbine : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            print("Player Entered Wind");
+            //print("Player Entered Wind");
             Rigidbody2D rbAffect = collision.gameObject.GetComponent<Rigidbody2D>();
             rbAffect.velocity = Vector2.zero;
             rbAffect.gravityScale = 0f;
@@ -28,7 +28,7 @@ public class WindTurbine : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            print("Player Entered Wind");
+            //print("Player Exit Wind");
             Rigidbody2D rbAffect = collision.gameObject.GetComponent<Rigidbody2D>();
             rbAffect.velocity = Vector2.zero;
             rbAffect.gravityScale = 1f;
