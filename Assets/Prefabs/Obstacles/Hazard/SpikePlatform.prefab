@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 3877685529903838935}
   - component: {fileID: 6942124888620020466}
   - component: {fileID: 1372564167080607470}
+  - component: {fileID: 5494340306368665782}
+  - component: {fileID: 9000648915452766534}
   m_Layer: 0
   m_Name: SpikePlatform
   m_TagString: Untagged
@@ -111,3 +113,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5033321, y: 1.511657}
   m_EdgeRadius: 0
+--- !u!114 &5494340306368665782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8942333798770328802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 361839cfca9bf8240a09be6ea0a09042, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canMove: 1
+  moveSpeed: 2
+  pathPoints: []
+  nextWaypointDistance: 0.1
+  waitAtPoint: 0
+  waitTime: 0
+--- !u!114 &9000648915452766534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8942333798770328802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc9195c0ac0026f40bc4974233a17e6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -37,6 +37,7 @@ public class MovingPlatform : MonoBehaviour
         if (pathPoints.Length < 2)
         {
             Debug.LogWarning("Insufficient patrol points. Need at least 2.");
+            Debug.LogWarning(this.gameObject.name);
             return;
         }
 

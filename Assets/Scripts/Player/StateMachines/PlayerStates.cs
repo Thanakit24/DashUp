@@ -23,7 +23,7 @@ public class GroundMoveState : PlayerStates
     public override void OnUpdate()
     {
         base.OnUpdate();
-        
+
     }
 
     public override void OnFixedUpdate()
@@ -69,7 +69,7 @@ public class JumpState : AirborneMoveState
         _pc.coyoteUsable = false;
         _pc.frameInput.isGliding = false;
         _pc.frameInput.isFlying = false;
-        
+
         if (_pc.amountOfPoop > 0)
         {
             _pc.amountOfPoop--;
@@ -95,20 +95,25 @@ public class AirborneMoveState : PlayerStates
     public override void OnEnter()
     {
         base.OnEnter();
-        if (_pc.blackJump)
-        {
-            _pc.blackJump = false;
-        }
+
     }
     public override void OnUpdate()
     {
         base.OnUpdate();
         if (!(_pc.currentState is GlideState || _pc.currentState is FlyState))
         {
-            if (_pc.rb.velocity.y <= 0.01f )
-                
+            if (_pc.rb.velocity.y <= 0.01f)
             {
-                _pc.anim.Play(PlayerController.FallKey);
+                if (_pc.blackJump)
+                {
+                    _pc.blackJump = false;
+                    _pc.anim.Play(PlayerController.FallKey);
+                }
+                else
+                {
+                    _pc.anim.Play(PlayerController.FallKey);
+                }
+                
             }
         }
 
@@ -199,7 +204,7 @@ public class FlyState : AirborneMoveState
         base.OnEnter();
         //set anim glide to play here
         _pc.anim.Play(PlayerController.FlyKey);
-     
+
     }
     public override void OnUpdate()
     {
@@ -214,7 +219,7 @@ public class FlyState : AirborneMoveState
         base.OnFixedUpdate();
         if (_pc.currentState is JumpState)
             return;
-        
+
         _pc.currentEnergy -= _pc.depleteEnergy * Time.deltaTime;
         _pc.frameInput.isGliding = false;
         _pc.rb.velocity = Vector2.zero;

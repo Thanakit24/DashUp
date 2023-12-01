@@ -74,4 +74,7 @@ public class VanishPlatform : MonoBehaviour
     //    StartCoroutine(UntilRestore(restoreTime));
     //    //when vanish is complete, the platform starts restoring
     //}
+
+    //For pickups and breakable platforms, on touch (pickup) or on destroy (poop vs breakable) set sprite to disappred sprite, turn off box col then countdown restore time. 
+    //Once it reaches 0, restore the sprite to its default sprite and turn on box collider.
 }

@@ -327,7 +327,7 @@ public class PlayerController : StateMachine, IPlayerController
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Breakable") && currentState is JumpState && blackJump)
+        if (collision.gameObject.CompareTag("Breakable") && blackJump)
         {
             print("called");
             collision.collider.enabled = false;

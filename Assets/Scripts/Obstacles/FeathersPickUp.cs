@@ -8,7 +8,7 @@ public class FeathersPickUp : MonoBehaviour
     public bool isActive = true;
     public float restoreTime;
     public int poopToIncrease;
-    //[SerializeField] private bool isGoldFeather;
+    [SerializeField] private bool isGoldFeather;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,12 +38,22 @@ public class FeathersPickUp : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && isActive)
         {
+            isGoldFeather = !isGoldFeather;
+            PlayerController player = collision.GetComponent<PlayerController>();
+
+            if (!isGoldFeather)
             {
                 print("picked up bread");
-                PlayerController player = collision.GetComponent<PlayerController>();
+                
                 player.amountOfPoop += poopToIncrease;
                 isActive = false;
                 Destroy(gameObject);
+            }
+            else
+            {
+                if (player.currentEnergy > player.maxEnergy)
+                    player.currentEnergy = player.maxEnergy;
+                    print("set player energy to full");
             }
             //play some effects or particles and sounds
             //isActive = false;
