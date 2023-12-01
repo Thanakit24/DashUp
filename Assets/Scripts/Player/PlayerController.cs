@@ -3,6 +3,7 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.UI;
 
+
 public class PlayerController : StateMachine, IPlayerController
 {
     public LayerMask playerLayer;
@@ -98,12 +99,13 @@ public class PlayerController : StateMachine, IPlayerController
     [HideInInspector] public FrameInput frameInput;
     public bool isFacingRight = true;
     private float time;
+    [SerializeField] private TrailRenderer trail;
 
     //--------------------------------------------------------------------
     //Interface
     public Vector2 FrameInput => frameInput.Move;
     public event Action<bool, float> GroundedChanged;
-    public event Action Jumped;
+    //public event Action Jumped;
 
     public override BaseState DefaultState()
     {
@@ -112,6 +114,7 @@ public class PlayerController : StateMachine, IPlayerController
     protected override void Awake()
     {
         base.Awake();
+        trail = GetComponentInChildren<TrailRenderer>();
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CapsuleCollider2D>();
@@ -127,6 +130,7 @@ public class PlayerController : StateMachine, IPlayerController
         currentEnergy = maxEnergy;
         energyBar.value = maxEnergy;
         energyBar.maxValue = maxEnergy;
+        trail.emitting = true;
     }
     protected override void Update()
     {
@@ -137,12 +141,7 @@ public class PlayerController : StateMachine, IPlayerController
 
         time += Time.deltaTime;
 
-        GatherInput();
-
-        //if (amountOfPoop > 0)
-        //    blackJump = true;
-        //else
-        //    blackJump = false;
+        GatherInput();;
 
         if (frameInput.isLaunch && !firstLaunch) //launching player with small upwards velocity, this also prevents spamming "fly input" to gain speed and minimize energy consumption
         {
@@ -334,11 +333,6 @@ public class PlayerController : StateMachine, IPlayerController
             Destroy(collision.gameObject);
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-
-
-    }
 
     public void Dead()
     {
@@ -361,7 +355,7 @@ public interface IPlayerController
 {
     public event Action<bool, float> GroundedChanged;
 
-    public event Action Jumped;
+    //public event Action Jumped;
     public Vector2 FrameInput { get; }
 }
 

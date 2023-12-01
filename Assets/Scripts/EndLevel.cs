@@ -22,7 +22,6 @@ public class EndLevel : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             GameManager.instance.CompleteLevel();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 }

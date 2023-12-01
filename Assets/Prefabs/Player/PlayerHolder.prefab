@@ -544,11 +544,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124285, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13
+      value: -19
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124285, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.65
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124285, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -587,6 +587,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
+      propertyPath: trail
+      value: 
+      objectReference: {fileID: 177326425}
+    - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: energyBar
       value: 
       objectReference: {fileID: 4889708597913526708}
@@ -608,7 +612,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: amountOfPoop
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: maxFallSpeed
@@ -734,7 +738,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+      key0: {r: 0.1882353, g: 0.1882353, b: 0.1882353, a: 1}
       key1: {r: 0.19215687, g: 0.19215687, b: 0.19215687, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -769,4 +773,4 @@ TrailRenderer:
     generateLightingData: 0
   m_MinVertexDistance: 0.2
   m_Autodestruct: 0
-  m_Emitting: 1
+  m_Emitting: 0

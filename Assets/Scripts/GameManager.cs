@@ -34,5 +34,7 @@ public class GameManager : MonoBehaviour
     public void CompleteLevel()
     {
         print("level completed");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+    
 }
