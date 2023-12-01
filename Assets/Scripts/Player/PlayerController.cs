@@ -55,6 +55,7 @@ public class PlayerController : StateMachine, IPlayerController
     public bool firstLaunch = false;
     public float launchDeplete;
     //public float launchPower = 15f;
+    public float testLaunch;
 
     //---------------------------------------------------------------------
 
@@ -142,6 +143,11 @@ public class PlayerController : StateMachine, IPlayerController
         time += Time.deltaTime;
 
         GatherInput();;
+        if (frameInput.isTest)
+        {
+            frameVelocity.y = 0f;
+            frameVelocity.y = testLaunch;
+        }
 
         if (frameInput.isLaunch && !firstLaunch) //launching player with small upwards velocity, this also prevents spamming "fly input" to gain speed and minimize energy consumption
         {
@@ -167,11 +173,13 @@ public class PlayerController : StateMachine, IPlayerController
     {
         frameInput = new FrameInput
         {
-            JumpDown = Input.GetButtonDown("Jump") || Input.GetKey(KeyCode.C) && amountOfJumps > 0,
+            JumpDown = (Input.GetButtonDown("Jump") || Input.GetKey(KeyCode.C)) && (amountOfJumps > 0 || amountOfPoop > 0),
             JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.C),
-            isGliding = (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.S)) && !grounded && rb.velocity.y <= 0f && currentEnergy > 0,
-            isFlying = Input.GetKey(KeyCode.W) && currentEnergy > 0,
-            isLaunch = Input.GetKeyDown(KeyCode.W),
+            isGliding = (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftShift)) && !grounded && rb.velocity.y <= 0f && currentEnergy > 0,
+            isFlying = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) && currentEnergy > 0,
+            //isPoop = (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.P)) && amountOfPoop > 0,
+            isLaunch = Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow),
+            isTest = Input.GetKeyDown(KeyCode.J),
             Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
         };
 
@@ -307,7 +315,7 @@ public class PlayerController : StateMachine, IPlayerController
         if (!jumpToConsume && !HasBufferedJump)
             return;
 
-        if (jumpToConsume && (amountOfJumps > 0 || amountOfPoop > 0))
+        if (jumpToConsume)
         {
             ChangeState(new JumpState(this));
         }
@@ -348,6 +356,7 @@ public struct FrameInput
     public bool isFlying;
     public bool isLaunch;
     public bool isPoop;
+    public bool isTest;
     public Vector2 Move;
 }
 

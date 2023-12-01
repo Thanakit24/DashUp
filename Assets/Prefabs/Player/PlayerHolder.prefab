@@ -603,6 +603,10 @@ PrefabInstance:
       value: 18.2
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
+      propertyPath: testLaunch
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: launchPower
       value: 10
       objectReference: {fileID: 0}
@@ -612,11 +616,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: amountOfPoop
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: maxFallSpeed
       value: 12.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
+      propertyPath: amountOfJumps
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: currentEnergy
