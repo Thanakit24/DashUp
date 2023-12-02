@@ -143,11 +143,12 @@ public class PlayerController : StateMachine, IPlayerController
         time += Time.deltaTime;
 
         GatherInput();;
-        if (frameInput.isTest)
-        {
-            frameVelocity.y = 0f;
-            frameVelocity.y = testLaunch;
-        }
+        //if (frameInput.isTest)
+        //{
+        //    frameVelocity.y = 0f;
+        //    frameVelocity.y = testLaunch;
+        //    //frameVelocity = new Vector2(frameInput.Move.x * testLaunch, frameVelocity.y * testLaunch);
+        //}
 
         if (frameInput.isLaunch && !firstLaunch) //launching player with small upwards velocity, this also prevents spamming "fly input" to gain speed and minimize energy consumption
         {
