@@ -5222,7 +5222,8 @@ MonoBehaviour:
   depleteEnergy: 10
   maxEnergy: 25
   blackAura: {fileID: 5342984786524671089}
-  blackLaunch: {fileID: 0}
+  poopCounter: {fileID: 0}
+  sprite: {fileID: 0}
   anim: {fileID: 0}
   frameVelocity: {x: 0, y: 0}
   isFacingRight: 1

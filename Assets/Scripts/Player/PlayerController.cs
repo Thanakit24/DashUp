@@ -56,13 +56,17 @@ public class PlayerController : StateMachine, IPlayerController
     public bool firstLaunch = false;
     public float launchDeplete;
     //public float launchPower = 15f;
-    public float testLaunch;
+    //public float testLaunch;
 
     //---------------------------------------------------------------------
 
     [Header("PIDGEYPOOP")]
     public int amountOfPoop;
+    public int maxPoop;
     public float poopPower;
+    public float poopRegen;
+    public float poopRegenIncrement;
+    public float poopMaxRegen;
     public Transform poopDropPos;
     public GameObject poopPrefab;
 
@@ -80,6 +84,7 @@ public class PlayerController : StateMachine, IPlayerController
     public Transform barDisplay;
     public Slider energyBar;
     public float currentEnergy;
+    public float increaseEnergy;
     public float depleteEnergy;
     public float maxEnergy;
 
@@ -142,16 +147,18 @@ public class PlayerController : StateMachine, IPlayerController
         energyBar.maxValue = maxEnergy;
         trail.emitting = true;
         blackAura.Play(false);
+        energyBar.gameObject.SetActive(false);
         //blackLaunch.Play(false);
     }
     protected override void Update()
     {
         base.Update();
         //print(currentState);
-        SetUpEffects();
+        SetUpEnergyBar();
+        SetUpPoop();
         time += Time.deltaTime;
 
-        GatherInput();;
+        GatherInput();
         //if (frameInput.isTest)
         //{
         //    frameVelocity.y = 0f;
@@ -178,10 +185,30 @@ public class PlayerController : StateMachine, IPlayerController
 
     }
 
-    private void SetUpEffects() //set up energy bar position and particle effects
+    private void SetUpEnergyBar() //set up energy bar position and particle effects
     {
         energyBar.gameObject.transform.position = barDisplay.position;
         energyBar.value = currentEnergy;
+        
+        #region EnergyBar
+        if (currentState is GlideState || currentState is FlyState)
+        {
+            energyBar.gameObject.SetActive(true);
+        }
+        else if (grounded && currentEnergy <= maxEnergy)
+        {
+            currentEnergy += increaseEnergy * Time.deltaTime;
+            if (currentEnergy >= maxEnergy)
+            {
+                currentEnergy = maxEnergy;
+                
+            }
+        }
+
+        if (currentEnergy == maxEnergy)
+        {
+            energyBar.gameObject.SetActive(false);
+        }
 
         if (currentEnergy <= maxEnergy / 2.05f)
         {
@@ -195,18 +222,34 @@ public class PlayerController : StateMachine, IPlayerController
         {
             sprite.color = new Color(255, 255, 255);
         }
+        #endregion
+    }
 
+    private void SetUpPoop()
+    {
         if (amountOfPoop > 0)
         {
+            if (!blackAura.isPlaying) //needs to check or else it wont play/cause inconsistency
+            {
+                blackAura.Play();
+            }
             poopCounter.gameObject.SetActive(true);
-            poopCounter.text = $" {amountOfPoop}";
-            blackAura.Play();
-        }
+            poopCounter.text = $" {amountOfPoop}"; //might remove this
 
+        }
         else
         {
+            
             poopCounter.gameObject.SetActive(false);
-            blackAura.Stop();
+            if (blackAura.isPlaying)
+            {
+                blackAura.Stop();
+            }
+        }
+
+        if (amountOfPoop >= maxPoop)
+        {
+            amountOfPoop = maxPoop;
         }
     }
     private void GatherInput()
@@ -219,7 +262,7 @@ public class PlayerController : StateMachine, IPlayerController
             isFlying = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) && currentEnergy > 0,
             //isPoop = (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.P)) && amountOfPoop > 0,
             isLaunch = Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow),
-            isTest = Input.GetKeyDown(KeyCode.J),
+            //isTest = Input.GetKeyDown(KeyCode.J),
             Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
         };
 
@@ -325,7 +368,7 @@ public class PlayerController : StateMachine, IPlayerController
             bufferedJumpUsable = true;
             endedJumpEarly = false;
             amountOfJumps = maxAmountOfJumps;
-            currentEnergy = maxEnergy;
+            //currentEnergy = maxEnergy;
             sprite.color = new Color(255, 255, 255);
             GroundedChanged?.Invoke(true, Mathf.Abs(frameVelocity.y));
 
@@ -397,7 +440,7 @@ public struct FrameInput
     public bool isFlying;
     public bool isLaunch;
     public bool isPoop;
-    public bool isTest;
+    //public bool isTest;
     public Vector2 Move;
 }
 

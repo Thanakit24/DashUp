@@ -42,6 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 733019679181538097}
   - component: {fileID: 8211825969509253663}
+  - component: {fileID: 8096677669566862622}
   - component: {fileID: 8898234453228733142}
   - component: {fileID: 6884851931460209945}
   - component: {fileID: 4486985203825858320}
@@ -93,6 +94,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.2097021, y: 1.2435241}
   m_EdgeRadius: 0
+--- !u!50 &8096677669566862622
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3164206523267072659}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 1
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!212 &8898234453228733142
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -177,5 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9db4fc5ba31e9bd44abaa6c865ee2eed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  restoreTime: 0
+  isActive: 1
+  restoreTime: 3
   poopToIncrease: 1
+  isGoldFeather: 0

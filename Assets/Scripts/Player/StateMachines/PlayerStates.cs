@@ -73,7 +73,6 @@ public class JumpState : AirborneMoveState
         if (_pc.amountOfPoop > 0)
         {
             _pc.amountOfPoop--;
-            _pc.amountOfJumps--;
             _pc.frameVelocity.y = _pc.poopPower;
             _pc.anim.Play(PlayerController.BlackJumpkey);
             _pc.blackJump = true;
@@ -221,6 +220,7 @@ public class FlyState : AirborneMoveState
             return;
 
         //ui.buffIcons[i].color = new Color(1, 1, 1, KongrooUtils.RemapRange(buffs[buffDetails], 0, buffDetails.duration, 0, 1));
+      
         _pc.currentEnergy -= _pc.depleteEnergy * Time.deltaTime;
         _pc.frameInput.isGliding = false;
         _pc.rb.velocity = Vector2.zero;

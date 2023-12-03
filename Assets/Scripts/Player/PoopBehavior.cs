@@ -55,7 +55,7 @@ public class PoopBehavior : MonoBehaviour
                 rb.gravityScale = 0;
                 rb.constraints = RigidbodyConstraints2D.FreezePosition;
                 anim.SetTrigger("PoopExplode");
-                Destroy(collision.gameObject, destroyObjectTime);
+                //Destroy(collision.gameObject, destroyObjectTime);
             }
         }
     }
