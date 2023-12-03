@@ -107,6 +107,7 @@ public class PlayerController : StateMachine, IPlayerController
     public static readonly int GlideKey = Animator.StringToHash("Glide");
     public static readonly int FlyKey = Animator.StringToHash("Fly");
     public static readonly int DeathKey = Animator.StringToHash("Death");
+    public static readonly int DeathKey2 = Animator.StringToHash("Death2");
 
     //--------------------------------------------------------------------
 
@@ -121,6 +122,7 @@ public class PlayerController : StateMachine, IPlayerController
     public Vector2 FrameInput => frameInput.Move;
     public event Action<bool, float> GroundedChanged;
     //public event Action Jumped;
+  
 
     public override BaseState DefaultState()
     {
@@ -153,6 +155,7 @@ public class PlayerController : StateMachine, IPlayerController
     }
     protected override void Update()
     {
+        
         base.Update();
         //print(currentState);
         SetUpEnergyBar();
@@ -184,10 +187,10 @@ public class PlayerController : StateMachine, IPlayerController
         if (frameInput.Move.x < 0 && isFacingRight)
             FlipSprite();
 
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Dead();
-        }
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
+        //    Dead();
+        //}
     }
 
     private void SetUpEnergyBar() //set up energy bar position and particle effects

@@ -21,7 +21,7 @@ public class EndLevel : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            GameManager.instance.CompleteLevel();
+            GameManager.instance.LoadNextLevel();
         }
     }
 }

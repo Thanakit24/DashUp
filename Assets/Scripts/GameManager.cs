@@ -7,6 +7,11 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public GameObject player;
     public Transform spawnPoint;
+    public Animator anim;
+    public float transitionTime = 1.5f;
+    public float deathWaitTime;
+    public Camera cam;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -22,23 +27,48 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            ReloadCurrentLevel();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             print("escape open UI");
         }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            LoadNextLevel();
+        }
     }
 
     public void GameOver()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Invoke("ReloadCurrentLevel", deathWaitTime);
+        //ReloadCurrentLevel();
     }
-    public void CompleteLevel()
+
+   
+    
+    public void LoadNextLevel()
     {
         print("level completed");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
     }
-    
+
+    public void ReloadCurrentLevel()
+    {
+        print("reload level");
+        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex));
+    }
+
+    IEnumerator LoadLevel(int levelIndex)
+    {
+        anim.SetTrigger("Start");
+        yield return new WaitForSeconds(transitionTime);
+        SceneManager.LoadScene(levelIndex);
+        print("platform restore");
+        //currentSprite.color = new Color(255, 255, 255);
+
+    }
 }
+

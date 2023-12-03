@@ -247,7 +247,7 @@ public class DeathState : PlayerStates
         _pc.enabled = false;
         //add camera shake
         //explore different anims
-        _pc.anim.Play(PlayerController.DeathKey);
+        _pc.anim.Play(PlayerController.DeathKey2);
         GameManager.instance.GameOver();
 
     }
