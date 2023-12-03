@@ -106,6 +106,7 @@ public class PlayerController : StateMachine, IPlayerController
     public static readonly int FallKey = Animator.StringToHash("Fall");
     public static readonly int GlideKey = Animator.StringToHash("Glide");
     public static readonly int FlyKey = Animator.StringToHash("Fly");
+    public static readonly int DeathKey = Animator.StringToHash("Death");
 
     //--------------------------------------------------------------------
 
@@ -113,7 +114,7 @@ public class PlayerController : StateMachine, IPlayerController
     [HideInInspector] public FrameInput frameInput;
     public bool isFacingRight = true;
     private float time;
-    [SerializeField] private TrailRenderer trail;
+    [HideInInspector] public TrailRenderer trail;
 
     //--------------------------------------------------------------------
     //Interface
@@ -183,6 +184,10 @@ public class PlayerController : StateMachine, IPlayerController
         if (frameInput.Move.x < 0 && isFacingRight)
             FlipSprite();
 
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Dead();
+        }
     }
 
     private void SetUpEnergyBar() //set up energy bar position and particle effects
@@ -429,6 +434,7 @@ public class PlayerController : StateMachine, IPlayerController
     public void Dead()
     {
         print("kill player");
+        ChangeState(new DeathState(this));
     }
 
 }

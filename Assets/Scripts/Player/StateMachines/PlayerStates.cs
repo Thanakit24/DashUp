@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerStates : BaseState
 {
@@ -220,13 +221,35 @@ public class FlyState : AirborneMoveState
             return;
 
         //ui.buffIcons[i].color = new Color(1, 1, 1, KongrooUtils.RemapRange(buffs[buffDetails], 0, buffDetails.duration, 0, 1));
-      
+
         _pc.currentEnergy -= _pc.depleteEnergy * Time.deltaTime;
         _pc.frameInput.isGliding = false;
         _pc.rb.velocity = Vector2.zero;
         _pc.frameVelocity.x = Mathf.MoveTowards(_pc.frameVelocity.x, _pc.frameInput.Move.x * _pc.maxFlySpeed, _pc.flyAcceleration * Time.fixedDeltaTime);
         _pc.frameVelocity.y /= _pc.airDownwardForce;
         _pc.frameVelocity.y = Mathf.MoveTowards(_pc.frameVelocity.y, _pc.flyUpwardSpeed, _pc.flyUpwardSpeed * Time.fixedDeltaTime);
+    }
+
+   
+}
+
+public class DeathState : PlayerStates
+{
+    public DeathState(PlayerController pc) : base(pc) { }
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
+        _pc.frameVelocity.y = _pc.poopPower;
+        _pc.energyBar.gameObject.SetActive(false);
+        _pc.trail.emitting = false;
+        _pc.rb.constraints = RigidbodyConstraints2D.FreezePosition;
+        _pc.enabled = false;
+        //add camera shake
+        //explore different anims
+        _pc.anim.Play(PlayerController.DeathKey);
+        GameManager.instance.GameOver();
+
     }
 
 }

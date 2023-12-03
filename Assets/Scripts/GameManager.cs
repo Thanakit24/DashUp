@@ -31,6 +31,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void GameOver()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
     public void CompleteLevel()
     {
         print("level completed");

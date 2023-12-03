@@ -1,5 +1,63 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &210413551969715677
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3017185786469214488}
+  - component: {fileID: 1103914711806464783}
+  m_Layer: 3
+  m_Name: PlayerTriggerCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3017185786469214488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210413551969715677}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8869937637638697409}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1103914711806464783
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210413551969715677}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0024313927, y: -0.0048635006}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.6954813, y: 0.7276435}
+  m_EdgeRadius: 0
 --- !u!1 &8869937637638697411
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,7 +70,6 @@ GameObject:
   - component: {fileID: 8869937637638697410}
   - component: {fileID: 8869937637638697408}
   - component: {fileID: 8869937637638697423}
-  - component: {fileID: 8869937637638697422}
   m_Layer: 3
   m_Name: Breakable2
   m_TagString: Breakable
@@ -31,7 +88,8 @@ Transform:
   m_LocalPosition: {x: -5, y: -5.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3017185786469214488}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -125,24 +183,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6c3a464a9040f945851b2d230de8cab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8869937637638697422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8869937637638697411}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f868515e3b13834080b124f04630cc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canVanish: 1
-  isVanishing: 0
-  isRestoring: 0
-  vanishTime: 0
-  vanishMaxTime: 0
-  restoreTime: 0
-  triggerCol: {fileID: 0}
-  defaultSprite: {fileID: 0}
-  vanishedSprite: {fileID: 0}
+  isActive: 1
+  currentSprite: {fileID: 8869937637638697410}
+  activeSprite: {fileID: 21300000, guid: 7a4f7a428315f8f4a95adee62367bf7d, type: 3}
+  deactiveSprite: {fileID: 21300000, guid: 9243009909eaf834490657f44d4c28c2, type: 3}
+  triggerCol: {fileID: 1103914711806464783}
+  restoreTime: 5

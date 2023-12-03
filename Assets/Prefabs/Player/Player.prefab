@@ -5205,9 +5205,12 @@ MonoBehaviour:
   airDownwardForce: 15
   firstLaunch: 0
   launchDeplete: 4
-  testLaunch: 20
   amountOfPoop: 0
+  maxPoop: 0
   poopPower: 18.2
+  poopRegen: 0
+  poopRegenIncrement: 0
+  poopMaxRegen: 0
   poopDropPos: {fileID: 8550018601427400666}
   poopPrefab: {fileID: 2296188348177056547, guid: 1e30cf7386820c043b20bce2dd5199bd, type: 3}
   groundLayerMask:
@@ -5219,6 +5222,7 @@ MonoBehaviour:
   barDisplay: {fileID: 1580932659}
   energyBar: {fileID: 0}
   currentEnergy: 25
+  increaseEnergy: 0
   depleteEnergy: 10
   maxEnergy: 25
   blackAura: {fileID: 5342984786524671089}
