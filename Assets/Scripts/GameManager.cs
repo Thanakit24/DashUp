@@ -35,10 +35,10 @@ public class GameManager : MonoBehaviour
             print("escape open UI");
         }
 
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            LoadNextLevel();
-        }
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
+        //    LoadNextLevel();
+        //}
     }
 
     public void GameOver()

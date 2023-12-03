@@ -36,6 +36,7 @@ public class Destroyable : MonoBehaviour
             boxCol.enabled = true;
             triggerCol.enabled = true;
             currentSprite.sprite = activeSprite;
+            currentSprite.color = new Color32(255, 255, 255, 255);
             //currentSprite.color = new Color(255, 255, 255);
 
         }
@@ -47,6 +48,7 @@ public class Destroyable : MonoBehaviour
         {
             isActive = false;
             currentSprite.sprite = deactiveSprite;
+            currentSprite.color = new Color32(255, 255, 255, 50);
             //currentSprite.color = new Color32(90, 90, 90, 255);
             //play explode particles? 
             boxCol.enabled = false;

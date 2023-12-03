@@ -424,15 +424,15 @@ public class PlayerController : StateMachine, IPlayerController
         isFacingRight = !isFacingRight;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Breakable") && blackJump)
-        {
-            print("called");
-            collision.collider.enabled = false;
-            Destroy(collision.gameObject);
-        }
-    }
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Breakable") && blackJump)
+    //    {
+    //        print("called");
+    //        collision.collider.enabled = false;
+    //        Destroy(collision.gameObject);
+    //    }
+    //}
 
     public void Dead()
     {

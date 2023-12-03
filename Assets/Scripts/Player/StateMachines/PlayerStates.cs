@@ -240,14 +240,14 @@ public class DeathState : PlayerStates
     public override void OnEnter()
     {
         base.OnEnter();
-        _pc.frameVelocity.y = _pc.poopPower;
+        _pc.sprite.color = new Color(255, 255, 255);
         _pc.energyBar.gameObject.SetActive(false);
         _pc.trail.emitting = false;
         _pc.rb.constraints = RigidbodyConstraints2D.FreezePosition;
         _pc.enabled = false;
         //add camera shake
         //explore different anims
-        _pc.anim.Play(PlayerController.DeathKey2);
+        _pc.anim.Play(PlayerController.DeathKey);
         GameManager.instance.GameOver();
 
     }
