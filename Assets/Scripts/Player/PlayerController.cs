@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Cinemachine;
+using TMPro;
 using UnityEngine.UI;
 
 
@@ -83,6 +84,13 @@ public class PlayerController : StateMachine, IPlayerController
     public float maxEnergy;
 
     //---------------------------------------------------------------------
+
+    [Header("PARTICLES")]
+    public ParticleSystem blackAura;
+    public TextMeshProUGUI poopCounter;
+    public SpriteRenderer sprite;
+    
+   
     //Animation Keys 
     [HideInInspector] public Animator anim;
     public static readonly int AnimSpeedParameter = Animator.StringToHash("animSpeed");
@@ -119,6 +127,7 @@ public class PlayerController : StateMachine, IPlayerController
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CapsuleCollider2D>();
+        //blackAura = GetComponentInChildren<ParticleSystem>();
         _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
 
     }
@@ -132,14 +141,14 @@ public class PlayerController : StateMachine, IPlayerController
         energyBar.value = maxEnergy;
         energyBar.maxValue = maxEnergy;
         trail.emitting = true;
+        blackAura.Play(false);
+        //blackLaunch.Play(false);
     }
     protected override void Update()
     {
         base.Update();
         //print(currentState);
-        energyBar.gameObject.transform.position = barDisplay.position;
-        energyBar.value = currentEnergy;
-
+        SetUpEffects();
         time += Time.deltaTime;
 
         GatherInput();;
@@ -149,15 +158,13 @@ public class PlayerController : StateMachine, IPlayerController
         //    frameVelocity.y = testLaunch;
         //    //frameVelocity = new Vector2(frameInput.Move.x * testLaunch, frameVelocity.y * testLaunch);
         //}
-
-        if (frameInput.isLaunch && !firstLaunch) //launching player with small upwards velocity, this also prevents spamming "fly input" to gain speed and minimize energy consumption
+        if (frameInput.isLaunch && !firstLaunch) //this prevents spamming "fly input" to gain speed and minimize energy consumption
         {
             firstLaunch = true;
 
             if (firstLaunch)
             {
                 currentEnergy -= launchDeplete;
-                //frameVelocity.y = launchPower;
                 firstLaunch = false;
             }
         }
@@ -169,6 +176,38 @@ public class PlayerController : StateMachine, IPlayerController
         if (frameInput.Move.x < 0 && isFacingRight)
             FlipSprite();
 
+    }
+
+    private void SetUpEffects() //set up energy bar position and particle effects
+    {
+        energyBar.gameObject.transform.position = barDisplay.position;
+        energyBar.value = currentEnergy;
+
+        if (currentEnergy <= maxEnergy / 2.05f)
+        {
+            float deductThreshold = maxEnergy / 2.05f;
+            float energyRatio = currentEnergy / deductThreshold;
+            // Set the red component directly, keeping green and blue at 0
+            float decreaseChannels = Mathf.Clamp01(energyRatio); // Ensure redness is between 0 and 1
+            sprite.color = new Color(255, Mathf.Max(decreaseChannels, 0.4f), Mathf.Max(decreaseChannels, 0.4f), 255f);
+        } 
+        else
+        {
+            sprite.color = new Color(255, 255, 255);
+        }
+
+        if (amountOfPoop > 0)
+        {
+            poopCounter.gameObject.SetActive(true);
+            poopCounter.text = $" {amountOfPoop}";
+            blackAura.Play();
+        }
+
+        else
+        {
+            poopCounter.gameObject.SetActive(false);
+            blackAura.Stop();
+        }
     }
     private void GatherInput()
     {
@@ -287,6 +326,7 @@ public class PlayerController : StateMachine, IPlayerController
             endedJumpEarly = false;
             amountOfJumps = maxAmountOfJumps;
             currentEnergy = maxEnergy;
+            sprite.color = new Color(255, 255, 255);
             GroundedChanged?.Invoke(true, Mathf.Abs(frameVelocity.y));
 
         }

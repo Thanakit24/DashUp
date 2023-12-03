@@ -36,9 +36,9 @@ public class FeathersPickUp : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && isActive)
+        if ((collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Poop")) && isActive)
         {
-            isGoldFeather = !isGoldFeather;
+            //isGoldFeather = !isGoldFeather;
             PlayerController player = collision.GetComponent<PlayerController>();
 
             if (!isGoldFeather)
@@ -48,12 +48,14 @@ public class FeathersPickUp : MonoBehaviour
                 player.amountOfPoop += poopToIncrease;
                 isActive = false;
                 Destroy(gameObject);
+                
             }
             else
             {
                 if (player.currentEnergy > player.maxEnergy)
                     player.currentEnergy = player.maxEnergy;
                     print("set player energy to full");
+                isActive = false; 
             }
             //play some effects or particles and sounds
             //isActive = false;

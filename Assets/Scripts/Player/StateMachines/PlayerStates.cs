@@ -77,7 +77,7 @@ public class JumpState : AirborneMoveState
             _pc.frameVelocity.y = _pc.poopPower;
             _pc.anim.Play(PlayerController.BlackJumpkey);
             _pc.blackJump = true;
-            GameObject poop = GameObject.Instantiate(_pc.poopPrefab, _pc.poopDropPos.position, Quaternion.identity);
+            GameObject poop = GameObject.Instantiate(_pc.poopPrefab, _pc.poopDropPos.position, Quaternion.identity);  
 
         }
         else
@@ -220,6 +220,7 @@ public class FlyState : AirborneMoveState
         if (_pc.currentState is JumpState)
             return;
 
+        //ui.buffIcons[i].color = new Color(1, 1, 1, KongrooUtils.RemapRange(buffs[buffDetails], 0, buffDetails.duration, 0, 1));
         _pc.currentEnergy -= _pc.depleteEnergy * Time.deltaTime;
         _pc.frameInput.isGliding = false;
         _pc.rb.velocity = Vector2.zero;
