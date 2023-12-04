@@ -7729,7 +7729,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 252571673}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 23, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7748,10 +7748,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f862393dc35a9e4c9b797f1a3d1e2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  portalDestination: {fileID: 614310735}
   firstPortal: 0
   portalA: {fileID: 614310735}
   portalB: {fileID: 252571674}
-  poopInPortal: 0
+  distance: 0.5
+  poop: {fileID: 2296188348177056547, guid: 1e30cf7386820c043b20bce2dd5199bd, type: 3}
+  isTeleporting: 0
 --- !u!212 &252571676
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7817,7 +7820,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.03213662}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -7828,7 +7831,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.4627686, y: 1.3213667}
   m_EdgeRadius: 0
 --- !u!1 &614310734
 GameObject:
@@ -7856,14 +7859,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 614310734}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.98, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 31, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1233971930}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!114 &614310736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7876,10 +7879,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f862393dc35a9e4c9b797f1a3d1e2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  portalDestination: {fileID: 252571674}
   firstPortal: 1
   portalA: {fileID: 614310735}
   portalB: {fileID: 252571674}
-  poopInPortal: 0
+  distance: 0.5
+  poop: {fileID: 2296188348177056547, guid: 1e30cf7386820c043b20bce2dd5199bd, type: 3}
+  isTeleporting: 0
 --- !u!212 &614310737
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7945,7 +7951,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.006427765, y: 0.012854576}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -7956,7 +7962,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.3984947, y: 1.4627676}
   m_EdgeRadius: 0
 --- !u!1 &619394800
 GameObject:
@@ -19505,7 +19511,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813658, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: orthographic size
-      value: 2.28125
+      value: 6.4375
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813733, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: m_RootOrder

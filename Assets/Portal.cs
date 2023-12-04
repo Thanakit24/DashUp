@@ -4,46 +4,46 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    public bool firstPortal = true;
+    public Transform portalDestination;
+    public bool firstPortal;
     public Transform portalA;
     public Transform portalB;
-    public bool poopInPortal = false;
+    public float distance = 0.4f;
+    public GameObject poop;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (!firstPortal)
+        {
+            portalDestination.position = portalA.transform.position;
+        }
+        else
+        {
+            portalDestination.position = portalB.transform.position;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        //play animation or particles
+        // play animation or particles
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Poop") && !poopInPortal)
+        if (collision.gameObject.CompareTag("Poop"))
         {
-            if (firstPortal)
+          
+            if (Vector2.Distance(transform.position, collision.transform.position) > distance)
             {
-                poopInPortal = true;
-                collision.transform.position = portalB.position;
+                //instantiate poop prefab on the next portal to prevent trail renderer from transitioning
+                Destroy(collision.gameObject);
+                Instantiate(poop, portalDestination.position, Quaternion.identity);
             }
-            else
-            {
-                collision.transform.position = portalA.position;
-                poopInPortal = true;
-            } 
             
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Poop") && poopInPortal)
-        {
-            poopInPortal = false;
 
-        }
-    }
 }
