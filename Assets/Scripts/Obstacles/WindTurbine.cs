@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class WindTurbine : MonoBehaviour
 {
+    [SerializeField] private float downwardForce;
     [SerializeField] private float upwardForce;
+    [SerializeField] private float impulseForce;
+    [SerializeField] private bool facingUp = false;
     private BoxCollider2D boxCol;
     [SerializeField] private float reductSpeed;
     [SerializeField] private float reductJump;
@@ -14,6 +17,10 @@ public class WindTurbine : MonoBehaviour
         boxCol = GetComponent<BoxCollider2D>();
     }
 
+    private void Update()
+    {
+        
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -22,6 +29,7 @@ public class WindTurbine : MonoBehaviour
             player.frameVelocity.y = 0f;
             player.flyUpwardSpeed /= reductSpeed;
             player.jumpPower -= reductJump;
+            player.rb.AddForce(player.rb.transform.up * impulseForce, ForceMode2D.Impulse);
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
@@ -33,7 +41,12 @@ public class WindTurbine : MonoBehaviour
             Rigidbody2D rbAffect = collision.gameObject.GetComponent<Rigidbody2D>();
             rbAffect.velocity = Vector2.zero;
             rbAffect.gravityScale = 0f;
-            rbAffect.AddForce(-player.rb.transform.up * upwardForce, ForceMode2D.Force);
+            if (!facingUp)
+                rbAffect.AddForce(-player.rb.transform.up * downwardForce, ForceMode2D.Force);
+            else
+            {
+                rbAffect.AddForce(player.rb.transform.up * upwardForce, ForceMode2D.Force);
+            }
             //player.rb.transform.up
         }
     }

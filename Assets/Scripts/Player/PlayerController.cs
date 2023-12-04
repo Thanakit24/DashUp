@@ -187,10 +187,6 @@ public class PlayerController : StateMachine, IPlayerController
         if (frameInput.Move.x < 0 && isFacingRight)
             FlipSprite();
 
-        //if (Input.GetKeyDown(KeyCode.T))
-        //{
-        //    Dead();
-        //}
     }
 
     private void SetUpEnergyBar() //set up energy bar position and particle effects
@@ -422,11 +418,6 @@ public class PlayerController : StateMachine, IPlayerController
         currentScale.x *= -1;
         gameObject.transform.localScale = currentScale;
         isFacingRight = !isFacingRight;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        print(collision.gameObject.name);
     }
 
     public void Dead()
