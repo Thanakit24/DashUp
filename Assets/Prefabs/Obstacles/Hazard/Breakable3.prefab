@@ -201,4 +201,4 @@ MonoBehaviour:
   activeSprite: {fileID: 21300000, guid: 9a8f587be04d4614588e68f4b6f023c4, type: 3}
   deactiveSprite: {fileID: 21300000, guid: 49736a629151ce5489f35c3e777176f9, type: 3}
   triggerCol: {fileID: 2748453486408115020}
-  restoreTime: 5
+  restoreTime: 3

@@ -9586,7 +9586,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5173898796684912531, guid: c895087ce49afbb48963376569487348, type: 3}
       propertyPath: moveSpeed
-      value: 6
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 5173898796684912531, guid: c895087ce49afbb48963376569487348, type: 3}
       propertyPath: pathPoints.Array.data[0]
@@ -10046,7 +10046,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813658, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: orthographic size
-      value: 6.40625
+      value: 2.25
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813658, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: m_NormalizedViewPortRect.y
@@ -10066,7 +10066,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813733, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.60229
+      value: 13.01635
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813733, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: m_LocalPosition.y

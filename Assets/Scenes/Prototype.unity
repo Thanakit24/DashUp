@@ -19505,7 +19505,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813658, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: orthographic size
-      value: 6.34375
+      value: 2.28125
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813733, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: m_RootOrder
@@ -19567,6 +19567,14 @@ PrefabInstance:
     - target: {fileID: 4889708598004479079, guid: 178c5ce936ecd37419d8cd551020acc9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4889708598770074675, guid: 178c5ce936ecd37419d8cd551020acc9, type: 3}
+      propertyPath: maxPoop
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 4889708598770074675, guid: 178c5ce936ecd37419d8cd551020acc9, type: 3}
+      propertyPath: amountOfPoop
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 4889708599287385492, guid: 178c5ce936ecd37419d8cd551020acc9, type: 3}
       propertyPath: m_Name
