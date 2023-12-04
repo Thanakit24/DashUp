@@ -5024,7 +5024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 393f6b8840f5c5642b5171674dacbd8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upwardForce: 70
+  upwardForce: 200
   reductSpeed: 1
   reductJump: 1
 --- !u!1 &8804428084095196285

@@ -7748,6 +7748,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 23373421}
     m_Modifications:
+    - target: {fileID: 8016872341251894664, guid: 827a1a685416fb14ea2c83187c77631b, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 8016872341251894665, guid: 827a1a685416fb14ea2c83187c77631b, type: 3}
       propertyPath: rotateRight
       value: 0
@@ -7825,6 +7829,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 23373421}
     m_Modifications:
+    - target: {fileID: 8016872341251894664, guid: 827a1a685416fb14ea2c83187c77631b, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 8016872341251894665, guid: 827a1a685416fb14ea2c83187c77631b, type: 3}
       propertyPath: rotateRight
       value: 1
@@ -7957,6 +7965,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 23373421}
     m_Modifications:
+    - target: {fileID: 8016872341251894664, guid: 827a1a685416fb14ea2c83187c77631b, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 8016872341251894665, guid: 827a1a685416fb14ea2c83187c77631b, type: 3}
       propertyPath: rotateRight
       value: 0
@@ -9929,6 +9941,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 23373421}
     m_Modifications:
+    - target: {fileID: 8016872341251894664, guid: 827a1a685416fb14ea2c83187c77631b, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 8016872341251894666, guid: 827a1a685416fb14ea2c83187c77631b, type: 3}
       propertyPath: m_Name
       value: DecorBlock (2)
@@ -10033,7 +10049,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813733, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.829162
+      value: 6.445001
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813733, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10137,6 +10153,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 23373421}
     m_Modifications:
+    - target: {fileID: 8016872341251894664, guid: 827a1a685416fb14ea2c83187c77631b, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 8016872341251894665, guid: 827a1a685416fb14ea2c83187c77631b, type: 3}
       propertyPath: rotateRight
       value: 1

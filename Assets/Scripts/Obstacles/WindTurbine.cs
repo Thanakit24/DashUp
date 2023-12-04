@@ -19,6 +19,7 @@ public class WindTurbine : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+            player.frameVelocity.y = 0f;
             player.flyUpwardSpeed /= reductSpeed;
             player.jumpPower -= reductJump;
         }

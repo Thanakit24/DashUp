@@ -19369,10 +19369,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 433642716, guid: c6bd4cb0756645041a112500bd50d2f6, type: 3}
-      propertyPath: shakeIntensity
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4020746551450792648, guid: c6bd4cb0756645041a112500bd50d2f6, type: 3}
       propertyPath: m_Name
       value: CM vcam1
@@ -19425,8 +19421,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 847200549, guid: c6bd4cb0756645041a112500bd50d2f6, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6bd4cb0756645041a112500bd50d2f6, type: 3}
 --- !u!1001 &4170943419196251039
 PrefabInstance:
