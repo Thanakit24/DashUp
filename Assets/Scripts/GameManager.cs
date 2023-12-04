@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public Animator anim;
     public float transitionTime = 1.5f;
     public float deathWaitTime;
-    public Camera cam;
+    //public Camera cam;
 
     // Start is called before the first frame update
     private void Awake()
@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        CameraShake.instance.ShakeCamera();
         Invoke("ReloadCurrentLevel", deathWaitTime);
         //ReloadCurrentLevel();
     }

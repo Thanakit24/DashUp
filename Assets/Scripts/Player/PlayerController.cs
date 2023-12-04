@@ -362,7 +362,7 @@ public class PlayerController : StateMachine, IPlayerController
         // Ground and Ceiling
         bool groundHit = Physics2D.CapsuleCast(col.bounds.center, col.size, col.direction, 0, Vector2.down, grounderDistance, groundLayerMask) && (currentState is not FlyState || currentState is not GlideState);
         //added is not flying check because when the player collides with the ground while flying, it resets the energy bar to full 
-        bool ceilingHit = Physics2D.CapsuleCast(col.bounds.center, col.size, col.direction, 0, Vector2.up, grounderDistance, ~playerLayer);
+        bool ceilingHit = Physics2D.CapsuleCast(col.bounds.center, col.size, col.direction, 0, Vector2.up, grounderDistance, groundLayerMask);
 
         // Hit a Ceiling
         if (ceilingHit) frameVelocity.y = Mathf.Min(0, frameVelocity.y);
@@ -424,15 +424,10 @@ public class PlayerController : StateMachine, IPlayerController
         isFacingRight = !isFacingRight;
     }
 
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Breakable") && blackJump)
-    //    {
-    //        print("called");
-    //        collision.collider.enabled = false;
-    //        Destroy(collision.gameObject);
-    //    }
-    //}
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        print(collision.gameObject.name);
+    }
 
     public void Dead()
     {

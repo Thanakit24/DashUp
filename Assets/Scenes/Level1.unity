@@ -6623,7 +6623,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813658, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: orthographic size
-      value: 6.40625
+      value: 8.03125
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813733, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: m_RootOrder
@@ -6779,9 +6779,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1419593610, guid: 857095070823107438d40b98ba7e7523, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 514225121}
+    - target: {fileID: 4498188762590488509, guid: 857095070823107438d40b98ba7e7523, type: 3}
+      propertyPath: m_text
+      value: "HOLD W \nFLY"
+      objectReference: {fileID: 0}
     - target: {fileID: 7472529831015836842, guid: 857095070823107438d40b98ba7e7523, type: 3}
       propertyPath: m_Name
       value: TutorialNPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 7472529831015836843, guid: 857095070823107438d40b98ba7e7523, type: 3}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7472529831015836844, guid: 857095070823107438d40b98ba7e7523, type: 3}
       propertyPath: m_RootOrder
@@ -6789,11 +6801,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7472529831015836844, guid: 857095070823107438d40b98ba7e7523, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.82
+      value: -3.978
       objectReference: {fileID: 0}
     - target: {fileID: 7472529831015836844, guid: 857095070823107438d40b98ba7e7523, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.62
+      value: -1.577
       objectReference: {fileID: 0}
     - target: {fileID: 7472529831015836844, guid: 857095070823107438d40b98ba7e7523, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6825,6 +6837,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7472529831015836844, guid: 857095070823107438d40b98ba7e7523, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7472559752605245272, guid: 857095070823107438d40b98ba7e7523, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

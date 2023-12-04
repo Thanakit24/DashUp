@@ -247,4 +247,4 @@ MonoBehaviour:
   spawnPoint: {fileID: 0}
   anim: {fileID: 250945376}
   transitionTime: 1
-  deathWaitTime: 1.5
+  deathWaitTime: 1.25

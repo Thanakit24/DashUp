@@ -188,7 +188,7 @@ public class GlideState : AirborneMoveState
         if (_pc.currentState is JumpState)
             return;
 
-        _pc.currentEnergy -= _pc.depleteEnergy * Time.deltaTime;
+        //_pc.currentEnergy -= _pc.depleteEnergy * Time.deltaTime;
         _pc.frameInput.isFlying = false;
         _pc.frameVelocity.x = Mathf.MoveTowards(_pc.frameVelocity.x, _pc.frameInput.Move.x * _pc.maxGlideSpeed, _pc.glideAcceleration * Time.fixedDeltaTime);
         _pc.frameVelocity.y /= _pc.glideGravityResistance;

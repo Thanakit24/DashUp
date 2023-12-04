@@ -8,6 +8,7 @@ TagManager:
   - Breakable
   - Obstacle
   - Poop
+  - NPC
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Poop
   - Enemy
   - Obstacle
-  - 
+  - NPC
   - 
   - 
   - 

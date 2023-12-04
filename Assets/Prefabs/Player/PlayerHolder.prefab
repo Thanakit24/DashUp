@@ -817,7 +817,7 @@ PrefabInstance:
       objectReference: {fileID: 4889708598869949137}
     - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: maxPoop
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: energyBar
@@ -832,12 +832,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1614311554}
     - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
+      propertyPath: maxFallSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: poopMaxRegen
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: increaseEnergy
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
+      propertyPath: fallAcceleration
+      value: 43
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: poopRegenIncrement
