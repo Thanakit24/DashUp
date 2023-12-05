@@ -833,7 +833,7 @@ PrefabInstance:
       objectReference: {fileID: 1614311554}
     - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: maxFallSpeed
-      value: 20
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: poopMaxRegen

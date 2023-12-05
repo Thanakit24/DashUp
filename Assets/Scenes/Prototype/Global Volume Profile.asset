@@ -43,7 +43,7 @@ MonoBehaviour:
     m_Value: 0.9
   intensity:
     m_OverrideState: 1
-    m_Value: 0.15
+    m_Value: 0.1
   scatter:
     m_OverrideState: 0
     m_Value: 0.7
@@ -52,7 +52,7 @@ MonoBehaviour:
     m_Value: 65539.79
   tint:
     m_OverrideState: 1
-    m_Value: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
   highQualityFiltering:
     m_OverrideState: 0
     m_Value: 0
@@ -83,16 +83,16 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 0.08
   xMultiplier:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   yMultiplier:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   center:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {x: 0.5, y: 0.5}
   scale:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -112,6 +112,7 @@ MonoBehaviour:
   - {fileID: -3311491442521287374}
   - {fileID: 1471117005462027710}
   - {fileID: 3958267090376632120}
+  - {fileID: 6800069371463379926}
 --- !u!114 &1471117005462027710
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -161,8 +162,8 @@ MonoBehaviour:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.9361702
-          value: 0.9098266
+          time: 0.635925
+          value: 0.74886394
           inSlope: 1
           outSlope: 1
           tangentMode: 0
@@ -326,3 +327,31 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
+--- !u!114 &6800069371463379926
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
+  m_Name: ColorAdjustments
+  m_EditorClassIdentifier: 
+  active: 0
+  postExposure:
+    m_OverrideState: 0
+    m_Value: 0.2
+  contrast:
+    m_OverrideState: 1
+    m_Value: 5
+  colorFilter:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  hueShift:
+    m_OverrideState: 0
+    m_Value: 0
+  saturation:
+    m_OverrideState: 0
+    m_Value: 0

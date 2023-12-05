@@ -7754,7 +7754,6 @@ MonoBehaviour:
   portalB: {fileID: 252571674}
   distance: 0.5
   poop: {fileID: 2296188348177056547, guid: 1e30cf7386820c043b20bce2dd5199bd, type: 3}
-  isTeleporting: 0
 --- !u!212 &252571676
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7885,7 +7884,6 @@ MonoBehaviour:
   portalB: {fileID: 252571674}
   distance: 0.5
   poop: {fileID: 2296188348177056547, guid: 1e30cf7386820c043b20bce2dd5199bd, type: 3}
-  isTeleporting: 0
 --- !u!212 &614310737
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19366,6 +19364,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3279115428724744547, guid: d7d8d84710a15064f8bb6760666a63f9, type: 3}
+      propertyPath: m_IsGlobal
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7d8d84710a15064f8bb6760666a63f9, type: 3}
 --- !u!1001 &4020746552826514280
@@ -19511,7 +19513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813658, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: orthographic size
-      value: 6.4375
+      value: 6.171875
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813733, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: m_RootOrder
