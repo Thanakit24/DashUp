@@ -35,7 +35,6 @@ public class PoopBehavior : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-       
         if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Obstacle"))
         {
             //print("destroy poop");
@@ -46,12 +45,17 @@ public class PoopBehavior : MonoBehaviour
 
         }
 
+       
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         if (collision.gameObject.CompareTag("Breakable"))
         {
             bool obstacleHit = Physics2D.OverlapCircle(transform.position, explosionRadius, groundMask);
             if (obstacleHit)
             {
-                //print("found bbreakable obstacle");
+                print("found bbreakable obstacle");
                 rb.velocity = Vector2.zero;
                 rb.gravityScale = 0;
                 rb.constraints = RigidbodyConstraints2D.FreezePosition;
