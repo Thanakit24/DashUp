@@ -851,6 +851,10 @@ PrefabInstance:
       propertyPath: poopRegenIncrement
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
+      propertyPath: glideFallAcceleration
+      value: 125
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
 --- !u!4 &4889708598770074673 stripped
