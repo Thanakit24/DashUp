@@ -55,7 +55,7 @@ public class PlayerController : StateMachine, IPlayerController
     public float airDownwardForce;
     public bool firstLaunch = false;
     public float launchDeplete;
-    //public float launchPower = 15f;
+    public float launchPower = 15f;
     //public float testLaunch;
 
     //---------------------------------------------------------------------
@@ -158,11 +158,11 @@ public class PlayerController : StateMachine, IPlayerController
         
         base.Update();
         //print(currentState);
-        SetUpEnergyBar();
+       
         SetUpPoop();
         time += Time.deltaTime;
-
         GatherInput();
+        SetUpEnergyBar();
         //if (frameInput.isTest)
         //{
         //    frameVelocity.y = 0f;
@@ -176,6 +176,7 @@ public class PlayerController : StateMachine, IPlayerController
             if (firstLaunch)
             {
                 currentEnergy -= launchDeplete;
+                frameVelocity.y = launchPower;
                 firstLaunch = false;
             }
         }
@@ -195,6 +196,7 @@ public class PlayerController : StateMachine, IPlayerController
         energyBar.value = currentEnergy;
         
         #region EnergyBar
+
         if (currentState is GlideState || currentState is FlyState)
         {
             energyBar.gameObject.SetActive(true);
@@ -209,7 +211,7 @@ public class PlayerController : StateMachine, IPlayerController
             }
         }
 
-        if (currentEnergy == maxEnergy)
+        if (currentEnergy == maxEnergy && currentState is not GlideState)
         {
             energyBar.gameObject.SetActive(false);
         }
