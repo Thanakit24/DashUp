@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
         anim.SetTrigger("Start");
         yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(levelIndex);
-        print("platform restore");
+        //print("platform restore");
         //currentSprite.color = new Color(255, 255, 255);
 
     }
