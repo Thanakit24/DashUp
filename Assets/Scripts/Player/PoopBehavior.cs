@@ -11,6 +11,7 @@ public class PoopBehavior : MonoBehaviour
     [SerializeField] private float lifeTime;
     [SerializeField] private float destroyObjectTime;
     [SerializeField] private float explosionRadius;
+    private TrailRenderer trail;
     public LayerMask groundMask;
     private Animator anim;
     private Rigidbody2D rb;
@@ -18,6 +19,7 @@ public class PoopBehavior : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        trail = GetComponent<TrailRenderer>();
     }
 
     private void Start()
@@ -67,6 +69,15 @@ public class PoopBehavior : MonoBehaviour
         }
     }
 
+    public void DisableTrail()
+    {
+        trail.enabled = false;
+    }
+
+    public void EnableTrail()
+    {
+        trail.enabled = true;
+    }
     public void DestroyPoop() //called by animation event
     {
        

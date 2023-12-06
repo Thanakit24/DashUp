@@ -102,7 +102,7 @@ MonoBehaviour:
   poopDamage: 0
   lifeTime: 5
   destroyObjectTime: 0.15
-  explosionRadius: 0.8
+  explosionRadius: 1
   groundMask:
     serializedVersion: 2
     m_Bits: 520

@@ -769,11 +769,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124285, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 22.50045
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124285, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -11.500231
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124285, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -826,6 +826,10 @@ PrefabInstance:
     - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: maxEnergy
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
+      propertyPath: launchPower
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 8550018600877124287, guid: 93d65b866c7615b4281649ebc78703e6, type: 3}
       propertyPath: poopCounter

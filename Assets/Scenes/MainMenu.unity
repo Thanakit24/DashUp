@@ -2391,42 +2391,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 816058392421754887, guid: fec0c568906162244987ba2a145911c0, type: 3}
-      propertyPath: sounds.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 816058392421754887, guid: fec0c568906162244987ba2a145911c0, type: 3}
-      propertyPath: sounds.Array.data[3].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: cb6d69862eee6c74fbb47ae4e8d19b47, type: 3}
-    - target: {fileID: 816058392421754887, guid: fec0c568906162244987ba2a145911c0, type: 3}
-      propertyPath: sounds.Array.data[5].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: 54247e4f08a48b64d9b16fb8bd324a36, type: 3}
-    - target: {fileID: 816058392421754887, guid: fec0c568906162244987ba2a145911c0, type: 3}
-      propertyPath: sounds.Array.data[5].name
-      value: Win
-      objectReference: {fileID: 0}
-    - target: {fileID: 816058392421754887, guid: fec0c568906162244987ba2a145911c0, type: 3}
-      propertyPath: sounds.Array.data[5].pitch
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 816058392421754887, guid: fec0c568906162244987ba2a145911c0, type: 3}
-      propertyPath: sounds.Array.data[3].volume
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 816058392421754887, guid: fec0c568906162244987ba2a145911c0, type: 3}
-      propertyPath: sounds.Array.data[5].volume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 816058392421754887, guid: fec0c568906162244987ba2a145911c0, type: 3}
-      propertyPath: sounds.Array.data[5].pitchVariance
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 816058392421754887, guid: fec0c568906162244987ba2a145911c0, type: 3}
-      propertyPath: sounds.Array.data[5].volumeVariance
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 816058392421754888, guid: fec0c568906162244987ba2a145911c0, type: 3}
       propertyPath: m_Name
       value: AudioManager

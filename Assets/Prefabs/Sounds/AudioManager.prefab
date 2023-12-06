@@ -91,6 +91,15 @@ MonoBehaviour:
     fadeOutDuration: 0
     loop: 0
     source: {fileID: 0}
+  - name: Win
+    clip: {fileID: 8300000, guid: 54247e4f08a48b64d9b16fb8bd324a36, type: 3}
+    volume: 1
+    pitch: 2
+    volumeVariance: 0
+    pitchVariance: 0
+    fadeOutDuration: 0
+    loop: 0
+    source: {fileID: 0}
   musicSource: {fileID: 8377385790362171266}
   menuClip: {fileID: 8300000, guid: 1fd3d0e4bb4ee1943a7e5ca442cc2613, type: 3}
   gameClip: {fileID: 8300000, guid: f9c77b3398906374ab28a7a11771a0b5, type: 3}

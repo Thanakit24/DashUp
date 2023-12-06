@@ -937,7 +937,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ur mum gei
+  m_text: thANKS FOR PLAYING!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46faf1629eaea3345b43e6970d7024e6, type: 2}
   m_sharedMaterial: {fileID: 3081305760726344191, guid: 46faf1629eaea3345b43e6970d7024e6, type: 2}

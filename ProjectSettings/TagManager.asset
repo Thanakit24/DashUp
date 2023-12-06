@@ -9,6 +9,7 @@ TagManager:
   - Obstacle
   - Poop
   - NPC
+  - Portal
   layers:
   - Default
   - TransparentFX

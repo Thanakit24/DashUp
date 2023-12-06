@@ -1,61 +1,50 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    public Transform portalDestination;
-    public bool firstPortal;
-    public Transform portalA;
-    public Transform portalB;
-    public float distance = 0.4f;
-    public GameObject poop;
-    public bool isTeleport = false;
-    public float resetTime;
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (!firstPortal)
-        {
-            portalDestination.position = portalA.transform.position;
-        }
-        else
-        {
-            portalDestination.position = portalB.transform.position;
-        }
-    }
+    public Transform destination;
+    private CircleCollider2D col; // Reference to the collider
+    [SerializeField] private float disabledDuration;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        // play animation or particles
+        // Get the collider component
+        col = GetComponent<CircleCollider2D>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Poop") && !isTeleport)
+        if (collision.gameObject.CompareTag("Poop"))
         {
-          
-            if (Vector2.Distance(transform.position, collision.transform.position) > distance)
+            PoopBehavior poop = collision.GetComponent<PoopBehavior>();
+            poop.DisableTrail();
+            if (Vector2.Distance(collision.transform.position, transform.position) > 0.4f)
             {
-                //instantiate poop prefab on the next portal to prevent trail renderer from transitioning
-                isTeleport = true;
-                Destroy(collision.gameObject);
-                Instantiate(poop, portalDestination.position, Quaternion.identity);
-                StartCoroutine(ResetPortal(resetTime));
+                collision.transform.position = destination.transform.position;
+                poop.EnableTrail();
+                StartCoroutine(DisableColliderForDuration(disabledDuration)); // Change 2f to your desired duration
             }
         }
     }
 
-    IEnumerator ResetPortal(float resetTime)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-       
-        yield return new WaitForSeconds(resetTime);
-        print("portal ready"); 
-        isTeleport = false;
-        //print("platform restore");
-        //currentSprite.color = new Color(255, 255, 255);
-
+        if (collision.gameObject.CompareTag("Poop"))
+        {
+            PoopBehavior poop = collision.GetComponent<PoopBehavior>();
+            poop.EnableTrail();
+        }
     }
+    private IEnumerator DisableColliderForDuration(float duration)
+    {
+        // Disable the collider
+        col.enabled = false;
 
+        // Wait for the specified duration
+        yield return new WaitForSeconds(duration);
+
+        // Enable the collider after the duration
+        col.enabled = true;
+    }
 }

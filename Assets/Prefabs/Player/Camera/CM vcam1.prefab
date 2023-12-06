@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4020746551450792651}
   - component: {fileID: 1148554093}
   - component: {fileID: 964521345565391575}
+  - component: {fileID: 3249243442181064493}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -116,6 +117,19 @@ MonoBehaviour:
   cinemcam: {fileID: 0}
   shakeIntensity: 1.5
   shakeTime: 0.2
+--- !u!114 &3249243442181064493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020746551450792648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_XPosition: 6.7
 --- !u!1 &4020746552918461493
 GameObject:
   m_ObjectHideFlags: 0
