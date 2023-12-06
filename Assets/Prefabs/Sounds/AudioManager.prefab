@@ -100,6 +100,15 @@ MonoBehaviour:
     fadeOutDuration: 0
     loop: 0
     source: {fileID: 0}
+  - name: Teleport
+    clip: {fileID: 8300000, guid: f9162b25fbede7d44b60a72a7859f9f8, type: 3}
+    volume: 0.4
+    pitch: 1
+    volumeVariance: 0
+    pitchVariance: 0
+    fadeOutDuration: 0
+    loop: 0
+    source: {fileID: 0}
   musicSource: {fileID: 8377385790362171266}
   menuClip: {fileID: 8300000, guid: 1fd3d0e4bb4ee1943a7e5ca442cc2613, type: 3}
   gameClip: {fileID: 8300000, guid: f9c77b3398906374ab28a7a11771a0b5, type: 3}

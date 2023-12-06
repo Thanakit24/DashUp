@@ -18,9 +18,11 @@ public class Portal : MonoBehaviour
         if (collision.gameObject.CompareTag("Poop"))
         {
             PoopBehavior poop = collision.GetComponent<PoopBehavior>();
+           
             poop.DisableTrail();
             if (Vector2.Distance(collision.transform.position, transform.position) > 0.4f)
             {
+                AudioManager.instance.Play("Teleport");
                 collision.transform.position = destination.transform.position;
                 poop.EnableTrail();
                 StartCoroutine(DisableColliderForDuration(disabledDuration)); // Change 2f to your desired duration

@@ -76,8 +76,9 @@ public class WindTurbine : MonoBehaviour
             }
             else
             {
-                player.frameVelocity.y = Mathf.MoveTowards(player.frameVelocity.y, upwardForce, upwardForceMax * Time.fixedDeltaTime);
-                player.flyUpwardSpeed = 500f; 
+                //rbAffect.AddForce(player.rb.transform.up * upwardForce, ForceMode2D.Force);
+                player.frameVelocity.y = Mathf.MoveTowards(player.frameVelocity.y, upwardForce, upwardForceMax * Time.fixedDeltaTime); //doing any actions in rb add upward force creates weird and buggy movement interactions
+                player.flyUpwardSpeed = 400f; 
                 player.glideFallAcceleration = 0;
                 player.glideFallSpeed = 0;
             }
