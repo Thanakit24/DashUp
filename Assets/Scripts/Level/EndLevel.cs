@@ -22,11 +22,9 @@ public class EndLevel : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && notLastLevel)
         {
+            AudioManager.instance.Play("Win");
             GameManager.instance.LoadNextLevel();
         }
-        else
-        {
-            
-        }
+     
     }
 }
