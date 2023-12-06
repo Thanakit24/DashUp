@@ -6252,6 +6252,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 227b5350074d1e249a7d82c5fe34f3f3, type: 3}
+--- !u!1 &1659426604 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 185052551086455999, guid: 227b5350074d1e249a7d82c5fe34f3f3, type: 3}
+  m_PrefabInstance: {fileID: 1659426603}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1676085273
 GameObject:
   m_ObjectHideFlags: 0
@@ -6554,7 +6559,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813658, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: orthographic size
-      value: 2.375
+      value: 9.53125
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813658, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: m_BackGroundColor.b
@@ -6574,11 +6579,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813733, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.07
+      value: 14.163982
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813733, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.77
+      value: -4.76992
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813733, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6807,6 +6812,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2134615149}
+    - target: {fileID: 7442869486892422631, guid: 38cc78a9d32c01442a797ed8601a7bc9, type: 3}
+      propertyPath: pauseMenu
+      value: 
+      objectReference: {fileID: 1659426604}
     - target: {fileID: 7442869486892422631, guid: 38cc78a9d32c01442a797ed8601a7bc9, type: 3}
       propertyPath: spawnPoint
       value: 

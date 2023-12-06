@@ -9462,6 +9462,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 514225120}
     - target: {fileID: 7442869486892422631, guid: 38cc78a9d32c01442a797ed8601a7bc9, type: 3}
+      propertyPath: pauseMenu
+      value: 
+      objectReference: {fileID: 1385047192}
+    - target: {fileID: 7442869486892422631, guid: 38cc78a9d32c01442a797ed8601a7bc9, type: 3}
       propertyPath: spawnPoint
       value: 
       objectReference: {fileID: 1189318238}
@@ -9660,6 +9664,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 227b5350074d1e249a7d82c5fe34f3f3, type: 3}
+--- !u!1 &1385047192 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 185052551086455999, guid: 227b5350074d1e249a7d82c5fe34f3f3, type: 3}
+  m_PrefabInstance: {fileID: 1385047191}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1385313784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10098,7 +10107,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813658, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: orthographic size
-      value: 7.421875
+      value: 9.53125
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813658, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: m_NormalizedViewPortRect.y
@@ -10118,7 +10127,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813733, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.899487
+      value: 5.1729126
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813733, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: m_LocalPosition.y

@@ -2202,32 +2202,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3854087933228547924, guid: 178c5ce936ecd37419d8cd551020acc9, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4889708598004479079, guid: 178c5ce936ecd37419d8cd551020acc9, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4889708598004479079, guid: 178c5ce936ecd37419d8cd551020acc9, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4889708598770074673, guid: 178c5ce936ecd37419d8cd551020acc9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 22.50045
-      objectReference: {fileID: 0}
-    - target: {fileID: 4889708598770074673, guid: 178c5ce936ecd37419d8cd551020acc9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -11.500231
-      objectReference: {fileID: 0}
-    - target: {fileID: 4889708598770074675, guid: 178c5ce936ecd37419d8cd551020acc9, type: 3}
-      propertyPath: maxPoop
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4889708598770074675, guid: 178c5ce936ecd37419d8cd551020acc9, type: 3}
-      propertyPath: amountOfPoop
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4889708599287385492, guid: 178c5ce936ecd37419d8cd551020acc9, type: 3}
@@ -2788,7 +2768,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8951998405634553454, guid: 9127033043c4c584ea501ba089b3bba3, type: 3}
       propertyPath: m_Name
-      value: EndLevel (1)
+      value: 'EndLevel '
       objectReference: {fileID: 0}
     - target: {fileID: 8951998405634553490, guid: 9127033043c4c584ea501ba089b3bba3, type: 3}
       propertyPath: m_RootOrder
@@ -3558,6 +3538,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 227b5350074d1e249a7d82c5fe34f3f3, type: 3}
+--- !u!1 &1659426604 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 185052551086455999, guid: 227b5350074d1e249a7d82c5fe34f3f3, type: 3}
+  m_PrefabInstance: {fileID: 1659426603}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1701690371
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3919,7 +3904,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813658, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: orthographic size
-      value: 4.8125
+      value: 9.53125
       objectReference: {fileID: 0}
     - target: {fileID: 4699891496684813658, guid: a67fbe010b256c1479a66fc6c720f07e, type: 3}
       propertyPath: m_BackGroundColor.b
@@ -4172,6 +4157,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2134615149}
+    - target: {fileID: 7442869486892422631, guid: 38cc78a9d32c01442a797ed8601a7bc9, type: 3}
+      propertyPath: pauseMenu
+      value: 
+      objectReference: {fileID: 1659426604}
     - target: {fileID: 7442869486892422631, guid: 38cc78a9d32c01442a797ed8601a7bc9, type: 3}
       propertyPath: spawnPoint
       value: 

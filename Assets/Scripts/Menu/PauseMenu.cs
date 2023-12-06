@@ -53,6 +53,11 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
+    public void LoadLevel()
+    {
+        SceneManager.LoadScene("LevelSelection");
+    }
+
     public void Skip()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
