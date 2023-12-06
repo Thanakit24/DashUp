@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public Animator anim;
     public float transitionTime = 1.5f;
     public float deathWaitTime;
+    public GameObject pauseMenu;
     //public Camera cam;
 
     // Start is called before the first frame update
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         player.transform.position = spawnPoint.position;
+        pauseMenu.SetActive(true);
     }
 
     // Update is called once per frame
@@ -54,17 +56,20 @@ public class GameManager : MonoBehaviour
     {
         print("level completed");
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
+        pauseMenu.SetActive(false);
     }
 
     public void ReloadCurrentLevel()
     {
         print("reload level");
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex));
+        pauseMenu.SetActive(false);
     }
 
     IEnumerator LoadLevel(int levelIndex)
     {
         anim.SetTrigger("Start");
+        pauseMenu.SetActive(false);
         yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(levelIndex);
         //print("platform restore");
