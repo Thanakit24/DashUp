@@ -86,6 +86,8 @@ public class JumpState : AirborneMoveState
             _pc.frameVelocity.y = _pc.jumpPower;
             _pc.anim.Play(PlayerController.JumpKey);
         }
+
+        AudioManager.instance.Play("Jump");
     }
 }
 public class AirborneMoveState : PlayerStates
@@ -95,7 +97,7 @@ public class AirborneMoveState : PlayerStates
     public override void OnEnter()
     {
         base.OnEnter();
-
+        
     }
     public override void OnUpdate()
     {
@@ -170,6 +172,7 @@ public class GlideState : AirborneMoveState
     public override void OnEnter()
     {
         base.OnEnter();
+       
         _pc.anim.Play(PlayerController.GlideKey);
 
         //set anim glide to play here
@@ -246,8 +249,11 @@ public class DeathState : PlayerStates
         _pc.trail.emitting = false;
         _pc.rb.constraints = RigidbodyConstraints2D.FreezePosition;
         _pc.enabled = false;
+        _pc.boxCol.enabled = false;
+        _pc.col.enabled = false;
         //add camera shake
         //explore different anims
+        AudioManager.instance.Play("Dead");
         _pc.anim.Play(PlayerController.DeathKey);
         GameManager.instance.GameOver();
 

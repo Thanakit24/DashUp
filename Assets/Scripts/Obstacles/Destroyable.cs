@@ -28,7 +28,7 @@ public class Destroyable : MonoBehaviour
     IEnumerator UntilRestore(float restoreTime)
     {
         yield return new WaitForSeconds(restoreTime);
-        print("platform restore");
+        //print("platform restore");
         if (!isActive)
         {
             isActive = true;

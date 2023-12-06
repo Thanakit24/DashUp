@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
 
     private PlayerController playerController;
+    float originalVol;
     //private Teleport teleport;
 
     // Update is called once per frame
@@ -16,6 +17,7 @@ public class PauseMenu : MonoBehaviour
     void Start()
     {
         playerController = FindObjectOfType<PlayerController>();
+        originalVol = AudioManager.instance.musicSource.volume;
         Resume();
     }
     void Update()
@@ -39,6 +41,9 @@ public class PauseMenu : MonoBehaviour
         playerController.enabled = true;
         Time.timeScale = 1f;
         GameIsPaused = false;
+
+        AudioManager.instance.musicSource.pitch = 1;
+        AudioManager.instance.musicSource.volume = originalVol;
     }
     void Pause()
     {
@@ -46,6 +51,10 @@ public class PauseMenu : MonoBehaviour
         playerController.enabled = false;
         Time.timeScale = 0f;
         GameIsPaused = true;
+
+        AudioManager.instance.musicSource.pitch = 0.75f;
+        originalVol = AudioManager.instance.musicSource.volume;
+        AudioManager.instance.musicSource.volume *= 0.5f;
     }
 
     public void LoadMenu()
@@ -66,5 +75,11 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("QuittingGame");
         Application.Quit();
+    }
+    private void OnDestroy()
+    {
+        Time.timeScale = 1f;
+        AudioManager.instance.musicSource.pitch = 1;
+        AudioManager.instance.musicSource.volume = 0.3f; //hardcoded value because setting it back to originalVol makes the volume set to 0 
     }
 }

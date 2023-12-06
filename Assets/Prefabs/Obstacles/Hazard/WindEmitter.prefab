@@ -14648,8 +14648,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 393f6b8840f5c5642b5171674dacbd8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  downwardForce: 170
+  downwardForce: 50
+  downardForceMax: 60
   upwardForce: 90
+  upwardForceMax: 0
   impulseForce: 0
   facingUp: 0
   reductSpeed: 1

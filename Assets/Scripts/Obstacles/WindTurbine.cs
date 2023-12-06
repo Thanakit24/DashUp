@@ -44,8 +44,15 @@ public class WindTurbine : MonoBehaviour
 
             // Store the original values when the player enters the trigger
             StoreOriginalValues(player);
-
-            player.rb.AddForce(player.rb.transform.up * impulseForce, ForceMode2D.Impulse);
+            //if (!facingUp)
+            //{
+            //    player.rb.AddForce(-player.rb.transform.up * impulseForce, ForceMode2D.Impulse);
+            //}
+            //else
+            //{
+            //    player.rb.AddForce(player.rb.transform.up * impulseForce, ForceMode2D.Impulse);
+            //}
+           
         }
     }
 
@@ -61,6 +68,11 @@ public class WindTurbine : MonoBehaviour
             if (!facingUp)
             {
                 rbAffect.AddForce(-player.rb.transform.up * downwardForce, ForceMode2D.Force);
+                //player.frameVelocity.y = Mathf.MoveTowards(player.frameVelocity.y, -upwardForce, upwardForceMax * Time.fixedDeltaTime);
+                //player.flyUpwardSpeed = 125f;
+                player.maxFlySpeed = 4f;
+                //player.glideFallSpeed = 80f;
+                //player.glideFallAcceleration = 250f;
             }
             else
             {
@@ -79,17 +91,7 @@ public class WindTurbine : MonoBehaviour
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
             Rigidbody2D rbAffect = collision.gameObject.GetComponent<Rigidbody2D>();
 
-            if (!facingUp)
-            {
-                // Restore the original values when the player exits the trigger
-                RestoreOriginalValues(player);
-            }
-            else
-            {
-                player.glideFallAcceleration = originalValues.glideFallAcceleration;
-                player.glideFallSpeed = originalValues.glideFallSpeed;
-            }
-
+            RestoreOriginalValues(player);
             player.jumpPower = originalValues.jumpPower;
             player.flyUpwardSpeed = originalValues.flyUpwardSpeed;
             rbAffect.gravityScale = 1f;

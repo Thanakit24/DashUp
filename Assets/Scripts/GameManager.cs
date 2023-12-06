@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public GameObject player;
+    public PlayerController pc;
     public Transform spawnPoint;
     public Animator anim;
     public float transitionTime = 1.5f;
@@ -37,10 +38,10 @@ public class GameManager : MonoBehaviour
             print("escape open UI");
         }
 
-        //if (Input.GetKeyDown(KeyCode.T))
-        //{
-        //    LoadNextLevel();
-        //}
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            LoadNextLevel();
+        }
     }
 
     public void GameOver()
@@ -56,15 +57,22 @@ public class GameManager : MonoBehaviour
     {
         print("level completed");
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
-        pauseMenu.SetActive(false);
+        //pauseMenu.SetActive(false);
     }
 
     public void ReloadCurrentLevel()
     {
         print("reload level");
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex));
-        pauseMenu.SetActive(false);
+        //pauseMenu.SetActive(false);
     }
+
+    //public void LoadMenu()
+    //{
+    //    print("reload level");
+    //    StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex));
+    //    pauseMenu.SetActive(false);
+    //}
 
     IEnumerator LoadLevel(int levelIndex)
     {

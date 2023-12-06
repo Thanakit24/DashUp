@@ -11,6 +11,7 @@ public class FeathersPickUp : MonoBehaviour
     public SpriteRenderer sprite;
     //public Sprite deactiveSprite;
     private Animator anim;
+    public PlayerController player;
     //private BoxCollider2D boxCol;
     [SerializeField] private bool isGoldFeather;
     // Start is called before the first frame update
@@ -24,12 +25,7 @@ public class FeathersPickUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isActive)
-        {
-            //set sprite to gray
-            //set collision to false
-
-        }
+        player = GameManager.instance.pc;
     }
 
     IEnumerator UntilRestore(float restoreTime)
@@ -47,14 +43,14 @@ public class FeathersPickUp : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if ((collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Poop")) && isActive)
+        if ((collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Poop")) && isActive && player.amountOfPoop == 0)
         {
             //isGoldFeather = !isGoldFeather;
-            PlayerController player = collision.GetComponent<PlayerController>();
+            //player = collision.GetComponent<PlayerController>();
 
             if (!isGoldFeather)
             {
-                print("picked up bread");
+                //print("picked up bread");
 
                 player.amountOfPoop += poopToIncrease;
                 isActive = false;
@@ -68,12 +64,16 @@ public class FeathersPickUp : MonoBehaviour
                 isActive = false;
             }
             //play some effects or particles and sounds
+            AudioManager.instance.Play("Bread");
             isActive = false;
+            //player = null;
             sprite.color = new Color32(90, 90, 90, 255);
             anim.enabled = false;
             StartCoroutine(UntilRestore(restoreTime));
             //change sprite to restoring/transparent sprite;
             //deactive this instead
         }
+
     }
 }
+

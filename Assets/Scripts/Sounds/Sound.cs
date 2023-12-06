@@ -12,6 +12,9 @@ public class Sound
     public float volume;
     [Range(.1f, 3f)]
     public float pitch;
+    public float volumeVariance;
+    public float pitchVariance;
+    public float fadeOutDuration;
 
     public bool loop;
 

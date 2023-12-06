@@ -9,7 +9,7 @@ public class PlayerController : StateMachine, IPlayerController
 {
     public LayerMask playerLayer;
     [HideInInspector] public Rigidbody2D rb;
-    private CapsuleCollider2D col;
+    [HideInInspector] public CapsuleCollider2D col;
 
     [Header("MOVEMENT")]
     public float maxSpeed;
@@ -116,6 +116,8 @@ public class PlayerController : StateMachine, IPlayerController
     public bool isFacingRight = true;
     private float time;
     [HideInInspector] public TrailRenderer trail;
+    [HideInInspector] public BoxCollider2D boxCol;
+ 
 
     //--------------------------------------------------------------------
     //Interface
@@ -134,8 +136,8 @@ public class PlayerController : StateMachine, IPlayerController
         trail = GetComponentInChildren<TrailRenderer>();
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        boxCol = GetComponent<BoxCollider2D>();
         col = GetComponent<CapsuleCollider2D>();
-        //blackAura = GetComponentInChildren<ParticleSystem>();
         _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
 
     }
@@ -169,6 +171,12 @@ public class PlayerController : StateMachine, IPlayerController
         //    frameVelocity.y = testLaunch;
         //    //frameVelocity = new Vector2(frameInput.Move.x * testLaunch, frameVelocity.y * testLaunch);
         //}
+        
+        if (frameInput.isFlight)
+        {
+            AudioManager.instance.Play("Flap");
+        }
+
         if (frameInput.isLaunch && !firstLaunch) //this prevents spamming "fly input" to gain speed and minimize energy consumption
         {
             firstLaunch = true;
@@ -268,7 +276,7 @@ public class PlayerController : StateMachine, IPlayerController
             isFlying = (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) && currentEnergy > 0,
             //isPoop = (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.P)) && amountOfPoop > 0,
             isLaunch = Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow),
-            //isTest = Input.GetKeyDown(KeyCode.J),
+            isFlight = Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow),
             Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
         };
 
@@ -369,6 +377,7 @@ public class PlayerController : StateMachine, IPlayerController
 
         if (!grounded && groundHit) /// adding the check here lead to animation bugs when flying
         {
+            //AudioManager.instance.Play("Ground");
             grounded = true;
             coyoteUsable = true;
             bufferedJumpUsable = true;
@@ -435,6 +444,7 @@ public struct FrameInput
     public bool JumpHeld;
     public bool isGliding;
     public bool isFlying;
+    public bool isFlight;
     public bool isLaunch;
     public bool isPoop;
     //public bool isTest;

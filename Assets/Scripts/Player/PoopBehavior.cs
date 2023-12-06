@@ -40,6 +40,7 @@ public class PoopBehavior : MonoBehaviour
             //print("destroy poop");
             rb.velocity = Vector2.zero;
             rb.gravityScale = 0;
+            AudioManager.instance.Play("Poop");
             anim.SetTrigger("PoopExplode");
             //display explosive, on impact particles
 
@@ -59,6 +60,7 @@ public class PoopBehavior : MonoBehaviour
                 rb.velocity = Vector2.zero;
                 rb.gravityScale = 0;
                 rb.constraints = RigidbodyConstraints2D.FreezePosition;
+                AudioManager.instance.Play("Poop");
                 anim.SetTrigger("PoopExplode");
                 //Destroy(collision.gameObject, destroyObjectTime);
             }
@@ -67,6 +69,7 @@ public class PoopBehavior : MonoBehaviour
 
     public void DestroyPoop() //called by animation event
     {
+       
         Destroy(gameObject);
     }
 

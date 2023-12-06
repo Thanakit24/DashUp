@@ -203,4 +203,5 @@ MonoBehaviour:
   restoreTime: 3
   poopToIncrease: 1
   sprite: {fileID: 0}
+  player: {fileID: 0}
   isGoldFeather: 0

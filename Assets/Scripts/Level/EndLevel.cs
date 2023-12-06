@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class EndLevel : MonoBehaviour
 {
+    public bool notLastLevel = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,9 +20,13 @@ public class EndLevel : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && notLastLevel)
         {
             GameManager.instance.LoadNextLevel();
+        }
+        else
+        {
+            
         }
     }
 }
